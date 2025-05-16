@@ -1,10 +1,9 @@
 /**
- * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
- * 1. You want to modify request context (see Part 1).
- * 2. You want to create a new middleware or type of procedure (see Part 3).
+ * 基本的にこのファイルを編集する必要はありません。例外は以下の場合です：
+ * 1. リクエストコンテキストを変更したい場合（パート1参照）。
+ * 2. 新しいミドルウェアやプロシージャタイプを作成したい場合（パート3参照）。
  *
- * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
- * need to use are documented accordingly near the end.
+ * 要約：tRPCサーバーの設定や拡張はここで行います。必要な部分はファイル末尾付近に記載しています。
  */
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
@@ -13,14 +12,13 @@ import { ZodError } from "zod";
 import { db } from "@/server/db";
 
 /**
- * 1. CONTEXT
+ * 1. コンテキスト
  *
- * This section defines the "contexts" that are available in the backend API.
+ * ここではバックエンドAPIで利用できる「コンテキスト」を定義します。
  *
- * These allow you to access things when processing a request, like the database, the session, etc.
+ * これにより、リクエスト処理時にデータベースやセッションなどへアクセスできます。
  *
- * This helper generates the "internals" for a tRPC context. The API handler and RSC clients each
- * wrap this and provides the required context.
+ * このヘルパーはtRPC内部で使う「コンテキスト」を生成します。APIハンドラーやRSCクライアントがこれをラップして必要な情報を提供します。
  *
  * @see https://trpc.io/docs/server/context
  */
@@ -32,11 +30,10 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
 };
 
 /**
- * 2. INITIALIZATION
+ * 2. 初期化
  *
- * This is where the tRPC API is initialized, connecting the context and transformer. We also parse
- * ZodErrors so that you get typesafety on the frontend if your procedure fails due to validation
- * errors on the backend.
+ * tRPC APIの初期化を行い、コンテキストやデータ変換、エラーフォーマットを設定します。
+ * Zodのバリデーションエラーも型安全にフロントエンドへ返します。
  */
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
@@ -53,31 +50,30 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 });
 
 /**
- * Create a server-side caller.
+ * サーバーサイドからAPIを呼び出すためのファクトリー関数。
  *
  * @see https://trpc.io/docs/server/server-side-calls
  */
 export const createCallerFactory = t.createCallerFactory;
 
 /**
- * 3. ROUTER & PROCEDURE (THE IMPORTANT BIT)
+ * 3. ルーターとプロシージャ（重要な部分）
  *
- * These are the pieces you use to build your tRPC API. You should import these a lot in the
- * "/src/server/api/routers" directory.
+ * これらはtRPC APIを構築する際に使う主要な部品です。
+ * "/src/server/api/routers" ディレクトリでよくインポートします。
  */
 
 /**
- * This is how you create new routers and sub-routers in your tRPC API.
+ * tRPC APIで新しいルーターやサブルーターを作成する方法です。
  *
  * @see https://trpc.io/docs/router
  */
 export const createTRPCRouter = t.router;
 
 /**
- * Middleware for timing procedure execution and adding an artificial delay in development.
+ * プロシージャ実行時間の計測や、開発時の人工的な遅延を加えるミドルウェア。
  *
- * You can remove this if you don't like it, but it can help catch unwanted waterfalls by simulating
- * network latency that would occur in production but not in local development.
+ * 不要な場合は削除しても構いません。開発時にネットワーク遅延を模擬できるため、パフォーマンス問題の発見に役立ちます。
  */
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
@@ -97,10 +93,9 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 });
 
 /**
- * Public (unauthenticated) procedure
+ * 公開（認証不要）プロシージャ
  *
- * This is the base piece you use to build new queries and mutations on your tRPC API. It does not
- * guarantee that a user querying is authorized, but you can still access user session data if they
- * are logged in.
+ * これはtRPC APIで新しいクエリやミューテーションを作成する際の基本単位です。
+ * ユーザー認証は保証しませんが、セッション情報にはアクセス可能です。
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
