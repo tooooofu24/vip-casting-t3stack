@@ -2,12 +2,8 @@ import "@/styles/globals.css";
 
 import type { Metadata, Viewport } from "next";
 
-import { HEADER_HEIGHT } from "@/app/(components)/constants";
-import { Footer } from "@/app/(components)/Footer/Footer";
-import { Navbar } from "@/app/(components)/Navbar/Navbar";
 import { ChakraProvider } from "@/lib/chakra-ui/provider";
 import { TRPCReactProvider } from "@/lib/trpc/react";
-import { Box } from "@chakra-ui/react";
 
 export const metadata: Metadata = {
   title: "VIPキャスティング",
@@ -30,13 +26,7 @@ export default function RootLayout({
     <html lang="ja" suppressHydrationWarning>
       <body>
         <TRPCReactProvider>
-          <ChakraProvider defaultTheme="light">
-            <Navbar />
-            <Box pt={HEADER_HEIGHT}>
-              <Box as="main">{children}</Box>
-            </Box>
-            <Footer />
-          </ChakraProvider>
+          <ChakraProvider defaultTheme="light">{children}</ChakraProvider>
         </TRPCReactProvider>
       </body>
     </html>
