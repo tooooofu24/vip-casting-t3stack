@@ -1,6 +1,6 @@
 "use client";
 
-import { FooterLink } from "@/components/Footer/FooterLink";
+import { FooterLink } from "@/app/(components)/Footer/FooterLink";
 import { Box, Heading, VStack } from "@chakra-ui/react";
 import { type ComponentProps } from "react";
 type Props = {

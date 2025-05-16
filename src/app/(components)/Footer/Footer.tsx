@@ -1,7 +1,7 @@
 "use client";
 
-import { FooterLink } from "@/components/Footer/FooterLink";
-import { FooterSection } from "@/components/Footer/FooterSection";
+import { FooterLink } from "@/app/(components)/Footer/FooterLink";
+import { FooterSection } from "@/app/(components)/Footer/FooterSection";
 import {
   Badge,
   Box,

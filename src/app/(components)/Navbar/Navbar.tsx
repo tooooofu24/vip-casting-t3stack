@@ -1,8 +1,8 @@
 "use client";
 
-import { HEADER_HEIGHT } from "@/components/constants";
-import { NavigationLinks } from "@/components/Navbar/NavigationLinks";
-import { SidebarButton } from "@/components/Sidebar/SidebarButton";
+import { HEADER_HEIGHT } from "@/app/(components)/constants";
+import { NavigationLinks } from "@/app/(components)/Navbar/NavigationLinks";
+import { SidebarButton } from "@/app/(components)/Sidebar/SidebarButton";
 import { Box, Heading, HStack, Icon, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuCrown } from "react-icons/lu";

@@ -1,4 +1,4 @@
-import { NavbarLink } from "@/components/Navbar/NavbarLink";
+import { NavbarLink } from "@/app/(components)/Navbar/NavbarLink";
 import { HStack } from "@chakra-ui/react";
 
 const navLinks = [

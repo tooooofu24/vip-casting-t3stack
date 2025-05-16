@@ -1,4 +1,4 @@
-import { SidebarContent } from "@/components/Sidebar/SidebarContent";
+import { SidebarContent } from "@/app/(components)/Sidebar/SidebarContent";
 import { Drawer, Icon, IconButton, Portal } from "@chakra-ui/react";
 import { LuMenu } from "react-icons/lu";
 

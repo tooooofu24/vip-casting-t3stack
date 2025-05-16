@@ -2,9 +2,9 @@ import "@/styles/globals.css";
 
 import type { Metadata, Viewport } from "next";
 
-import { HEADER_HEIGHT } from "@/components/constants";
-import { Footer } from "@/components/Footer/Footer";
-import { Navbar } from "@/components/Navbar/Navbar";
+import { HEADER_HEIGHT } from "@/app/(components)/constants";
+import { Footer } from "@/app/(components)/Footer/Footer";
+import { Navbar } from "@/app/(components)/Navbar/Navbar";
 import { ChakraProvider } from "@/lib/chakra-ui/provider";
 import { TRPCReactProvider } from "@/lib/trpc/react";
 import { Box } from "@chakra-ui/react";
