@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const env = createEnv({
   /**
-   * Specify your server-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars.
+   * サーバーサイドで利用する環境変数のスキーマをここで定義します。
+   * これにより、無効な環境変数でアプリがビルドされるのを防げます。
    */
   server: {
     DATABASE_URL: z.string().url(),
@@ -14,17 +14,18 @@ export const env = createEnv({
   },
 
   /**
-   * Specify your client-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars. To expose them to the client, prefix them with
-   * `NEXT_PUBLIC_`.
+   * クライアントサイドで利用する環境変数のスキーマをここで定義します。
+   * 無効な値でビルドされるのを防げます。クライアントで使う場合は
+   * 変数名の先頭に `NEXT_PUBLIC_` を付けてください。
    */
   client: {
     // NEXT_PUBLIC_CLIENT_VAR: z.string(),
   },
 
   /**
-   * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
-   * middlewares) or client-side so we need to destruct manually.
+   * Next.jsのEdgeランタイム（例: middlewares）やクライアントサイドでは
+   * process.envを通常のオブジェクトのように分割代入できません。
+   * そのため、ここで個別に指定します。
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
@@ -32,13 +33,14 @@ export const env = createEnv({
     // NEXT_PUBLIC_CLIENT_VAR: process.env.NEXT_PUBLIC_CLIENT_VAR,
   },
   /**
-   * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
-   * useful for Docker builds.
+   * `SKIP_ENV_VALIDATION` を付けて `build` や `dev` を実行すると
+   * 環境変数のバリデーションをスキップできます。
+   * Dockerビルド時などに便利です。
    */
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   /**
-   * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
-   * `SOME_VAR=''` will throw an error.
+   * 空文字列を undefined として扱います。
+   * 例: `SOME_VAR: z.string()` かつ `SOME_VAR=''` の場合はエラーになります。
    */
   emptyStringAsUndefined: true,
 });
