@@ -18,3 +18,250 @@ model Post {
 
     @@index([name])
 }
+
+enum UserRole {
+    USER
+    INFLUENCER
+    COMPANY
+}
+
+enum Gender {
+    UNSPECIFIED
+    MALE
+    FEMALE
+    OTHER
+}
+
+enum AccountType {
+    SAVINGS
+    CHECKING
+}
+
+enum CampaignStatus {
+    DRAFT // 下書き
+    IN_PROGRESS // 進行中
+    PENDING // 確認待ち
+    COMPLETED // 完了
+    CANCELLED // キャンセル
+}
+
+enum ApplicationStatus {
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+enum SnsType {
+    INSTAGRAM
+    TIKTOK
+    YOUTUBE
+    TWITTER
+}
+
+model User {
+    id         String      @id @default(uuid()) @db.Uuid
+    email      String      @unique @db.VarChar(255)
+    password   String      @db.VarChar(255)
+    name       String?     @db.VarChar(100)
+    createdAt  DateTime    @default(now()) @db.Timestamptz(6)
+    updatedAt  DateTime    @updatedAt @db.Timestamptz(6)
+    role       UserRole    @default(USER)
+    influencer Influencer?
+    company    Company?
+
+    @@index([email])
+}
+
+model Influencer {
+    id                     String            @id @default(uuid()) @db.Uuid
+    userId                 String            @unique @db.Uuid
+    user                   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+    nickname               String?           @db.VarChar(100)
+    familyName             String?           @db.VarChar(50)
+    givenName              String?           @db.VarChar(50)
+    familyNameKana         String?           @db.VarChar(50)
+    givenNameKana          String?           @db.VarChar(50)
+    birthday               DateTime?         @db.Date
+    sex                    Gender?
+    phoneNumber            String?           @db.VarChar(20)
+    postCode               String?           @db.VarChar(8)
+    prefecture             String?           @db.VarChar(20)
+    address                String?           @db.VarChar(255)
+    roomNumber             String?           @db.VarChar(50)
+    selfPr                 String?           @db.Text
+    requestedRewardByPost  Int?              @db.Integer
+    requestedRewardByVideo Int?              @db.Integer
+    requestedRewardByLive  Int?              @db.Integer
+    requestedRewardByEvent Int?              @db.Integer
+    ngProducts             String?           @db.Text
+    ngCompanies            String?           @db.Text
+    ngOthers               String?           @db.Text
+    createdAt              DateTime          @default(now()) @db.Timestamptz(6)
+    updatedAt              DateTime          @updatedAt @db.Timestamptz(6)
+    applications           Application[]
+    specialityFields       SpecialityField[]
+    prHistories            PrHistory[]
+    snsAccounts            SnsAccount[]
+    handlableCases         HandlableCase[]
+    activeAreas            ActiveArea[]
+
+    @@index([userId])
+}
+
+model SpecialityField {
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @db.Uuid
+    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    field        String     @db.VarChar(100)
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
+
+    @@index([influencerId])
+}
+
+model PrHistory {
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @db.Uuid
+    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    history      String     @db.Text
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
+
+    @@index([influencerId])
+}
+
+model SnsAccount {
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @db.Uuid
+    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    snsType      SnsType
+    accountName  String     @db.VarChar(100)
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
+
+    @@index([influencerId])
+    @@index([snsType])
+}
+
+model HandlableCase {
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @db.Uuid
+    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    caseType     String     @db.VarChar(50)
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
+
+    @@index([influencerId])
+}
+
+model ActiveArea {
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @db.Uuid
+    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    area         String     @db.VarChar(50)
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
+
+    @@index([influencerId])
+    @@index([area])
+}
+
+model Company {
+    id          String  @id @default(uuid()) @db.Uuid
+    userId      String  @unique @db.Uuid
+    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    name        String  @db.VarChar(255)
+    industry    String? @db.VarChar(100)
+    website     String? @db.VarChar(255)
+    description String? @db.Text
+
+    // 基本情報
+    contactPersonName       String? @db.VarChar(100)
+    contactPersonDepartment String? @db.VarChar(100)
+    contactPersonPosition   String? @db.VarChar(100)
+    contactPersonPhone      String? @db.VarChar(20)
+    contactPersonEmail      String? @db.VarChar(255)
+
+    // ビジネス情報
+    minBudget          Int?    @db.Integer
+    maxBudget          Int?    @db.Integer
+    targetGenres       String? @db.Text
+    targetAgeGroups    String? @db.Text
+    targetGender       Gender?
+    targetRegions      String? @db.Text
+    pastExperience     String? @db.Text
+    productDescription String? @db.Text
+    campaignObjectives String? @db.Text
+
+    // 連絡先情報
+    postalCode   String? @db.VarChar(8)
+    prefecture   String? @db.VarChar(20)
+    city         String? @db.VarChar(100)
+    address      String? @db.VarChar(255)
+    buildingName String? @db.VarChar(100)
+    phoneNumber  String? @db.VarChar(20)
+
+    // 支払い情報
+    bankName             String?      @db.VarChar(100)
+    branchName           String?      @db.VarChar(100)
+    accountType          AccountType?
+    accountNumber        String?      @db.VarChar(20)
+    accountHolder        String?      @db.VarChar(100)
+    billingPostalCode    String?      @db.VarChar(8)
+    billingPrefecture    String?      @db.VarChar(20)
+    billingCity          String?      @db.VarChar(100)
+    billingAddress       String?      @db.VarChar(255)
+    billingBuildingName  String?      @db.VarChar(100)
+    billingContactPerson String?      @db.VarChar(100)
+
+    // その他
+    platformUsagePurpose String? @db.Text
+    notes                String? @db.Text
+
+    createdAt DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt DateTime   @updatedAt @db.Timestamptz(6)
+    campaigns Campaign[]
+
+    @@index([userId])
+    @@index([name])
+}
+
+model Campaign {
+    id            String         @id @default(uuid()) @db.Uuid
+    companyId     String         @db.Uuid
+    company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    title         String         @db.VarChar(255)
+    platform      String         @db.VarChar(50)
+    genre         String         @db.VarChar(50)
+    image         String         @db.VarChar(255)
+    followers     Int            @db.Integer
+    deadline      DateTime       @db.Timestamptz(6)
+    draftDeadline DateTime?      @db.Timestamptz(6)
+    requiresDraft Boolean        @default(false)
+    budgetFrom    Int            @db.Integer
+    budgetTo      Int            @db.Integer
+    isVip         Boolean        @default(false)
+    status        CampaignStatus @default(DRAFT)
+    Application   Application[]
+
+    @@index([companyId])
+    @@index([platform])
+    @@index([genre])
+    @@index([status])
+}
+
+model Application {
+    id           String            @id @default(uuid()) @db.Uuid
+    influencerId String            @db.Uuid
+    influencer   Influencer        @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    campaignId   String            @db.Uuid
+    campaign     Campaign          @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+    status       ApplicationStatus @default(PENDING)
+    message      String?           @db.Text
+    createdAt    DateTime          @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime          @updatedAt @db.Timestamptz(6)
+
+    @@index([influencerId])
+    @@index([campaignId])
+    @@index([status])
+}
