@@ -18,7 +18,9 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cspell": "cspell src",
+    "knip": "knip --production --fix --allow-remove-files"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.19.0",
@@ -45,6 +47,7 @@
     "@types/node": "^22.15.18",
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
+    "cspell": "^9.0.1",
     "eslint": "^9.26.0",
     "eslint-config-next": "^15.3.2",
     "knip": "^5.56.0",

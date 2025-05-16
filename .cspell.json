@@ -1,0 +1,5 @@
+{
+  "language": "en,ja",
+  "ignorePaths": ["src/lib/chakra-ui"],
+  "words": ["chakra"]
+}
