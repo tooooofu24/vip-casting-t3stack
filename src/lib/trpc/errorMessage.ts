@@ -1,30 +1,4 @@
-// tRPCエラーコードを日本語メッセージに変換する関数
-// import type { TRPC_ERROR_CODE_KEY } from "@trpc/server";
-
 import type { TRPC_ERROR_CODE_KEY } from "@trpc/server/unstable-core-do-not-import";
-
-const trpcErrorMessages: Record<TRPC_ERROR_CODE_KEY, string> = {
-  PARSE_ERROR: "サーバーでリクエストの解析に失敗しました。",
-  BAD_REQUEST: "リクエスト内容が不正です。",
-  INTERNAL_SERVER_ERROR: "サーバー内部でエラーが発生しました。",
-  NOT_IMPLEMENTED: "未実装の機能です。",
-  BAD_GATEWAY: "サーバーのゲートウェイエラーが発生しました。",
-  SERVICE_UNAVAILABLE: "サービスが一時的に利用できません。",
-  GATEWAY_TIMEOUT: "サーバーの応答がタイムアウトしました。",
-  UNAUTHORIZED: "認証に失敗しました。ログインしてください。",
-  FORBIDDEN: "権限がありません。",
-  NOT_FOUND: "リソースが見つかりません。",
-  METHOD_NOT_SUPPORTED: "サポートされていないメソッドです。",
-  TIMEOUT: "タイムアウトが発生しました。",
-  CONFLICT: "リソースの競合が発生しました。",
-  PRECONDITION_FAILED: "前提条件が満たされていません。",
-  PAYLOAD_TOO_LARGE: "リクエストのデータが大きすぎます。",
-  UNSUPPORTED_MEDIA_TYPE: "サポートされていないメディアタイプです。",
-  UNPROCESSABLE_CONTENT: "リクエスト内容を処理できません。",
-  TOO_MANY_REQUESTS:
-    "リクエストが多すぎます。しばらくしてから再度お試しください。",
-  CLIENT_CLOSED_REQUEST: "クライアントがリクエストを中断しました。",
-};
 
 export function getErrorMessageFromTrpcCode(
   code?: TRPC_ERROR_CODE_KEY,
@@ -32,5 +6,48 @@ export function getErrorMessageFromTrpcCode(
   if (!code) {
     return "不明なエラーが発生しました。";
   }
-  return trpcErrorMessages[code] ?? "不明なエラーが発生しました。";
+  switch (code) {
+    case "PARSE_ERROR":
+      return "サーバーでリクエストの解析に失敗しました。";
+    case "BAD_REQUEST":
+      return "リクエスト内容が不正です。";
+    case "INTERNAL_SERVER_ERROR":
+      return "サーバー内部でエラーが発生しました。";
+    case "NOT_IMPLEMENTED":
+      return "未実装の機能です。";
+    case "BAD_GATEWAY":
+      return "サーバーのゲートウェイエラーが発生しました。";
+    case "SERVICE_UNAVAILABLE":
+      return "サービスが一時的に利用できません。";
+    case "GATEWAY_TIMEOUT":
+      return "サーバーの応答がタイムアウトしました。";
+    case "UNAUTHORIZED":
+      return "認証に失敗しました。ログインしてください。";
+    case "FORBIDDEN":
+      return "権限がありません。";
+    case "NOT_FOUND":
+      return "リソースが見つかりません。";
+    case "METHOD_NOT_SUPPORTED":
+      return "サポートされていないメソッドです。";
+    case "TIMEOUT":
+      return "タイムアウトが発生しました。";
+    case "CONFLICT":
+      return "リソースの競合が発生しました。";
+    case "PRECONDITION_FAILED":
+      return "前提条件が満たされていません。";
+    case "PAYLOAD_TOO_LARGE":
+      return "リクエストのデータが大きすぎます。";
+    case "UNSUPPORTED_MEDIA_TYPE":
+      return "サポートされていないメディアタイプです。";
+    case "UNPROCESSABLE_CONTENT":
+      return "リクエスト内容を処理できません。";
+    case "TOO_MANY_REQUESTS":
+      return "リクエストが多すぎます。しばらくしてから再度お試しください。";
+    case "CLIENT_CLOSED_REQUEST":
+      return "クライアントがリクエストを中断しました。";
+    default:
+      // case漏れがあれば、ここで型エラーになる
+      const _: never = code;
+      return "不明なエラーが発生しました。";
+  }
 }
