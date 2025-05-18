@@ -57,7 +57,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const createCallerFactory = t.createCallerFactory;
 
 /**
- * 3. ルーターとプロシージャ（重要な部分）
+ * 3. routersとprocedures（重要な部分）
  *
  * これらはtRPC APIを構築する際に使う主要な部品です。
  * "/src/server/api/routers" ディレクトリでよくインポートします。
