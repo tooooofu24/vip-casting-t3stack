@@ -1,4 +1,5 @@
-import "@/styles/globals.css";
+import "@/app/globals.css";
+import "@/lib/zod";
 
 import type { Metadata, Viewport } from "next";
 
