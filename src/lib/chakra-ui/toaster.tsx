@@ -1,5 +1,6 @@
 "use client";
 
+import { getErrorMessageFromTrpcCode } from "@/lib/trpc/errorMessage";
 import {
   Toaster as ChakraToaster,
   Portal,
@@ -8,9 +9,10 @@ import {
   Toast,
   createToaster,
 } from "@chakra-ui/react";
+import type { TRPC_ERROR_CODE_KEY } from "@trpc/server/unstable-core-do-not-import";
 
 export const toaster = createToaster({
-  placement: "bottom-end",
+  placement: "top-end",
   pauseOnPageIdle: true,
 });
 
@@ -40,4 +42,17 @@ export const Toaster = () => {
       </ChakraToaster>
     </Portal>
   );
+};
+
+export const showErrorToast = (code?: TRPC_ERROR_CODE_KEY) => {
+  toaster.create({
+    type: "error",
+    duration: 10 * 1000,
+    title: "エラーが発生しました",
+    description: getErrorMessageFromTrpcCode(code),
+    action: {
+      label: "閉じる",
+      onClick: () => null,
+    },
+  });
 };

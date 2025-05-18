@@ -4,6 +4,7 @@ import "@/lib/zod";
 import type { Metadata, Viewport } from "next";
 
 import { ChakraProvider } from "@/lib/chakra-ui/provider";
+import { Toaster } from "@/lib/chakra-ui/toaster";
 import { TRPCReactProvider } from "@/lib/trpc/react";
 
 export const metadata: Metadata = {
@@ -27,7 +28,10 @@ export default function RootLayout({
     <html lang="ja" suppressHydrationWarning>
       <body>
         <TRPCReactProvider>
-          <ChakraProvider defaultTheme="light">{children}</ChakraProvider>
+          <ChakraProvider defaultTheme="light">
+            <Toaster />
+            {children}
+          </ChakraProvider>
         </TRPCReactProvider>
       </body>
     </html>

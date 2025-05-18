@@ -1,6 +1,6 @@
 "use client";
 
-import { getErrorMessageFromTrpcCode } from "@/lib/trpc/errorMessage";
+import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
   Card,
@@ -15,8 +15,14 @@ import { AdminLoginForm } from "./(components)/AdminLoginForm";
 
 export default function AdminLoginPage() {
   const { mutateAsync, isPending } = api.admin.login.useMutation({
+    onSuccess: () => {
+      toaster.create({
+        type: "success",
+        title: "ログインしました！",
+      });
+    },
     onError: (error) => {
-      alert(getErrorMessageFromTrpcCode(error.data?.code));
+      showErrorToast(error.data?.code);
     },
   });
 
