@@ -12,6 +12,8 @@ export function supabaseErrorCodeToTrpcCode(
     case "bad_json": // JSON不正
     case "bad_code_verifier": // PKCE検証失敗
     case "email_address_invalid": // メールアドレス不正
+    case "email_not_confirmed": // メール未確認
+    case "phone_not_confirmed": // 電話未確認
       return "BAD_REQUEST";
 
     // 401系: 認証失敗
@@ -147,8 +149,6 @@ export function supabaseErrorCodeToTrpcCode(
     case "otp_expired":
     case "otp_disabled":
     case "sms_send_failed":
-    case "email_not_confirmed":
-    case "phone_not_confirmed":
       return "INTERNAL_SERVER_ERROR";
 
     default:
