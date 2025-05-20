@@ -1,8 +1,11 @@
 "use client";
 
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";
+import type { AdminLoginRequest } from "@/validations/admin/adminLogin";
 import {
+  Button,
   Card,
   Center,
   Container,
@@ -10,21 +13,53 @@ import {
   HStack,
   Icon,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { LuShieldCheck } from "react-icons/lu";
 import { AdminLoginForm } from "./(components)/AdminLoginForm";
 
 export default function AdminLoginPage() {
-  const { mutateAsync, isPending } = api.admin.login.useMutation({
-    onSuccess: () => {
+  const router = useRouter();
+  const supabase = createSupabaseBrowserClient();
+  const { mutateAsync: signUp, isPending: isSignUpPending } =
+    api.admin.signUp.useMutation({
+      onSuccess: () => {
+        toaster.create({
+          type: "success",
+          title: "サインアップしました！",
+        });
+      },
+      onError: (error) => {
+        showErrorToast(error.data?.code);
+      },
+    });
+
+  const signIn = async ({ email, password }: AdminLoginRequest) => {
+    const supabase = createSupabaseBrowserClient();
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (data.user?.user_metadata.role === "admin") {
       toaster.create({
         type: "success",
-        title: "ログインしました！",
+        title: "ログインに成功しました",
       });
-    },
-    onError: (error) => {
-      showErrorToast(error.data?.code);
-    },
-  });
+      router.push("/admin/dashboard");
+      return;
+    }
+    if (error) {
+      toaster.create({
+        type: "error",
+        title: error.message,
+      });
+    } else {
+      toaster.create({
+        type: "error",
+        title: "ログインに失敗しました",
+      });
+      await supabase.auth.signOut();
+    }
+  };
 
   return (
     <Center h="full">
@@ -43,7 +78,13 @@ export default function AdminLoginPage() {
                 管理者ログイン
               </Heading>
             </HStack>
-            <AdminLoginForm onSubmit={mutateAsync} isLoading={isPending} />
+            <AdminLoginForm onSubmit={signIn} />
+            <Button mt={4} onClick={() => signUp()} loading={isSignUpPending}>
+              サインアップ
+            </Button>
+            <Button mt={4} onClick={() => supabase.auth.signOut()}>
+              ログアウト
+            </Button>
           </Card.Body>
         </Card.Root>
       </Container>

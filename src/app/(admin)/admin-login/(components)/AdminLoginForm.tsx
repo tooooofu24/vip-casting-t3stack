@@ -1,9 +1,6 @@
 "use client";
 
-import type {
-  AdminLoginRequest,
-  AdminLoginResponse,
-} from "@/validations/admin/adminLogin";
+import type { AdminLoginRequest } from "@/validations/admin/adminLogin";
 import { adminLoginSchema } from "@/validations/admin/adminLogin";
 import {
   Alert,
@@ -20,8 +17,7 @@ import { useForm } from "react-hook-form";
 import { LuLock, LuMail } from "react-icons/lu";
 
 type Props = {
-  onSubmit: (data: AdminLoginRequest) => Promise<AdminLoginResponse>;
-  isLoading?: boolean;
+  onSubmit: (data: AdminLoginRequest) => void;
   defaultValues?: DefaultValues<AdminLoginRequest>;
 };
 
