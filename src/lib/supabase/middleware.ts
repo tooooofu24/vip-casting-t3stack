@@ -38,6 +38,15 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const isAdmin = user?.user_metadata.role === "admin";
+  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin/");
+
+  if (isAdminRoute && !isAdmin) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/admin-login";
+    return NextResponse.redirect(url);
+  }
+
   // TODO: ログインしていない場合はログインページへリダイレクト
   //   if (
   //     !user &&
