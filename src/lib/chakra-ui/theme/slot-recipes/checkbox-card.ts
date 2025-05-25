@@ -18,7 +18,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
       userSelect: "none",
       position: "relative",
       borderRadius: "l2",
-      flex: "1",
+      // flex: "1",
       focusVisibleRing: "outside",
       _disabled: {
         opacity: "0.8",
@@ -277,9 +277,9 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
     },
   },
   defaultVariants: {
-    size: "md",
+    size: "sm",
     variant: "outline",
-    align: "start",
+    align: "center",
     orientation: "horizontal",
   },
 });
