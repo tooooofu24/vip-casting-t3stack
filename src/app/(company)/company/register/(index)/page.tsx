@@ -1,37 +1,55 @@
 "use client";
 
-import { RegistrationSteps } from "@/app/(company)/company/register/(components)/RegistrationSteps";
+import { CompanyRegisterAddress } from "@/app/(company)/company/register/(components)/CompanyRegisterAddress";
+import { CompanyRegisterBusiness } from "@/app/(company)/company/register/(components)/CompanyRegisterBusiness";
+import { CompanyRegisterInformation } from "@/app/(company)/company/register/(components)/CompanyRegisterInformation";
+import { CompanyRegisterPayment } from "@/app/(company)/company/register/(components)/CompanyRegisterPayment";
+import {
+  type CompanyRegisterAddressInput,
+  type CompanyRegisterBusinessInput,
+  type CompanyRegisterInformationInput,
+  type CompanyRegisterInput,
+  type CompanyRegisterPaymentInput,
+} from "@/validations/company/register";
 import {
   Box,
   Button,
-  Card,
+  ButtonGroup,
   Container,
-  Field,
   Heading,
-  Input,
-  Portal,
-  Select,
-  SimpleGrid,
+  Steps,
   Text,
+  useSteps,
   VStack,
-  createListCollection,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
-const industries = createListCollection({
-  items: [
-    { label: "小売業", value: "retail" },
-    { label: "製造業", value: "manufacturing" },
-    { label: "サービス業", value: "service" },
-    { label: "IT・通信", value: "it" },
-    { label: "金融・保険", value: "finance" },
-    { label: "不動産", value: "real_estate" },
-    { label: "飲食業", value: "food" },
-    { label: "エンターテインメント", value: "entertainment" },
-    { label: "その他", value: "other" },
-  ],
-});
+const items = ["基本情報", "所在地情報", "ビジネス情報", "支払い情報"] as const;
 
 export default function CompanyRegisterPage() {
+  const [data, setData] = useState<Partial<CompanyRegisterInput>>({
+    // ...companyRegisterInformationDefaultValues,
+  });
+
+  const steps = useSteps({
+    defaultStep: 0,
+    count: items.length,
+  });
+
+  const onSubmit = (
+    data:
+      | CompanyRegisterInformationInput
+      | CompanyRegisterAddressInput
+      | CompanyRegisterBusinessInput
+      | CompanyRegisterPaymentInput,
+  ) => {
+    setData({
+      ...data,
+    });
+    steps.goToNextStep();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <Box py={{ base: 8, md: 12 }}>
       <Container maxW="3xl">
@@ -47,104 +65,48 @@ export default function CompanyRegisterPage() {
           </VStack>
 
           <VStack gap={4} align="stretch">
-            <RegistrationSteps step={0} />
-
-            {/* Form Content */}
-            <Card.Root>
-              <Card.Body p={{ base: 6, md: 8 }}>
-                <VStack gap={6} align="stretch">
-                  <Field.Root required>
-                    <Field.Label>
-                      法人名（正式名称）
-                      <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input placeholder="株式会社〇〇" />
-                  </Field.Root>
-
-                  <Field.Root required>
-                    <Field.Label>
-                      クライアント名（プロフィール表示名）
-                      <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input placeholder="〇〇ブランド" />
-                    <Field.HelperText>
-                      ※インフルエンサーに表示される名称です
-                    </Field.HelperText>
-                  </Field.Root>
-
-                  <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
-                    <Field.Root>
-                      <Field.Label>法人番号</Field.Label>
-                      <Input placeholder="1234567890123" />
-                    </Field.Root>
-
-                    <Field.Root>
-                      <Field.Label>代表取締役氏名</Field.Label>
-                      <Input />
-                    </Field.Root>
-                  </SimpleGrid>
-
-                  <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
-                    <Field.Root>
-                      <Field.Label>設立年月日</Field.Label>
-                      <Input type="date" />
-                    </Field.Root>
-
-                    <Field.Root>
-                      <Field.Label>資本金</Field.Label>
-                      <Input placeholder="1000万円" />
-                    </Field.Root>
-                  </SimpleGrid>
-
-                  <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
-                    <Field.Root>
-                      <Field.Label>従業員数</Field.Label>
-                      <Input placeholder="100名" />
-                    </Field.Root>
-
-                    <Field.Root>
-                      <Field.Label>業種</Field.Label>
-                      <Select.Root collection={industries}>
-                        <Select.Control>
-                          <Select.Trigger>
-                            <Select.ValueText placeholder="選択してください" />
-                          </Select.Trigger>
-                          <Select.IndicatorGroup>
-                            <Select.Indicator />
-                          </Select.IndicatorGroup>
-                        </Select.Control>
-                        <Portal>
-                          <Select.Positioner>
-                            <Select.Content>
-                              {industries.items.map((industry) => (
-                                <Select.Item
-                                  key={industry.value}
-                                  item={industry}
-                                >
-                                  {industry.label}
-                                  <Select.ItemIndicator />
-                                </Select.Item>
-                              ))}
-                            </Select.Content>
-                          </Select.Positioner>
-                        </Portal>
-                      </Select.Root>
-                    </Field.Root>
-                  </SimpleGrid>
-
-                  <Field.Root>
-                    <Field.Label>会社HP URL</Field.Label>
-                    <Input type="url" placeholder="https://www.example.com" />
-                  </Field.Root>
-                </VStack>
-
-                <Box mt={8}>
-                  <Button size="md" w="full">
-                    次へ
-                  </Button>
-                </Box>
-              </Card.Body>
-            </Card.Root>
+            <Steps.RootProvider value={steps} size="sm">
+              <Steps.List mb={4}>
+                {items.map((title, i) => (
+                  <Steps.Item key={i} index={i} title={title}>
+                    <Steps.Indicator />
+                    <Steps.Title>{title}</Steps.Title>
+                    <Steps.Separator />
+                  </Steps.Item>
+                ))}
+              </Steps.List>
+              <Steps.Content index={0}>
+                <CompanyRegisterInformation
+                  defaultValues={data}
+                  onSubmit={onSubmit}
+                />
+              </Steps.Content>
+              <Steps.Content index={1}>
+                <CompanyRegisterAddress
+                  defaultValues={data}
+                  onSubmit={onSubmit}
+                  onBack={() => steps.goToPrevStep()}
+                />
+              </Steps.Content>
+              <Steps.Content index={2}>
+                <CompanyRegisterBusiness />
+              </Steps.Content>
+              <Steps.Content index={3}>
+                <CompanyRegisterPayment />
+              </Steps.Content>
+              <Steps.CompletedContent>
+                全ての情報の入力が完了しました！
+              </Steps.CompletedContent>
+              <Button onClick={() => steps.goToNextStep()}>登録完了</Button>
+              <ButtonGroup size="sm" variant="outline">
+                <Steps.PrevTrigger asChild>
+                  <Button>Prev</Button>
+                </Steps.PrevTrigger>
+                <Steps.NextTrigger asChild>
+                  <Button>Next</Button>
+                </Steps.NextTrigger>
+              </ButtonGroup>
+            </Steps.RootProvider>
           </VStack>
         </VStack>
       </Container>
