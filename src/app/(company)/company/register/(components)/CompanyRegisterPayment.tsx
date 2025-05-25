@@ -59,10 +59,7 @@ export function CompanyRegisterPayment() {
                   <Field.RequiredIndicator />
                 </Field.Label>
                 <NativeSelect.Root>
-                  <NativeSelect.Field
-                    placeholder="選択してください"
-                    required={false}
-                  >
+                  <NativeSelect.Field placeholder="選択してください">
                     <option value="ordinary">普通</option>
                     <option value="current">当座</option>
                   </NativeSelect.Field>
@@ -117,10 +114,7 @@ export function CompanyRegisterPayment() {
                     <Field.RequiredIndicator />
                   </Field.Label>
                   <NativeSelect.Root>
-                    <NativeSelect.Field
-                      placeholder="選択してください"
-                      required={false}
-                    >
+                    <NativeSelect.Field placeholder="選択してください">
                       <option value="tokyo">東京都</option>
                       <option value="osaka">大阪府</option>
                       {/* 他の都道府県をここに追加 */}

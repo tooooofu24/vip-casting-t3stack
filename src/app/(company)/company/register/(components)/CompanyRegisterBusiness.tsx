@@ -198,7 +198,7 @@ export function CompanyRegisterBusiness() {
               <Field.Root>
                 <Field.Label>性別</Field.Label>
                 <NativeSelect.Root>
-                  <NativeSelect.Field placeholder="指定なし" required={false}>
+                  <NativeSelect.Field placeholder="指定なし">
                     <option value="">指定なし</option>
                     <option value="male">男性</option>
                     <option value="female">女性</option>
