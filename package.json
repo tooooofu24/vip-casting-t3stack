@@ -28,9 +28,9 @@
     "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.8.2",
     "@supabase/ssr": "^0.6.1",
-    "@supabase/supabase-js": "^2.49.7",
+    "@supabase/supabase-js": "^2.49.8",
     "@t3-oss/env-nextjs": "^0.13.4",
-    "@tanstack/react-query": "^5.76.1",
+    "@tanstack/react-query": "^5.77.0",
     "@trpc/client": "^11.1.2",
     "@trpc/react-query": "^11.1.2",
     "@trpc/server": "^11.1.2",
@@ -44,7 +44,7 @@
     "react-icons": "^5.5.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.2",
-    "zod": "^3.25.17",
+    "zod": "^3.25.28",
     "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
@@ -56,7 +56,7 @@
     "cspell": "^9.0.2",
     "eslint": "^9.27.0",
     "eslint-config-next": "^15.3.2",
-    "knip": "^5.57.0",
+    "knip": "^5.58.0",
     "prettier": "^3.5.3",
     "prisma": "^6.8.2",
     "typescript": "^5.8.3",
@@ -65,5 +65,5 @@
   "ct3aMetadata": {
     "initVersion": "7.39.3"
   },
-  "packageManager": "npm@11.4.0"
+  "packageManager": "npm@11.4.1"
 }
