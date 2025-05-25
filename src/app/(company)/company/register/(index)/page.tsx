@@ -32,7 +32,7 @@ export default function CompanyRegisterPage() {
   });
 
   const steps = useSteps({
-    defaultStep: 0,
+    defaultStep: 2,
     count: items.length,
   });
 
