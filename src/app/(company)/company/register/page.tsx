@@ -10,10 +10,6 @@ import {
   companyBusinessDefaultValues,
   companyInformationDefaultValues,
   companyPaymentDefaultValues,
-  type CompanyAddressRequest,
-  type CompanyBusinessRequest,
-  type CompanyInformationRequest,
-  type CompanyPaymentRequest,
   type CompanyRequest,
 } from "@/validations/company/register";
 import {
@@ -31,10 +27,10 @@ const items = ["基本情報", "所在地情報", "ビジネス情報", "支払�
 
 export default function CompanyRegisterPage() {
   const [data, setData] = useState<Partial<CompanyRequest>>({
-    ...companyInformationDefaultValues,
-    ...companyAddressDefaultValues,
-    ...companyBusinessDefaultValues,
-    ...companyPaymentDefaultValues,
+    information: companyInformationDefaultValues,
+    address: companyAddressDefaultValues,
+    business: companyBusinessDefaultValues,
+    payment: companyPaymentDefaultValues,
   });
 
   const steps = useSteps({
@@ -42,16 +38,14 @@ export default function CompanyRegisterPage() {
     count: items.length,
   });
 
-  const onSubmit = (
-    data:
-      | CompanyInformationRequest
-      | CompanyAddressRequest
-      | CompanyBusinessRequest
-      | CompanyPaymentRequest,
+  const onSubmit = <K extends keyof CompanyRequest>(
+    key: K,
+    value: CompanyRequest[K],
   ) => {
-    setData({
-      ...data,
-    });
+    setData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
     steps.goToNextStep();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -83,28 +77,28 @@ export default function CompanyRegisterPage() {
               </Steps.List>
               <Steps.Content index={0}>
                 <CompanyInformationForm
-                  defaultValues={data}
-                  onSubmit={onSubmit}
+                  defaultValues={data.information}
+                  onSubmit={(v) => onSubmit("information", v)}
                 />
               </Steps.Content>
               <Steps.Content index={1}>
                 <CompanyAddressForm
-                  defaultValues={data}
-                  onSubmit={onSubmit}
+                  defaultValues={data.address}
+                  onSubmit={(v) => onSubmit("address", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
                 <CompanyBusinessForm
-                  defaultValues={data}
-                  onSubmit={onSubmit}
+                  defaultValues={data.business}
+                  onSubmit={(v) => onSubmit("business", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={3}>
                 <CompanyPaymentForm
-                  defaultValues={data}
-                  onSubmit={onSubmit}
+                  defaultValues={data.payment}
+                  onSubmit={(v) => onSubmit("payment", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>

@@ -145,8 +145,11 @@ export const companyPaymentDefaultValues: CompanyPaymentRequest = {
 };
 
 // 全体スキーマ
-export const companySchema = companyInformationSchema
-  .merge(companyAddressSchema)
-  .merge(companyBusinessSchema)
-  .merge(companyPaymentSchema);
+export const companySchema = z.object({
+  information: companyInformationSchema,
+  address: companyAddressSchema,
+  business: companyBusinessSchema,
+  payment: companyPaymentSchema,
+});
+
 export type CompanyRequest = z.infer<typeof companySchema>;

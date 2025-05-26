@@ -25,7 +25,7 @@ import { useForm, type DefaultValues } from "react-hook-form";
 import { LuCreditCard, LuMapPin, LuSend, LuUser } from "react-icons/lu";
 
 type Props = {
-  defaultValues: DefaultValues<CompanyPaymentRequest>;
+  defaultValues?: DefaultValues<CompanyPaymentRequest>;
   onSubmit: (data: CompanyPaymentRequest) => void;
   onBack?: () => void;
 };

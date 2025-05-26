@@ -21,7 +21,7 @@ import { useForm, type DefaultValues } from "react-hook-form";
 import { LuMapPin } from "react-icons/lu";
 
 type Props = {
-  defaultValues: DefaultValues<CompanyAddressRequest>;
+  defaultValues?: DefaultValues<CompanyAddressRequest>;
   onSubmit: (data: CompanyAddressRequest) => void;
   onBack: () => void;
 };

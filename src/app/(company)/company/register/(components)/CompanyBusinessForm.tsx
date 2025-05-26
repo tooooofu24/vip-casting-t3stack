@@ -32,7 +32,7 @@ import { Controller, useForm, type DefaultValues } from "react-hook-form";
 import { LuDollarSign, LuUser } from "react-icons/lu";
 
 type Props = {
-  defaultValues: DefaultValues<CompanyBusinessRequest>;
+  defaultValues?: DefaultValues<CompanyBusinessRequest>;
   onSubmit: (data: CompanyBusinessRequest) => void;
   onBack?: () => void;
 };

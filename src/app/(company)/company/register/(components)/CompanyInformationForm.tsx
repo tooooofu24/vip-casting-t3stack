@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type DefaultValues } from "react-hook-form";
 
 type Props = {
-  defaultValues: DefaultValues<CompanyInformationRequest>;
+  defaultValues?: DefaultValues<CompanyInformationRequest>;
   onSubmit: (data: CompanyInformationRequest) => void;
 };
 
