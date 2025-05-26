@@ -67,7 +67,8 @@ model User {
     updatedAt  DateTime    @updatedAt @db.Timestamptz(6)
     role       UserRole    @default(USER)
     influencer Influencer?
-    company    Company?
+    company    Company?    @relation(fields: [companyId], references: [id])
+    companyId  String?     @db.Uuid
 
     @@index([email])
 }
@@ -167,63 +168,76 @@ model ActiveArea {
 }
 
 model Company {
-    id          String  @id @default(uuid()) @db.Uuid
-    userId      String  @unique @db.Uuid
-    user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    name        String  @db.VarChar(255)
-    industry    String? @db.VarChar(100)
-    website     String? @db.VarChar(255)
-    description String? @db.Text
+    id        String   @id @default(uuid()) @db.Uuid
+    createdAt DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-    // 基本情報
-    contactPersonName       String? @db.VarChar(100)
-    contactPersonDepartment String? @db.VarChar(100)
-    contactPersonPosition   String? @db.VarChar(100)
-    contactPersonPhone      String? @db.VarChar(20)
-    contactPersonEmail      String? @db.VarChar(255)
+    // リレーション
+    information CompanyInformation?
+    address     CompanyAddress?
+    business    CompanyBusiness?
+    payment     CompanyPayment?
 
-    // ビジネス情報
-    minBudget          Int?    @db.Integer
-    maxBudget          Int?    @db.Integer
-    targetGenres       String? @db.Text
-    targetAgeGroups    String? @db.Text
-    targetGender       Gender?
-    targetRegions      String? @db.Text
-    pastExperience     String? @db.Text
-    productDescription String? @db.Text
-    campaignObjectives String? @db.Text
-
-    // 連絡先情報
-    postalCode   String? @db.VarChar(8)
-    prefecture   String? @db.VarChar(20)
-    city         String? @db.VarChar(100)
-    address      String? @db.VarChar(255)
-    buildingName String? @db.VarChar(100)
-    phoneNumber  String? @db.VarChar(20)
-
-    // 支払い情報
-    bankName             String?      @db.VarChar(100)
-    branchName           String?      @db.VarChar(100)
-    accountType          AccountType?
-    accountNumber        String?      @db.VarChar(20)
-    accountHolder        String?      @db.VarChar(100)
-    billingPostalCode    String?      @db.VarChar(8)
-    billingPrefecture    String?      @db.VarChar(20)
-    billingCity          String?      @db.VarChar(100)
-    billingAddress       String?      @db.VarChar(255)
-    billingBuildingName  String?      @db.VarChar(100)
-    billingContactPerson String?      @db.VarChar(100)
-
-    // その他
-    platformUsagePurpose String? @db.Text
-    notes                String? @db.Text
-
-    createdAt DateTime   @default(now()) @db.Timestamptz(6)
-    updatedAt DateTime   @updatedAt @db.Timestamptz(6)
+    // リレーション
     campaigns Campaign[]
+    User      User[]
+}
 
-    @@index([userId])
-    @@index([name])
+model CompanyAddress {
+    id         String   @id @default(uuid()) @db.Uuid
+    companyId  String   @unique @db.Uuid
+    company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    postalCode String   @db.VarChar(8)
+    prefecture String   @db.VarChar(20)
+    city       String   @db.VarChar(100)
+    town       String   @db.VarChar(100)
+    street     String   @db.VarChar(100)
+    building   String?  @db.VarChar(100)
+    createdAt  DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt  DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model CompanyBusiness {
+    id                 String   @id @default(uuid()) @db.Uuid
+    companyId          String   @unique @db.Uuid
+    company            Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    contactName        String   @db.VarChar(100)
+    department         String   @db.VarChar(100)
+    position           String?  @db.VarChar(100)
+    phone              String?  @db.VarChar(20)
+    email              String   @db.VarChar(255)
+    minBudget          Int
+    maxBudget          Int
+    ageGroups          String   @db.Text // JSON or CSV
+    gender             String   @db.VarChar(10)
+    regions            String   @db.Text // JSON or CSV
+    genres             String   @db.Text // JSON or CSV
+    objectives         String   @db.Text // JSON or CSV
+    pastExperience     String?  @db.Text
+    productDescription String?  @db.Text
+    createdAt          DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt          DateTime @updatedAt @db.Timestamptz(6)
+}
+
+model CompanyPayment {
+    id                 String   @id @default(uuid()) @db.Uuid
+    companyId          String   @unique @db.Uuid
+    company            Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    bankName           String   @db.VarChar(100)
+    branchName         String   @db.VarChar(100)
+    accountType        String   @db.VarChar(20)
+    accountNumber      String   @db.VarChar(20)
+    accountHolder      String   @db.VarChar(100)
+    billingPostalCode  String   @db.VarChar(8)
+    billingPrefecture  String   @db.VarChar(20)
+    billingCity        String   @db.VarChar(100)
+    billingAddress     String   @db.VarChar(255)
+    billingBuilding    String?  @db.VarChar(100)
+    billingContactName String   @db.VarChar(100)
+    purpose            String?  @db.Text
+    note               String?  @db.Text
+    createdAt          DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt          DateTime @updatedAt @db.Timestamptz(6)
 }
 
 model Campaign {
@@ -264,4 +278,21 @@ model Application {
     @@index([influencerId])
     @@index([campaignId])
     @@index([status])
+}
+
+model CompanyInformation {
+    id                String   @id @default(uuid()) @db.Uuid
+    companyId         String   @unique @db.Uuid
+    company           Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    companyName       String   @db.VarChar(255)
+    clientName        String   @db.VarChar(255)
+    corporateNumber   String   @db.VarChar(13)
+    ceoName           String   @db.VarChar(100)
+    establishedAt     DateTime
+    capital           Int
+    numberOfEmployees Int
+    industry          String   @db.VarChar(100)
+    websiteUrl        String   @db.VarChar(255)
+    createdAt         DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
 }

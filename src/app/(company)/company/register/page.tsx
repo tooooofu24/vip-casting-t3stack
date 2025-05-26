@@ -1,10 +1,10 @@
 "use client";
 
-import { CompanyRegisterAddress } from "@/app/(company)/company/register/(components)/CompanyRegisterAddress";
-import { CompanyRegisterBusiness } from "@/app/(company)/company/register/(components)/CompanyRegisterBusiness";
-import { CompanyRegisterCompletedCard } from "@/app/(company)/company/register/(components)/CompanyRegisterCompletedCard";
-import { CompanyRegisterInformation } from "@/app/(company)/company/register/(components)/CompanyRegisterInformation";
-import { CompanyRegisterPayment } from "@/app/(company)/company/register/(components)/CompanyRegisterPayment";
+import { CompanyAddressForm } from "@/app/(company)/company/register/(components)/CompanyAddressForm";
+import { CompanyBusinessForm } from "@/app/(company)/company/register/(components)/CompanyBusinessForm";
+import { CompanyCompletedCard } from "@/app/(company)/company/register/(components)/CompanyCompletedCard";
+import { CompanyInformationForm } from "@/app/(company)/company/register/(components)/CompanyInformationForm";
+import { CompanyPaymentForm } from "@/app/(company)/company/register/(components)/CompanyPaymentForm";
 import {
   companyRegisterAddressDefaultValues,
   companyRegisterBusinessDefaultValues,
@@ -82,34 +82,34 @@ export default function CompanyRegisterPage() {
                 ))}
               </Steps.List>
               <Steps.Content index={0}>
-                <CompanyRegisterInformation
+                <CompanyInformationForm
                   defaultValues={data}
                   onSubmit={onSubmit}
                 />
               </Steps.Content>
               <Steps.Content index={1}>
-                <CompanyRegisterAddress
+                <CompanyAddressForm
                   defaultValues={data}
                   onSubmit={onSubmit}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
-                <CompanyRegisterBusiness
+                <CompanyBusinessForm
                   defaultValues={data}
                   onSubmit={onSubmit}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={3}>
-                <CompanyRegisterPayment
+                <CompanyPaymentForm
                   defaultValues={data}
                   onSubmit={onSubmit}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.CompletedContent>
-                <CompanyRegisterCompletedCard />
+                <CompanyCompletedCard />
               </Steps.CompletedContent>
             </Steps.RootProvider>
           </VStack>

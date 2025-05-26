@@ -73,7 +73,7 @@ type Props = {
   onBack?: () => void;
 };
 
-export function CompanyRegisterBusiness({
+export function CompanyBusinessForm({
   defaultValues,
   onSubmit,
   onBack,

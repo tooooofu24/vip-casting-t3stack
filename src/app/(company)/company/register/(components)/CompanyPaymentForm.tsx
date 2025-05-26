@@ -33,11 +33,7 @@ type Props = {
   onBack?: () => void;
 };
 
-export function CompanyRegisterPayment({
-  defaultValues,
-  onSubmit,
-  onBack,
-}: Props) {
+export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
   const {
     register,
     handleSubmit,

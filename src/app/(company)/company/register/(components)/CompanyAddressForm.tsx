@@ -26,11 +26,7 @@ type Props = {
   onBack: () => void;
 };
 
-export function CompanyRegisterAddress({
-  defaultValues,
-  onSubmit,
-  onBack,
-}: Props) {
+export function CompanyAddressForm({ defaultValues, onSubmit, onBack }: Props) {
   const {
     register,
     handleSubmit,

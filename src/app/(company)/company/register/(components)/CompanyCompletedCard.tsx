@@ -1,7 +1,7 @@
 import { Card, Heading, Icon, Text, VStack } from "@chakra-ui/react";
 import { LuMailCheck } from "react-icons/lu";
 
-export function CompanyRegisterCompletedCard() {
+export function CompanyCompletedCard() {
   return (
     <Card.Root>
       <Card.Body>

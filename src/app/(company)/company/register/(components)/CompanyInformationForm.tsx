@@ -39,7 +39,7 @@ type Props = {
   onSubmit: (data: CompanyRegisterInformationInput) => void;
 };
 
-export function CompanyRegisterInformation({ defaultValues, onSubmit }: Props) {
+export function CompanyInformationForm({ defaultValues, onSubmit }: Props) {
   const {
     register,
     handleSubmit,
