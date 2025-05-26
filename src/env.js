@@ -7,7 +7,7 @@ export const env = createEnv({
    * これにより、無効な環境変数でアプリがビルドされるのを防げます。
    */
   server: {
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.string().min(1).url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -20,7 +20,7 @@ export const env = createEnv({
    * 変数名の先頭に `NEXT_PUBLIC_` を付けてください。
    */
   client: {
-    NEXT_PUBLIC_SUPABASE_URL: z.string().min(1),
+    NEXT_PUBLIC_SUPABASE_URL: z.string().min(1).url(),
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   },
 
