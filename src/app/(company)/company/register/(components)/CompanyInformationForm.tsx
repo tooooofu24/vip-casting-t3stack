@@ -1,42 +1,30 @@
 "use client";
 
+import { industries } from "@/const/industry";
 import {
-  companyRegisterInformationSchema,
-  type CompanyRegisterInformationInput,
+  companyInformationSchema,
+  type CompanyInformationRequest,
 } from "@/validations/company/register";
 import {
   Alert,
   Box,
   Button,
   Card,
-  createListCollection,
   Field,
   Input,
   InputGroup,
   NativeSelect,
   SimpleGrid,
+  Text,
+  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type DefaultValues } from "react-hook-form";
 
-const industries = createListCollection({
-  items: [
-    { label: "小売業", value: "retail" },
-    { label: "製造業", value: "manufacturing" },
-    { label: "サービス業", value: "service" },
-    { label: "IT・通信", value: "it" },
-    { label: "金融・保険", value: "finance" },
-    { label: "不動産", value: "real_estate" },
-    { label: "飲食業", value: "food" },
-    { label: "エンターテインメント", value: "entertainment" },
-    { label: "その他", value: "other" },
-  ],
-});
-
 type Props = {
-  defaultValues: DefaultValues<CompanyRegisterInformationInput>;
-  onSubmit: (data: CompanyRegisterInformationInput) => void;
+  defaultValues: DefaultValues<CompanyInformationRequest>;
+  onSubmit: (data: CompanyInformationRequest) => void;
 };
 
 export function CompanyInformationForm({ defaultValues, onSubmit }: Props) {
@@ -44,8 +32,8 @@ export function CompanyInformationForm({ defaultValues, onSubmit }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CompanyRegisterInformationInput>({
-    resolver: zodResolver(companyRegisterInformationSchema),
+  } = useForm<CompanyInformationRequest>({
+    resolver: zodResolver(companyInformationSchema),
     defaultValues,
   });
 
@@ -66,20 +54,20 @@ export function CompanyInformationForm({ defaultValues, onSubmit }: Props) {
             <Field.ErrorText>{errors.companyName?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Field.Root required invalid={!!errors.clientName}>
+          <Field.Root required invalid={!!errors.displayName}>
             <Field.Label>
-              クライアント名（プロフィール表示名）
+              プロフィール表示名
               <Field.RequiredIndicator />
             </Field.Label>
             <Input
               placeholder="〇〇ブランド"
               required={false}
-              {...register("clientName")}
+              {...register("displayName")}
             />
             <Field.HelperText>
               ※インフルエンサーに表示される名称です
             </Field.HelperText>
-            <Field.ErrorText>{errors.clientName?.message}</Field.ErrorText>
+            <Field.ErrorText>{errors.displayName?.message}</Field.ErrorText>
           </Field.Root>
 
           <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
@@ -179,7 +167,7 @@ export function CompanyInformationForm({ defaultValues, onSubmit }: Props) {
                   required={false}
                   {...register("industry")}
                 >
-                  {industries.items.map((industry) => (
+                  {industries.map((industry) => (
                     <option key={industry.value} value={industry.value}>
                       {industry.label}
                     </option>
@@ -203,6 +191,48 @@ export function CompanyInformationForm({ defaultValues, onSubmit }: Props) {
               {...register("websiteUrl")}
             />
             <Field.ErrorText>{errors.websiteUrl?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root invalid={!!errors.purpose}>
+            <Field.Label>
+              プラットフォーム利用目的
+              <Field.RequiredIndicator
+                fallback={
+                  <Text fontSize="xs" color="fg.muted">
+                    （任意）
+                  </Text>
+                }
+              />
+            </Field.Label>
+            <Textarea
+              placeholder="プラットフォームの利用目的を入力"
+              required={false}
+              autoresize
+              rows={3}
+              {...register("purpose")}
+            />
+            <Field.ErrorText>{errors.purpose?.message}</Field.ErrorText>
+          </Field.Root>
+
+          <Field.Root invalid={!!errors.note}>
+            <Field.Label>
+              備考
+              <Field.RequiredIndicator
+                fallback={
+                  <Text fontSize="xs" color="fg.muted">
+                    （任意）
+                  </Text>
+                }
+              />
+            </Field.Label>
+            <Textarea
+              placeholder="備考を入力"
+              required={false}
+              autoresize
+              rows={3}
+              {...register("note")}
+            />
+            <Field.ErrorText>{errors.note?.message}</Field.ErrorText>
           </Field.Root>
 
           {/* Error Alert */}

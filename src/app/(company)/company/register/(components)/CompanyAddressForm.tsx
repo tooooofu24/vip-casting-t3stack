@@ -1,9 +1,9 @@
 "use client";
 
-import { PREFECTURES } from "@/const/prefectures";
+import { prefectures } from "@/const/prefecture";
 import {
-  companyRegisterAddressSchema,
-  type CompanyRegisterAddressInput,
+  companyAddressSchema,
+  type CompanyAddressRequest,
 } from "@/validations/company/register";
 import {
   Button,
@@ -21,8 +21,8 @@ import { useForm, type DefaultValues } from "react-hook-form";
 import { LuMapPin } from "react-icons/lu";
 
 type Props = {
-  defaultValues: DefaultValues<CompanyRegisterAddressInput>;
-  onSubmit: (data: CompanyRegisterAddressInput) => void;
+  defaultValues: DefaultValues<CompanyAddressRequest>;
+  onSubmit: (data: CompanyAddressRequest) => void;
   onBack: () => void;
 };
 
@@ -31,8 +31,8 @@ export function CompanyAddressForm({ defaultValues, onSubmit, onBack }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CompanyRegisterAddressInput>({
-    resolver: zodResolver(companyRegisterAddressSchema),
+  } = useForm<CompanyAddressRequest>({
+    resolver: zodResolver(companyAddressSchema),
     defaultValues,
   });
 
@@ -47,7 +47,7 @@ export function CompanyAddressForm({ defaultValues, onSubmit, onBack }: Props) {
             </Field.Label>
             <InputGroup startElement={<Icon as={LuMapPin} />}>
               <Input
-                placeholder="100-0001"
+                placeholder="1000001"
                 required={false}
                 {...register("postalCode")}
               />
@@ -64,11 +64,15 @@ export function CompanyAddressForm({ defaultValues, onSubmit, onBack }: Props) {
               <NativeSelect.Field
                 placeholder="選択してください"
                 required={false}
-                {...register("prefecture")}
+                {...register("prefecture", {
+                  setValueAs(v: string) {
+                    return v === "" ? undefined : v;
+                  },
+                })}
               >
-                {PREFECTURES.map((pref) => (
-                  <option key={pref} value={pref}>
-                    {pref}
+                {prefectures.map((pref) => (
+                  <option key={pref.value} value={pref.value}>
+                    {pref.label}
                   </option>
                 ))}
               </NativeSelect.Field>

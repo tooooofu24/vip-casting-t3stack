@@ -1,9 +1,13 @@
 "use client";
 
+import { ageGroups } from "@/const/ageGroup";
+import { genres } from "@/const/genre";
+import { objectives } from "@/const/objective";
+import { regions } from "@/const/region";
 import { spacing } from "@/lib/chakra-ui/theme/tokens/spacing";
 import {
-  companyRegisterBusinessSchema,
-  type CompanyRegisterBusinessInput,
+  companyBusinessSchema,
+  type CompanyBusinessRequest,
 } from "@/validations/company/register";
 import {
   Box,
@@ -23,53 +27,13 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { type Objective } from "@prisma/client";
 import { Controller, useForm, type DefaultValues } from "react-hook-form";
 import { LuDollarSign, LuUser } from "react-icons/lu";
 
-const genres = [
-  { label: "ビューティー", value: "beauty" },
-  { label: "ファッション", value: "fashion" },
-  { label: "フード", value: "food" },
-  { label: "テクノロジー", value: "tech" },
-  { label: "ライフスタイル", value: "lifestyle" },
-  { label: "トラベル", value: "travel" },
-  { label: "フィットネス", value: "fitness" },
-  { label: "エンタメ", value: "entertainment" },
-] as const;
-
-const ageGroups = [
-  { label: "10代", value: "10s" },
-  { label: "20代前半", value: "early20s" },
-  { label: "20代後半", value: "late20s" },
-  { label: "30代前半", value: "early30s" },
-  { label: "30代後半", value: "late30s" },
-  { label: "40代以上", value: "over40s" },
-] as const;
-
-const regions = [
-  { label: "全国", value: "all" },
-  { label: "関東", value: "kanto" },
-  { label: "関西", value: "kansai" },
-  { label: "東海", value: "tokai" },
-  { label: "北海道", value: "hokkaido" },
-  { label: "東北", value: "tohoku" },
-  { label: "中国", value: "chugoku" },
-  { label: "四国", value: "shikoku" },
-  { label: "九州", value: "kyushu" },
-] as const;
-
-const objectives = [
-  { label: "認知拡大", value: "awareness" },
-  { label: "商品販売促進", value: "sales" },
-  { label: "ブランドイメージ向上", value: "brand" },
-  { label: "エンゲージメント獲得", value: "engagement" },
-  { label: "リード獲得", value: "leads" },
-  { label: "サービス利用促進", value: "service" },
-] as const;
-
 type Props = {
-  defaultValues: DefaultValues<CompanyRegisterBusinessInput>;
-  onSubmit: (data: CompanyRegisterBusinessInput) => void;
+  defaultValues: DefaultValues<CompanyBusinessRequest>;
+  onSubmit: (data: CompanyBusinessRequest) => void;
   onBack?: () => void;
 };
 
@@ -83,8 +47,8 @@ export function CompanyBusinessForm({
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<CompanyRegisterBusinessInput>({
-    resolver: zodResolver(companyRegisterBusinessSchema),
+  } = useForm<CompanyBusinessRequest>({
+    resolver: zodResolver(companyBusinessSchema),
     defaultValues,
   });
 
@@ -287,10 +251,10 @@ export function CompanyBusinessForm({
                 <NativeSelect.Root>
                   <NativeSelect.Field
                     required={false}
-                    placeholder="指定なし"
+                    placeholder="選択してください"
                     {...register("gender")}
                   >
-                    <option value="">指定なし</option>
+                    <option value="all">指定なし</option>
                     <option value="male">男性</option>
                     <option value="female">女性</option>
                   </NativeSelect.Field>
@@ -429,7 +393,9 @@ export function CompanyBusinessForm({
                         onChange={() => {
                           if (value?.includes(objective.value)) {
                             onChange(
-                              value.filter((v) => v !== objective.value),
+                              value.filter(
+                                (v: Objective) => v !== objective.value,
+                              ),
                             );
                           } else {
                             onChange([...(value ?? []), objective.value]);

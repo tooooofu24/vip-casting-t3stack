@@ -1,8 +1,9 @@
 "use client";
 
+import { prefectures } from "@/const/prefecture";
 import {
-  companyRegisterPaymentSchema,
-  type CompanyRegisterPaymentInput,
+  companyPaymentSchema,
+  type CompanyPaymentRequest,
 } from "@/validations/company/register";
 import {
   Box,
@@ -17,19 +18,15 @@ import {
   NativeSelect,
   SimpleGrid,
   Text,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type DefaultValues } from "react-hook-form";
 import { LuCreditCard, LuMapPin, LuSend, LuUser } from "react-icons/lu";
 
-// 都道府県リスト（必要に応じてimportや定義）
-import { PREFECTURES } from "@/const/prefectures";
-
 type Props = {
-  defaultValues: DefaultValues<CompanyRegisterPaymentInput>;
-  onSubmit: (data: CompanyRegisterPaymentInput) => void;
+  defaultValues: DefaultValues<CompanyPaymentRequest>;
+  onSubmit: (data: CompanyPaymentRequest) => void;
   onBack?: () => void;
 };
 
@@ -38,8 +35,8 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CompanyRegisterPaymentInput>({
-    resolver: zodResolver(companyRegisterPaymentSchema),
+  } = useForm<CompanyPaymentRequest>({
+    resolver: zodResolver(companyPaymentSchema),
     defaultValues,
   });
 
@@ -161,7 +158,7 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
                     }
                   >
                     <Input
-                      placeholder="123-4567"
+                      placeholder="1000001"
                       required={false}
                       {...register("billingPostalCode")}
                     />
@@ -182,10 +179,9 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
                       placeholder="選択してください"
                       {...register("billingPrefecture")}
                     >
-                      <option value="">選択してください</option>
-                      {PREFECTURES.map((pref) => (
-                        <option key={pref} value={pref}>
-                          {pref}
+                      {prefectures.map((prefecture) => (
+                        <option key={prefecture.value} value={prefecture.value}>
+                          {prefecture.label}
                         </option>
                       ))}
                     </NativeSelect.Field>
@@ -267,54 +263,6 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
                 <Field.ErrorText>
                   {errors.billingContactName?.message}
                 </Field.ErrorText>
-              </Field.Root>
-            </VStack>
-          </Box>
-
-          {/* Additional Information */}
-          <Box>
-            <Heading size="md" mb={4}>
-              その他
-            </Heading>
-            <VStack gap={4} align="stretch">
-              <Field.Root invalid={!!errors.purpose}>
-                <Field.Label>
-                  プラットフォーム利用目的
-                  <Field.RequiredIndicator
-                    fallback={
-                      <Text as="span" fontSize="xs" color="fg.muted">
-                        （任意）
-                      </Text>
-                    }
-                  />
-                </Field.Label>
-                <Textarea
-                  placeholder="プラットフォームの利用目的を入力"
-                  rows={3}
-                  required={false}
-                  {...register("purpose")}
-                />
-                <Field.ErrorText>{errors.purpose?.message}</Field.ErrorText>
-              </Field.Root>
-
-              <Field.Root invalid={!!errors.note}>
-                <Field.Label>
-                  備考
-                  <Field.RequiredIndicator
-                    fallback={
-                      <Text as="span" fontSize="xs" color="fg.muted">
-                        （任意）
-                      </Text>
-                    }
-                  />
-                </Field.Label>
-                <Textarea
-                  placeholder="備考を入力"
-                  rows={3}
-                  required={false}
-                  {...register("note")}
-                />
-                <Field.ErrorText>{errors.note?.message}</Field.ErrorText>
               </Field.Root>
             </VStack>
           </Box>

@@ -58,6 +58,109 @@ enum SnsType {
     TWITTER
 }
 
+enum Industry {
+    RETAIL
+    MANUFACTURING
+    SERVICE
+    IT
+    FINANCE
+    REAL_ESTATE
+    FOOD
+    ENTERTAINMENT
+    OTHER
+}
+
+enum Prefecture {
+    HOKKAIDO
+    AOMORI
+    IWATE
+    MIYAGI
+    AKITA
+    YAMAGATA
+    FUKUSHIMA
+    IBARAKI
+    TOCHIGI
+    GUNMA
+    SAITAMA
+    CHIBA
+    TOKYO
+    KANAGAWA
+    NIIGATA
+    TOYAMA
+    ISHIKAWA
+    FUKUI
+    YAMANASHI
+    NAGANO
+    GIFU
+    SHIZUOKA
+    AICHI
+    MIE
+    SHIGA
+    KYOTO
+    OSAKA
+    HYOGO
+    NARA
+    WAKAYAMA
+    TOTTORI
+    SHIMANE
+    OKAYAMA
+    HIROSHIMA
+    YAMAGUCHI
+    TOKUSHIMA
+    KAGAWA
+    EHIME
+    KOCHI
+    FUKUOKA
+    SAGA
+    NAGASAKI
+    KUMAMOTO
+    OITA
+    MIYAZAKI
+    KAGOSHIMA
+    OKINAWA
+}
+
+enum AgeGroup {
+    TEENS
+    EARLY_20S
+    LATE_20S
+    EARLY_30S
+    LATE_30S
+    OVER_40S
+}
+
+enum Region {
+    ALL
+    KANTO
+    KANSAI
+    TOKAI
+    HOKKAIDO
+    TOHOKU
+    CHUGOKU
+    SHIKOKU
+    KYUSHU
+}
+
+enum Genre {
+    BEAUTY
+    FASHION
+    FOOD
+    TECH
+    LIFESTYLE
+    TRAVEL
+    FITNESS
+    ENTERTAINMENT
+}
+
+enum Objective {
+    AWARENESS
+    SALES
+    BRAND
+    ENGAGEMENT
+    LEADS
+    SERVICE
+}
+
 model User {
     id         String      @id @default(uuid()) @db.Uuid
     email      String      @unique @db.VarChar(255)
@@ -85,8 +188,8 @@ model Influencer {
     birthday               DateTime?         @db.Date
     sex                    Gender?
     phoneNumber            String?           @db.VarChar(20)
-    postCode               String?           @db.VarChar(8)
-    prefecture             String?           @db.VarChar(20)
+    postCode               String?           @db.VarChar(7)
+    prefecture             Prefecture?
     address                String?           @db.VarChar(255)
     roomNumber             String?           @db.VarChar(50)
     selfPr                 String?           @db.Text
@@ -172,35 +275,52 @@ model Company {
     createdAt DateTime @default(now()) @db.Timestamptz(6)
     updatedAt DateTime @updatedAt @db.Timestamptz(6)
 
-    // リレーション
     information CompanyInformation?
     address     CompanyAddress?
     business    CompanyBusiness?
     payment     CompanyPayment?
+    campaigns   Campaign[]
+    User        User[]
+}
 
-    // リレーション
-    campaigns Campaign[]
-    User      User[]
+model CompanyInformation {
+    id                String   @id @default(uuid()) @db.Uuid
+    companyId         String   @unique @db.Uuid
+    companyName       String   @db.VarChar(255)
+    displayName       String   @db.VarChar(255)
+    corporateNumber   String   @db.VarChar(13)
+    ceoName           String   @db.VarChar(100)
+    establishedAt     DateTime
+    capital           Int
+    numberOfEmployees Int
+    industry          Industry
+    websiteUrl        String   @db.VarChar(255)
+    purpose           String?  @db.Text
+    note              String?  @db.Text
+    createdAt         DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
+
+    company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 model CompanyAddress {
-    id         String   @id @default(uuid()) @db.Uuid
-    companyId  String   @unique @db.Uuid
-    company    Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-    postalCode String   @db.VarChar(8)
-    prefecture String   @db.VarChar(20)
-    city       String   @db.VarChar(100)
-    town       String   @db.VarChar(100)
-    street     String   @db.VarChar(100)
-    building   String?  @db.VarChar(100)
-    createdAt  DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt  DateTime @updatedAt @db.Timestamptz(6)
+    id         String     @id @default(uuid()) @db.Uuid
+    companyId  String     @unique @db.Uuid
+    postalCode String     @db.VarChar(7)
+    prefecture Prefecture
+    city       String     @db.VarChar(255)
+    town       String     @db.VarChar(255)
+    street     String     @db.VarChar(255)
+    building   String?    @db.VarChar(100)
+    createdAt  DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt  DateTime   @updatedAt @db.Timestamptz(6)
+
+    company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 model CompanyBusiness {
     id                 String   @id @default(uuid()) @db.Uuid
     companyId          String   @unique @db.Uuid
-    company            Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
     contactName        String   @db.VarChar(100)
     department         String   @db.VarChar(100)
     position           String?  @db.VarChar(100)
@@ -208,36 +328,90 @@ model CompanyBusiness {
     email              String   @db.VarChar(255)
     minBudget          Int
     maxBudget          Int
-    ageGroups          String   @db.Text // JSON or CSV
     gender             String   @db.VarChar(10)
-    regions            String   @db.Text // JSON or CSV
-    genres             String   @db.Text // JSON or CSV
-    objectives         String   @db.Text // JSON or CSV
     pastExperience     String?  @db.Text
     productDescription String?  @db.Text
     createdAt          DateTime @default(now()) @db.Timestamptz(6)
     updatedAt          DateTime @updatedAt @db.Timestamptz(6)
+
+    // --- リレーション ---
+    company    Company                    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    ageGroups  CompanyBusinessAgeGroup[]
+    regions    CompanyBusinessRegion[]
+    genres     CompanyBusinessGenre[]
+    objectives CompanyBusinessObjective[]
+}
+
+model CompanyBusinessAgeGroup {
+    id                String   @id @default(uuid()) @db.Uuid
+    companyBusinessId String   @db.Uuid
+    ageGroup          AgeGroup
+    createdAt         DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
+
+    companyBusiness CompanyBusiness @relation(fields: [companyBusinessId], references: [id], onDelete: Cascade)
+
+    @@unique([companyBusinessId, ageGroup])
+    @@index([companyBusinessId])
+}
+
+model CompanyBusinessRegion {
+    id                String   @id @default(uuid()) @db.Uuid
+    companyBusinessId String   @db.Uuid
+    region            Region
+    createdAt         DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
+
+    companyBusiness CompanyBusiness @relation(fields: [companyBusinessId], references: [id], onDelete: Cascade)
+
+    @@unique([companyBusinessId, region])
+    @@index([companyBusinessId])
+}
+
+model CompanyBusinessGenre {
+    id                String   @id @default(uuid()) @db.Uuid
+    companyBusinessId String   @db.Uuid
+    genre             Genre
+    createdAt         DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
+
+    companyBusiness CompanyBusiness @relation(fields: [companyBusinessId], references: [id], onDelete: Cascade)
+
+    @@unique([companyBusinessId, genre])
+    @@index([companyBusinessId])
+}
+
+model CompanyBusinessObjective {
+    id                String    @id @default(uuid()) @db.Uuid
+    companyBusinessId String    @db.Uuid
+    objective         Objective
+    createdAt         DateTime  @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime  @updatedAt @db.Timestamptz(6)
+
+    companyBusiness CompanyBusiness @relation(fields: [companyBusinessId], references: [id], onDelete: Cascade)
+
+    @@unique([companyBusinessId, objective])
+    @@index([companyBusinessId])
 }
 
 model CompanyPayment {
-    id                 String   @id @default(uuid()) @db.Uuid
-    companyId          String   @unique @db.Uuid
-    company            Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-    bankName           String   @db.VarChar(100)
-    branchName         String   @db.VarChar(100)
-    accountType        String   @db.VarChar(20)
-    accountNumber      String   @db.VarChar(20)
-    accountHolder      String   @db.VarChar(100)
-    billingPostalCode  String   @db.VarChar(8)
-    billingPrefecture  String   @db.VarChar(20)
-    billingCity        String   @db.VarChar(100)
-    billingAddress     String   @db.VarChar(255)
-    billingBuilding    String?  @db.VarChar(100)
-    billingContactName String   @db.VarChar(100)
-    purpose            String?  @db.Text
-    note               String?  @db.Text
-    createdAt          DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt          DateTime @updatedAt @db.Timestamptz(6)
+    id                 String     @id @default(uuid()) @db.Uuid
+    companyId          String     @unique @db.Uuid
+    bankName           String     @db.VarChar(100)
+    branchName         String     @db.VarChar(100)
+    accountType        String     @db.VarChar(20)
+    accountNumber      String     @db.VarChar(20)
+    accountHolder      String     @db.VarChar(100)
+    billingPostalCode  String     @db.VarChar(7)
+    billingPrefecture  Prefecture
+    billingCity        String     @db.VarChar(100)
+    billingAddress     String     @db.VarChar(255)
+    billingBuilding    String?    @db.VarChar(100)
+    billingContactName String     @db.VarChar(100)
+    createdAt          DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt          DateTime   @updatedAt @db.Timestamptz(6)
+
+    company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 }
 
 model Campaign {
@@ -278,21 +452,4 @@ model Application {
     @@index([influencerId])
     @@index([campaignId])
     @@index([status])
-}
-
-model CompanyInformation {
-    id                String   @id @default(uuid()) @db.Uuid
-    companyId         String   @unique @db.Uuid
-    company           Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-    companyName       String   @db.VarChar(255)
-    clientName        String   @db.VarChar(255)
-    corporateNumber   String   @db.VarChar(13)
-    ceoName           String   @db.VarChar(100)
-    establishedAt     DateTime
-    capital           Int
-    numberOfEmployees Int
-    industry          String   @db.VarChar(100)
-    websiteUrl        String   @db.VarChar(255)
-    createdAt         DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
 }

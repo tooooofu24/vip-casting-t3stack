@@ -5,7 +5,7 @@ import type { ErrorCode as SupabaseErrorCode } from "@supabase/auth-js/src/lib/e
 import { TRPCError } from "@trpc/server";
 
 export const adminRouter = createTRPCRouter({
-  signUp: publicProcedure.mutation(async ({ ctx }) => {
+  signUp: publicProcedure.mutation(async () => {
     const supabase = await createSupabaseAdminClient();
     const { error } = await supabase.auth.admin.createUser({
       email_confirm: true,

@@ -6,15 +6,15 @@ import { CompanyCompletedCard } from "@/app/(company)/company/register/(componen
 import { CompanyInformationForm } from "@/app/(company)/company/register/(components)/CompanyInformationForm";
 import { CompanyPaymentForm } from "@/app/(company)/company/register/(components)/CompanyPaymentForm";
 import {
-  companyRegisterAddressDefaultValues,
-  companyRegisterBusinessDefaultValues,
-  companyRegisterInformationDefaultValues,
-  companyRegisterPaymentDefaultValues,
-  type CompanyRegisterAddressInput,
-  type CompanyRegisterBusinessInput,
-  type CompanyRegisterInformationInput,
-  type CompanyRegisterInput,
-  type CompanyRegisterPaymentInput,
+  companyAddressDefaultValues,
+  companyBusinessDefaultValues,
+  companyInformationDefaultValues,
+  companyPaymentDefaultValues,
+  type CompanyAddressRequest,
+  type CompanyBusinessRequest,
+  type CompanyInformationRequest,
+  type CompanyPaymentRequest,
+  type CompanyRequest,
 } from "@/validations/company/register";
 import {
   Box,
@@ -30,11 +30,11 @@ import { useState } from "react";
 const items = ["基本情報", "所在地情報", "ビジネス情報", "支払い情報"] as const;
 
 export default function CompanyRegisterPage() {
-  const [data, setData] = useState<Partial<CompanyRegisterInput>>({
-    ...companyRegisterInformationDefaultValues,
-    ...companyRegisterAddressDefaultValues,
-    ...companyRegisterBusinessDefaultValues,
-    ...companyRegisterPaymentDefaultValues,
+  const [data, setData] = useState<Partial<CompanyRequest>>({
+    ...companyInformationDefaultValues,
+    ...companyAddressDefaultValues,
+    ...companyBusinessDefaultValues,
+    ...companyPaymentDefaultValues,
   });
 
   const steps = useSteps({
@@ -44,10 +44,10 @@ export default function CompanyRegisterPage() {
 
   const onSubmit = (
     data:
-      | CompanyRegisterInformationInput
-      | CompanyRegisterAddressInput
-      | CompanyRegisterBusinessInput
-      | CompanyRegisterPaymentInput,
+      | CompanyInformationRequest
+      | CompanyAddressRequest
+      | CompanyBusinessRequest
+      | CompanyPaymentRequest,
   ) => {
     setData({
       ...data,
