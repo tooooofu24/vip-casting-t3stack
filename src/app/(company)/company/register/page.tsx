@@ -5,12 +5,16 @@ import { CompanyBusinessForm } from "@/app/(company)/company/register/(component
 import { CompanyCompletedCard } from "@/app/(company)/company/register/(components)/CompanyCompletedCard";
 import { CompanyInformationForm } from "@/app/(company)/company/register/(components)/CompanyInformationForm";
 import { CompanyPaymentForm } from "@/app/(company)/company/register/(components)/CompanyPaymentForm";
+import { showErrorToast } from "@/lib/chakra-ui/toaster";
+import { api } from "@/lib/trpc/react";
 import {
   companyAddressDefaultValues,
   companyBusinessDefaultValues,
   companyInformationDefaultValues,
   companyPaymentDefaultValues,
-  type CompanyRequest,
+  companyRegisterSchema,
+  type CompanyPaymentRequest,
+  type CompanyRegisterRequest,
 } from "@/validations/company/register";
 import {
   Box,
@@ -26,7 +30,7 @@ import { useState } from "react";
 const items = ["基本情報", "所在地情報", "ビジネス情報", "支払い情報"] as const;
 
 export default function CompanyRegisterPage() {
-  const [data, setData] = useState<Partial<CompanyRequest>>({
+  const [data, setData] = useState<Partial<CompanyRegisterRequest>>({
     information: companyInformationDefaultValues,
     address: companyAddressDefaultValues,
     business: companyBusinessDefaultValues,
@@ -38,16 +42,39 @@ export default function CompanyRegisterPage() {
     count: items.length,
   });
 
-  const onSubmit = <K extends keyof CompanyRequest>(
+  const onSubmit = <K extends keyof CompanyRegisterRequest>(
     key: K,
-    value: CompanyRequest[K],
+    value: CompanyRegisterRequest[K],
   ) => {
     setData((prev) => ({
       ...prev,
       [key]: value,
     }));
-    steps.goToNextStep();
     window.scrollTo({ top: 0, behavior: "smooth" });
+    steps.goToNextStep();
+  };
+
+  const register = api.company.register.useMutation({
+    onSuccess: async () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      steps.goToNextStep();
+    },
+    onError: (error) => {
+      showErrorToast(error.data?.code);
+    },
+  });
+
+  const onRegister = (request: CompanyPaymentRequest) => {
+    setData((prev) => ({
+      ...prev,
+      payment: request,
+    }));
+    const validated = companyRegisterSchema.safeParse(data);
+    if (!validated.success) {
+      showErrorToast(validated.error.message);
+      return;
+    }
+    return register.mutate(validated.data);
   };
 
   return (
@@ -98,7 +125,7 @@ export default function CompanyRegisterPage() {
               <Steps.Content index={3}>
                 <CompanyPaymentForm
                   defaultValues={data.payment}
-                  onSubmit={(v) => onSubmit("payment", v)}
+                  onSubmit={onRegister}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>

@@ -15,12 +15,12 @@ export const companyInformationSchema = z.object({
     .string()
     .min(1)
     .max(13)
-    .regex(/^[0-9]{13}$/, "13桁の数字で入力してください"),
+    .regex(/^\d{13}$/, "13桁の数字で入力してください"),
   ceoName: z.string().min(1).max(100),
   establishedAt: z
     .string()
     .min(1)
-    .regex(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/),
+    .regex(/^\d{4}-\d{2}-\d{2}$/),
   capital: z.number().min(1).int().positive(),
   numberOfEmployees: z.number().min(1).int().positive(),
   industry: z.enum(industryValues),
@@ -43,8 +43,8 @@ export const companyInformationDefaultValues: CompanyInformationRequest = {
   numberOfEmployees: 50,
   industry: "IT",
   websiteUrl: "https://www.example.com",
-  purpose: "",
-  note: "",
+  purpose: undefined,
+  note: undefined,
 };
 
 // 所在地情報
@@ -145,11 +145,11 @@ export const companyPaymentDefaultValues: CompanyPaymentRequest = {
 };
 
 // 全体スキーマ
-export const companySchema = z.object({
+export const companyRegisterSchema = z.object({
   information: companyInformationSchema,
   address: companyAddressSchema,
   business: companyBusinessSchema,
   payment: companyPaymentSchema,
 });
 
-export type CompanyRequest = z.infer<typeof companySchema>;
+export type CompanyRegisterRequest = z.infer<typeof companyRegisterSchema>;

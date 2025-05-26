@@ -34,7 +34,7 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<CompanyPaymentRequest>({
     resolver: zodResolver(companyPaymentSchema),
     defaultValues,
@@ -272,7 +272,7 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
             <Button variant="outline" type="button" onClick={onBack}>
               戻る
             </Button>
-            <Button type="submit">
+            <Button type="submit" loading={isSubmitting}>
               <Icon>
                 <LuSend />
               </Icon>
