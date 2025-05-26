@@ -1,5 +1,6 @@
 "use client";
 
+import { AdminLoginForm } from "@/app/(admin)/admin-login/(components)/AdminLoginForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";
@@ -15,7 +16,6 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { LuShieldCheck } from "react-icons/lu";
-import { AdminLoginForm } from "./(components)/AdminLoginForm";
 
 export default function AdminLoginPage() {
   const router = useRouter();

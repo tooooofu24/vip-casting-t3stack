@@ -1,5 +1,10 @@
 "use client";
 
+import { CampaignDetailsDialog } from "@/app/(company)/company/campaigns/(components)/CampaignDetailsDialog";
+import {
+  mockCampaigns,
+  type Campaign,
+} from "@/app/(company)/company/campaigns/mock";
 import {
   Badge,
   Box,
@@ -26,8 +31,6 @@ import {
   LuSearch,
   LuUsers,
 } from "react-icons/lu";
-import { CampaignDetailsDialog } from "./(components)/CampaignDetailsDialog";
-import { type Campaign, mockCampaigns } from "./mock";
 
 const getStatusColor = (
   status: Campaign["status"] | Campaign["applications"][number]["status"],
@@ -75,7 +78,7 @@ const getStatusText = (
 
 export default function CampaignManagementPage() {
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign>(
-    mockCampaigns[0]!,
+    mockCampaigns[0] ?? ({} as Campaign),
   );
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 

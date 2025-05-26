@@ -18,6 +18,13 @@ export default tseslint.config(
       ...tseslint.configs.stylisticTypeChecked,
     ],
     rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: ["../*", "./*"],
+          paths: ["zod"],
+        },
+      ],
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-type-imports": [
@@ -37,6 +44,12 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+    },
+  },
+  {
+    files: ["src/lib/chakra-ui/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": "off",
     },
   },
   {

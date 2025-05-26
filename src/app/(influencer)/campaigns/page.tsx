@@ -1,5 +1,7 @@
 "use client";
 
+import { CampaignCard } from "@/app/(influencer)/campaigns/(components)/CampaignCard";
+import { MOCK_CAMPAIGNS } from "@/app/(influencer)/campaigns/mock";
 import {
   Box,
   Button,
@@ -28,8 +30,6 @@ import {
   LuTrendingUp,
   LuUsers,
 } from "react-icons/lu";
-import { CampaignCard } from "./(components)/CampaignCard";
-import { MOCK_CAMPAIGNS } from "./mock";
 
 // 仮のデータ（後で実際のデータに置き換え）
 const PLATFORMS = ["Instagram", "TikTok", "YouTube", "Twitter"];

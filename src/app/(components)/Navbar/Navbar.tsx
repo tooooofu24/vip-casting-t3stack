@@ -1,13 +1,13 @@
 "use client";
 
 import { HEADER_HEIGHT } from "@/app/(components)/constants";
+import { AuthenticatedActions } from "@/app/(components)/Navbar/AuthenticatedContent";
 import { NavigationLinks } from "@/app/(components)/Navbar/NavigationLinks";
+import { UnauthenticatedContent } from "@/app/(components)/Navbar/UnauthenticatedContent";
 import { SidebarButton } from "@/app/(components)/Sidebar/SidebarButton";
 import { Box, Heading, HStack, Icon, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuCrown } from "react-icons/lu";
-import { AuthenticatedActions } from "./AuthenticatedContent";
-import { UnauthenticatedContent } from "./UnauthenticatedContent";
 
 export function Navbar() {
   const isAuthenticated = true; // TODO: 認証状態の管理を実装

@@ -1,6 +1,7 @@
 "use client";
 
 import { MOCK_CAMPAIGNS } from "@/app/(influencer)/campaigns/mock";
+import CampaignDetailsDialog from "@/app/(influencer)/dashboard/(components)/CampaignDetailsDialog";
 import {
   Badge,
   Box,
@@ -15,7 +16,6 @@ import {
 import { type CampaignStatus } from "@prisma/client";
 import { useState } from "react";
 import { LuCalendar, LuStar, LuTrendingUp } from "react-icons/lu";
-import CampaignDetailsDialog from "./(components)/CampaignDetailsDialog";
 
 interface ScheduleEvent {
   id: number;
@@ -232,8 +232,8 @@ export default function DashboardPage() {
 
       <CampaignDetailsDialog
         isOpen={isModalOpen}
-        onClose={(e) => setIsModalOpen(e.open)}
-        campaign={MOCK_CAMPAIGNS[0]!}
+        onClose={(e: { open: boolean }) => setIsModalOpen(e.open)}
+        campaign={MOCK_CAMPAIGNS[0] ?? null}
       />
     </Box>
   );

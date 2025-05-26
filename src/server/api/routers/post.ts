@@ -1,5 +1,4 @@
-import { z } from "zod";
-
+import { z } from "@/lib/zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 export const postRouter = createTRPCRouter({

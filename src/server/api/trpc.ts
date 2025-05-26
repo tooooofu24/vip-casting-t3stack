@@ -7,7 +7,7 @@
  */
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
-import { ZodError } from "zod";
+import { ZodError } from "zod"; // eslint-disable-line no-restricted-imports
 
 import { db } from "@/server/db";
 
