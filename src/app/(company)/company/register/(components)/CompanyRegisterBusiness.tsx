@@ -284,20 +284,18 @@ export function CompanyRegisterBusiness({
 
               <Field.Root invalid={!!errors.gender}>
                 <Field.Label>性別</Field.Label>
-                <Controller
-                  control={control}
-                  name="gender"
-                  render={({ field }) => (
-                    <NativeSelect.Root>
-                      <NativeSelect.Field placeholder="指定なし" {...field}>
-                        <option value="">指定なし</option>
-                        <option value="male">男性</option>
-                        <option value="female">女性</option>
-                      </NativeSelect.Field>
-                      <NativeSelect.Indicator />
-                    </NativeSelect.Root>
-                  )}
-                />
+                <NativeSelect.Root>
+                  <NativeSelect.Field
+                    required={false}
+                    placeholder="指定なし"
+                    {...register("gender")}
+                  >
+                    <option value="">指定なし</option>
+                    <option value="male">男性</option>
+                    <option value="female">女性</option>
+                  </NativeSelect.Field>
+                  <NativeSelect.Indicator />
+                </NativeSelect.Root>
                 <Field.ErrorText>{errors.gender?.message}</Field.ErrorText>
               </Field.Root>
 

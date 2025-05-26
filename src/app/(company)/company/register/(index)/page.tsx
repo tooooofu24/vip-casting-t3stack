@@ -89,10 +89,18 @@ export default function CompanyRegisterPage() {
                 />
               </Steps.Content>
               <Steps.Content index={2}>
-                <CompanyRegisterBusiness />
+                <CompanyRegisterBusiness
+                  defaultValues={data}
+                  onSubmit={onSubmit}
+                  onBack={() => steps.goToPrevStep()}
+                />
               </Steps.Content>
               <Steps.Content index={3}>
-                <CompanyRegisterPayment />
+                <CompanyRegisterPayment
+                  defaultValues={data}
+                  onSubmit={onSubmit}
+                  onBack={() => steps.goToPrevStep()}
+                />
               </Steps.Content>
               <Steps.CompletedContent>
                 全ての情報の入力が完了しました！
