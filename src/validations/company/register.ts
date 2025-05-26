@@ -53,6 +53,17 @@ export type CompanyRegisterAddressInput = z.infer<
   typeof companyRegisterAddressSchema
 >;
 
+// 所在地情報のデフォルト値
+export const companyRegisterAddressDefaultValues: CompanyRegisterAddressInput =
+  {
+    postalCode: "100-0001",
+    prefecture: "東京都",
+    city: "千代田区",
+    town: "千代田",
+    street: "1-1",
+    building: "千代田ビル302",
+  };
+
 // ビジネス情報
 export const companyRegisterBusinessSchema = z.object({
   contactName: z.string().min(1),
@@ -74,6 +85,25 @@ export type CompanyRegisterBusinessInput = z.infer<
   typeof companyRegisterBusinessSchema
 >;
 
+// ビジネス情報のデフォルト値
+export const companyRegisterBusinessDefaultValues: CompanyRegisterBusinessInput =
+  {
+    contactName: "山田花子",
+    department: "マーケティング部",
+    position: "マネージャー",
+    phone: "03-1234-5678",
+    email: "hanako@example.com",
+    minBudget: "30000",
+    maxBudget: "100000",
+    ageGroups: ["20s"],
+    gender: "female",
+    regions: ["kanto"],
+    genres: ["beauty"],
+    objectives: ["awareness"],
+    pastExperience: "2023年にInstagramキャンペーンを実施",
+    productDescription: "新商品コスメのPR",
+  };
+
 // 支払い情報
 export const companyRegisterPaymentSchema = z.object({
   bankName: z.string().min(1),
@@ -93,6 +123,24 @@ export const companyRegisterPaymentSchema = z.object({
 export type CompanyRegisterPaymentInput = z.infer<
   typeof companyRegisterPaymentSchema
 >;
+
+// 支払い情報のデフォルト値
+export const companyRegisterPaymentDefaultValues: CompanyRegisterPaymentInput =
+  {
+    bankName: "みずほ銀行",
+    branchName: "新宿支店",
+    accountType: "ordinary",
+    accountNumber: "1234567",
+    accountHolder: "ヤマダハナコ",
+    billingPostalCode: "100-0001",
+    billingPrefecture: "東京都",
+    billingCity: "千代田区",
+    billingAddress: "1-1",
+    billingBuilding: "千代田ビル302",
+    billingContactName: "山田花子",
+    purpose: "",
+    note: "",
+  };
 
 // 全体スキーマ
 export const companyRegisterSchema = companyRegisterInformationSchema

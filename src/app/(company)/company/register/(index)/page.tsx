@@ -2,9 +2,14 @@
 
 import { CompanyRegisterAddress } from "@/app/(company)/company/register/(components)/CompanyRegisterAddress";
 import { CompanyRegisterBusiness } from "@/app/(company)/company/register/(components)/CompanyRegisterBusiness";
+import { CompanyRegisterCompletedCard } from "@/app/(company)/company/register/(components)/CompanyRegisterCompletedCard";
 import { CompanyRegisterInformation } from "@/app/(company)/company/register/(components)/CompanyRegisterInformation";
 import { CompanyRegisterPayment } from "@/app/(company)/company/register/(components)/CompanyRegisterPayment";
 import {
+  companyRegisterAddressDefaultValues,
+  companyRegisterBusinessDefaultValues,
+  companyRegisterInformationDefaultValues,
+  companyRegisterPaymentDefaultValues,
   type CompanyRegisterAddressInput,
   type CompanyRegisterBusinessInput,
   type CompanyRegisterInformationInput,
@@ -13,8 +18,6 @@ import {
 } from "@/validations/company/register";
 import {
   Box,
-  Button,
-  ButtonGroup,
   Container,
   Heading,
   Steps,
@@ -28,11 +31,14 @@ const items = ["基本情報", "所在地情報", "ビジネス情報", "支払�
 
 export default function CompanyRegisterPage() {
   const [data, setData] = useState<Partial<CompanyRegisterInput>>({
-    // ...companyRegisterInformationDefaultValues,
+    ...companyRegisterInformationDefaultValues,
+    ...companyRegisterAddressDefaultValues,
+    ...companyRegisterBusinessDefaultValues,
+    ...companyRegisterPaymentDefaultValues,
   });
 
   const steps = useSteps({
-    defaultStep: 2,
+    defaultStep: 0,
     count: items.length,
   });
 
@@ -103,17 +109,8 @@ export default function CompanyRegisterPage() {
                 />
               </Steps.Content>
               <Steps.CompletedContent>
-                全ての情報の入力が完了しました！
+                <CompanyRegisterCompletedCard />
               </Steps.CompletedContent>
-              <Button onClick={() => steps.goToNextStep()}>登録完了</Button>
-              <ButtonGroup size="sm" variant="outline">
-                <Steps.PrevTrigger asChild>
-                  <Button>Prev</Button>
-                </Steps.PrevTrigger>
-                <Steps.NextTrigger asChild>
-                  <Button>Next</Button>
-                </Steps.NextTrigger>
-              </ButtonGroup>
             </Steps.RootProvider>
           </VStack>
         </VStack>
