@@ -5,10 +5,11 @@
  *
  * 要約：tRPCサーバーの設定や拡張はここで行います。必要な部分はファイル末尾付近に記載しています。
  */
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod"; // eslint-disable-line no-restricted-imports
 
+import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
 import { db } from "@/server/db";
 
 /**
@@ -99,3 +100,31 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * ユーザー認証は保証しませんが、セッション情報にはアクセス可能です。
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+// 管理者認証ミドルウェア
+const adminAuthMiddleware = t.middleware(async ({ ctx, next }) => {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "認証が必要です" });
+  }
+
+  const isAdmin = user.user_metadata?.role === "admin";
+  if (!isAdmin) {
+    throw new TRPCError({ code: "FORBIDDEN", message: "管理者権限が必要です" });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      user,
+      isAdmin: true,
+    },
+  });
+});
+
+// 管理者専用プロシージャ
+export const adminProcedure = t.procedure.use(adminAuthMiddleware);
