@@ -3,6 +3,7 @@ import { supabaseErrorCodeToTrpcCode } from "@/lib/trpc/supabaseErrorToTrpcError
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import type { ErrorCode as SupabaseErrorCode } from "@supabase/auth-js/src/lib/error-codes";
 import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 export const adminRouter = createTRPCRouter({
   signUp: publicProcedure.mutation(async () => {
@@ -40,4 +41,13 @@ export const adminRouter = createTRPCRouter({
     });
     return companies;
   }),
+  approveCompany: publicProcedure
+    .input(z.object({ companyId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const company = await ctx.db.company.update({
+        where: { id: input.companyId },
+        data: { isApproved: true },
+      });
+      return company;
+    }),
 });
