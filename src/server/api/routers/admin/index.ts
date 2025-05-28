@@ -1,9 +1,9 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
 import { supabaseErrorCodeToTrpcCode } from "@/lib/trpc/supabaseErrorToTrpcError";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { approveCompanySchema } from "@/validations/admin/approveCompany";
 import type { ErrorCode as SupabaseErrorCode } from "@supabase/auth-js/src/lib/error-codes";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 
 export const adminRouter = createTRPCRouter({
   signUp: publicProcedure.mutation(async () => {
@@ -42,7 +42,7 @@ export const adminRouter = createTRPCRouter({
     return companies;
   }),
   approveCompany: publicProcedure
-    .input(z.object({ companyId: z.string() }))
+    .input(approveCompanySchema)
     .mutation(async ({ ctx, input }) => {
       const company = await ctx.db.company.update({
         where: { id: input.companyId },
