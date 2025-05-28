@@ -2,7 +2,6 @@
 
 import { InfluencerCompletedCard } from "@/app/(influencer)/(public)/register/(components)/InfluencerCompletedCard";
 import { InfluencerInformationForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerInformationForm";
-import { InfluencerPersonalForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerPersonalForm";
 import { InfluencerSnsForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerSnsForm";
 import { InfluencerWorkForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerWorkForm";
 import {
@@ -17,7 +16,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-const items = ["基本情報", "個人情報", "SNS情報", "案件情報"] as const;
+const items = ["基本情報", "SNS情報", "案件情報"] as const;
 
 export default function RegisterPage() {
   const steps = useSteps({
@@ -53,12 +52,9 @@ export default function RegisterPage() {
                 <InfluencerInformationForm />
               </Steps.Content>
               <Steps.Content index={1}>
-                <InfluencerPersonalForm />
-              </Steps.Content>
-              <Steps.Content index={2}>
                 <InfluencerSnsForm />
               </Steps.Content>
-              <Steps.Content index={3}>
+              <Steps.Content index={2}>
                 <InfluencerWorkForm />
               </Steps.Content>
               <Steps.CompletedContent>
