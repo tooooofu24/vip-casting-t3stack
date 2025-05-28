@@ -10,54 +10,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    @@index([name])
-}
-
-enum UserRole {
-    USER
-    INFLUENCER
-    COMPANY
-}
-
-enum Gender {
-    UNSPECIFIED
-    MALE
-    FEMALE
-    OTHER
-}
-
-enum AccountType {
-    SAVINGS
-    CHECKING
-}
-
-enum CampaignStatus {
-    DRAFT // 下書き
-    IN_PROGRESS // 進行中
-    PENDING // 確認待ち
-    COMPLETED // 完了
-    CANCELLED // キャンセル
-}
-
-enum ApplicationStatus {
-    PENDING
-    APPROVED
-    REJECTED
-}
-
-enum SnsType {
-    INSTAGRAM
-    TIKTOK
-    YOUTUBE
-    TWITTER
-}
-
 enum Industry {
     RETAIL
     MANUFACTURING
@@ -161,115 +113,6 @@ enum Objective {
     SERVICE
 }
 
-model User {
-    id         String      @id @default(uuid()) @db.Uuid
-    email      String      @unique @db.VarChar(255)
-    password   String      @db.VarChar(255)
-    name       String?     @db.VarChar(100)
-    createdAt  DateTime    @default(now()) @db.Timestamptz(6)
-    updatedAt  DateTime    @updatedAt @db.Timestamptz(6)
-    role       UserRole    @default(USER)
-    influencer Influencer?
-    company    Company?    @relation(fields: [companyId], references: [id])
-    companyId  String?     @db.Uuid
-
-    @@index([email])
-}
-
-model Influencer {
-    id                     String            @id @default(uuid()) @db.Uuid
-    userId                 String            @unique @db.Uuid
-    user                   User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-    nickname               String?           @db.VarChar(100)
-    familyName             String?           @db.VarChar(50)
-    givenName              String?           @db.VarChar(50)
-    familyNameKana         String?           @db.VarChar(50)
-    givenNameKana          String?           @db.VarChar(50)
-    birthday               DateTime?         @db.Date
-    sex                    Gender?
-    phoneNumber            String?           @db.VarChar(20)
-    postCode               String?           @db.VarChar(7)
-    prefecture             Prefecture?
-    address                String?           @db.VarChar(255)
-    roomNumber             String?           @db.VarChar(50)
-    selfPr                 String?           @db.Text
-    requestedRewardByPost  Int?              @db.Integer
-    requestedRewardByVideo Int?              @db.Integer
-    requestedRewardByLive  Int?              @db.Integer
-    requestedRewardByEvent Int?              @db.Integer
-    ngProducts             String?           @db.Text
-    ngCompanies            String?           @db.Text
-    ngOthers               String?           @db.Text
-    createdAt              DateTime          @default(now()) @db.Timestamptz(6)
-    updatedAt              DateTime          @updatedAt @db.Timestamptz(6)
-    applications           Application[]
-    specialityFields       SpecialityField[]
-    prHistories            PrHistory[]
-    snsAccounts            SnsAccount[]
-    handlableCases         HandlableCase[]
-    activeAreas            ActiveArea[]
-
-    @@index([userId])
-}
-
-model SpecialityField {
-    id           String     @id @default(uuid()) @db.Uuid
-    influencerId String     @db.Uuid
-    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-    field        String     @db.VarChar(100)
-    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
-
-    @@index([influencerId])
-}
-
-model PrHistory {
-    id           String     @id @default(uuid()) @db.Uuid
-    influencerId String     @db.Uuid
-    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-    history      String     @db.Text
-    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
-
-    @@index([influencerId])
-}
-
-model SnsAccount {
-    id           String     @id @default(uuid()) @db.Uuid
-    influencerId String     @db.Uuid
-    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-    snsType      SnsType
-    accountName  String     @db.VarChar(100)
-    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
-
-    @@index([influencerId])
-    @@index([snsType])
-}
-
-model HandlableCase {
-    id           String     @id @default(uuid()) @db.Uuid
-    influencerId String     @db.Uuid
-    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-    caseType     String     @db.VarChar(50)
-    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
-
-    @@index([influencerId])
-}
-
-model ActiveArea {
-    id           String     @id @default(uuid()) @db.Uuid
-    influencerId String     @db.Uuid
-    influencer   Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-    area         String     @db.VarChar(50)
-    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
-
-    @@index([influencerId])
-    @@index([area])
-}
-
 model Company {
     id         String   @id @default(uuid()) @db.Uuid
     createdAt  DateTime @default(now()) @db.Timestamptz(6)
@@ -280,8 +123,6 @@ model Company {
     address     CompanyAddress?
     business    CompanyBusiness?
     payment     CompanyPayment?
-    campaigns   Campaign[]
-    User        User[]
 }
 
 model CompanyInformation {
@@ -413,44 +254,4 @@ model CompanyPayment {
     updatedAt          DateTime   @updatedAt @db.Timestamptz(6)
 
     company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-}
-
-model Campaign {
-    id            String         @id @default(uuid()) @db.Uuid
-    companyId     String         @db.Uuid
-    company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
-    title         String         @db.VarChar(255)
-    platform      String         @db.VarChar(50)
-    genre         String         @db.VarChar(50)
-    image         String         @db.VarChar(255)
-    followers     Int            @db.Integer
-    deadline      DateTime       @db.Timestamptz(6)
-    draftDeadline DateTime?      @db.Timestamptz(6)
-    requiresDraft Boolean        @default(false)
-    budgetFrom    Int            @db.Integer
-    budgetTo      Int            @db.Integer
-    isVip         Boolean        @default(false)
-    status        CampaignStatus @default(DRAFT)
-    Application   Application[]
-
-    @@index([companyId])
-    @@index([platform])
-    @@index([genre])
-    @@index([status])
-}
-
-model Application {
-    id           String            @id @default(uuid()) @db.Uuid
-    influencerId String            @db.Uuid
-    influencer   Influencer        @relation(fields: [influencerId], references: [id], onDelete: Cascade)
-    campaignId   String            @db.Uuid
-    campaign     Campaign          @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-    status       ApplicationStatus @default(PENDING)
-    message      String?           @db.Text
-    createdAt    DateTime          @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime          @updatedAt @db.Timestamptz(6)
-
-    @@index([influencerId])
-    @@index([campaignId])
-    @@index([status])
 }

@@ -1,5 +1,14 @@
-type CampaignStatus = "active" | "draft" | "cancelled";
-type ApplicationStatus = "pending" | "accepted" | "completed" | "rejected";
+export type CampaignStatus =
+  | "active"
+  | "draft"
+  | "cancelled"
+  | "pending"
+  | "completed";
+export type ApplicationStatus =
+  | "pending"
+  | "accepted"
+  | "completed"
+  | "rejected";
 
 export type CampaignApplication = {
   id: string;

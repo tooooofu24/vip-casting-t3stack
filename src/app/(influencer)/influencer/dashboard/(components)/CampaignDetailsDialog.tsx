@@ -1,5 +1,6 @@
 "use client";
 
+import type { Campaign } from "@/app/(company)/company/campaigns/mock";
 import {
   Alert,
   Box,
@@ -12,7 +13,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { type Campaign } from "@prisma/client";
 import {
   LuCalendar,
   LuCircleAlert,
@@ -55,9 +55,6 @@ export default function CampaignDetailsDialog({
                       {campaign.title}
                     </Text>
                   </Dialog.Title>
-                  <Text color="gray.600" mt={1}>
-                    {campaign.companyId}
-                  </Text>
                 </Box>
                 <Dialog.CloseTrigger asChild>
                   <Button variant="ghost" size="sm">
@@ -75,17 +72,14 @@ export default function CampaignDetailsDialog({
                   </Text>
                   <Stack direction="row" align="center" color="gray.700">
                     <Icon as={LuCalendar} />
-                    <Text>締切: {campaign.deadline.toLocaleDateString()}</Text>
+                    <Text>締切: {campaign.endDate}</Text>
                   </Stack>
                 </Box>
                 <Box>
                   <Text fontSize="sm" color="gray.500" mb={1}>
                     報酬
                   </Text>
-                  <Text color="gray.700">
-                    ¥{campaign.budgetFrom.toLocaleString()} 〜 ¥
-                    {campaign.budgetTo.toLocaleString()}
-                  </Text>
+                  <Text color="gray.700">{campaign.budget}</Text>
                 </Box>
               </SimpleGrid>
 
@@ -108,7 +102,7 @@ export default function CampaignDetailsDialog({
                 </VStack>
               </Box>
 
-              {campaign.status === "IN_PROGRESS" && campaign.draftDeadline && (
+              {campaign.draftDeadline && (
                 <Alert.Root status="warning" variant="subtle">
                   <Alert.Indicator>
                     <Icon as={LuCircleAlert} />
@@ -116,7 +110,7 @@ export default function CampaignDetailsDialog({
                   <Alert.Content>
                     <Alert.Title>下書き提出の締切が近づいています</Alert.Title>
                     <Alert.Description>
-                      締切: {campaign.draftDeadline.toLocaleDateString()}まで
+                      締切: {campaign.draftDeadline}まで
                     </Alert.Description>
                   </Alert.Content>
                 </Alert.Root>

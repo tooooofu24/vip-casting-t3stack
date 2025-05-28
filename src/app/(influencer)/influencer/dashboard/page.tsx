@@ -1,5 +1,6 @@
 "use client";
 
+import type { CampaignStatus } from "@/app/(company)/company/campaigns/mock";
 import { MOCK_CAMPAIGNS } from "@/app/(influencer)/influencer/campaigns/mock";
 import CampaignDetailsDialog from "@/app/(influencer)/influencer/dashboard/(components)/CampaignDetailsDialog";
 import {
@@ -13,7 +14,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { type CampaignStatus } from "@prisma/client";
 import { useState } from "react";
 import { LuCalendar, LuStar, LuTrendingUp } from "react-icons/lu";
 
@@ -53,11 +53,11 @@ const statusConfig: Record<
   CampaignStatus,
   { colorPalette: string; label: string }
 > = {
-  DRAFT: { colorPalette: "gray", label: "下書き" },
-  IN_PROGRESS: { colorPalette: "green", label: "進行中" },
-  PENDING: { colorPalette: "yellow", label: "確認待ち" },
-  COMPLETED: { colorPalette: "blue", label: "完了" },
-  CANCELLED: { colorPalette: "red", label: "キャンセル" },
+  draft: { colorPalette: "gray", label: "下書き" },
+  active: { colorPalette: "green", label: "進行中" },
+  pending: { colorPalette: "yellow", label: "確認待ち" },
+  completed: { colorPalette: "blue", label: "完了" },
+  cancelled: { colorPalette: "red", label: "キャンセル" },
 };
 
 export default function DashboardPage() {
@@ -170,9 +170,6 @@ export default function DashboardPage() {
                   >
                     <Box>
                       <Text fontWeight="medium">{campaign.title}</Text>
-                      <Text fontSize="sm" color="gray.600">
-                        {campaign.companyId}
-                      </Text>
                     </Box>
                     <Badge
                       size="sm"
@@ -189,7 +186,7 @@ export default function DashboardPage() {
                     color="gray.600"
                   >
                     <Icon as={LuCalendar} />
-                    <Text>締切: {campaign.deadline.toLocaleDateString()}</Text>
+                    <Text>締切: {campaign.endDate}</Text>
                   </Stack>
                 </Box>
               ))}
