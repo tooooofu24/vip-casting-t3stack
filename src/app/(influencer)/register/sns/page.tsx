@@ -176,7 +176,7 @@ export default function SnsInfoPage() {
                         SNSアカウント登録について
                       </Alert.Title>
                       <Alert.Description>
-                        <List.Root gap={1}>
+                        <List.Root listStylePosition="inside">
                           <List.Item>SNSアカウントの登録は任意です</List.Item>
                           <List.Item>
                             登録することで、より多くの案件にマッチする可能性が高まります

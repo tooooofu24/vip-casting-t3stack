@@ -141,14 +141,11 @@ export function CampaignDetailsDialog({ campaign, open, onOpenChange }: Props) {
                     <Text fontSize="lg" fontWeight="bold">
                       応募条件
                     </Text>
-                    <List.Root
-                      color="fg.muted"
-                      gap={2}
-                      listStyleType="disc"
-                      listStylePosition="inside"
-                    >
+                    <List.Root listStylePosition="inside">
                       {campaign.requirements.map((req, index) => (
-                        <List.Item key={index}>{req}</List.Item>
+                        <List.Item key={index} color="fg.muted">
+                          {req}
+                        </List.Item>
                       ))}
                     </List.Root>
                   </Stack>

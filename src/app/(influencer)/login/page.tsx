@@ -148,7 +148,7 @@ export default function LoginPage() {
                   <Text fontWeight="bold" mb={4}>
                     VIPキャスティングの特徴
                   </Text>
-                  <List.Root px={4} gap={2}>
+                  <List.Root listStylePosition="inside">
                     {features.map((feature) => (
                       <List.Item key={feature}>
                         <Text color="fg.muted">{feature}</Text>

@@ -77,7 +77,7 @@ export default function CompletePage() {
               <Alert.Content>
                 <Alert.Title>審査完了までの流れ</Alert.Title>
                 <Alert.Description mt={2}>
-                  <List.Root as="ol" gap={1} pl={5}>
+                  <List.Root as="ol" listStylePosition="inside">
                     <List.Item>プロフィール内容の確認（1-2営業日）</List.Item>
                     <List.Item>SNSアカウントの確認（1営業日）</List.Item>
                     <List.Item>審査結果のご連絡</List.Item>

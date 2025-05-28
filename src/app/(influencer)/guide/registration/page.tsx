@@ -109,7 +109,7 @@ export default function RegistrationGuidePage() {
             <Card.Title>登録後のメリット</Card.Title>
           </Card.Header>
           <Card.Body>
-            <List.Root gap={4}>
+            <List.Root listStylePosition="inside">
               {benefits.map((benefit, index) => (
                 <List.Item
                   key={index}
@@ -142,7 +142,7 @@ export default function RegistrationGuidePage() {
           <Alert.Content>
             <Alert.Title>登録時の注意事項</Alert.Title>
             <Alert.Description>
-              <List.Root listStyle="disc" ps={4} gap={2}>
+              <List.Root listStylePosition="inside">
                 <List.Item>本人確認書類は必ず原本をご用意ください</List.Item>
                 <List.Item>
                   SNSアカウントは実際に運用しているものを連携してください

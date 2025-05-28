@@ -146,7 +146,7 @@ export default function PrListingDetailPage() {
 
               <Stack>
                 <Text fontWeight="medium">応募条件</Text>
-                <List.Root listStyleType="disc" listStylePosition="inside">
+                <List.Root listStylePosition="inside">
                   {mockPrListing.requirements.map((req, index) => (
                     <List.Item key={index} color="fg.muted">
                       {req}
@@ -221,7 +221,7 @@ export default function PrListingDetailPage() {
           <Alert.Content>
             <Alert.Title>応募時の注意事項</Alert.Title>
             <Alert.Description>
-              <List.Root gap="1">
+              <List.Root listStylePosition="inside">
                 <List.Item>応募前に必ず募集内容をよくご確認ください</List.Item>
                 <List.Item>
                   条件に合致しない場合は、応募をお控えください

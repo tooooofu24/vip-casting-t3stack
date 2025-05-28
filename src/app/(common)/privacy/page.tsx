@@ -23,7 +23,7 @@ export default function PrivacyPage() {
               <Text color="gray.600">
                 当社はお客様から個人情報をご提供いただく場合には、その個人情報を利用する目的（以下「利用目的」といいます）をあらかじめ明示いたします。ただし、次の場合には、利用目的の提示を省略させていただくことがございます。
               </Text>
-              <List.Root gap="2" pl="6">
+              <List.Root listStylePosition="inside">
                 <List.Item color="gray.600">
                   当社WEBサイト、お電話、FAX、E-mail等でのお問合せ、各種登録・申込手続き等により個人情報をいただく場合
                 </List.Item>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
               <Text color="gray.600">
                 当社がお客様から個人情報をいただく場合は通常次のようなものが含まれます。
               </Text>
-              <List.Root gap="2" pl="6">
+              <List.Root listStylePosition="inside">
                 <List.Item color="gray.600">
                   お客様のお名前（企業ユーザーの場合は企業名、担当者名）、お勤め先、ご連絡先（お電話、FAX、E-mailアドレス、住所等）
                 </List.Item>
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
               <Text color="gray.600">
                 当社は、お客様からご提供いただいた個人情報を、次の目的の範囲内で利用させていただきます。
               </Text>
-              <List.Root gap="2" pl="6">
+              <List.Root listStylePosition="inside">
                 <List.Item color="gray.600">
                   本サービスを提供するため（マッチング、コミュニケーション、レポート機能、支払い処理等）
                 </List.Item>
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
               <Text color="gray.600">
                 当社はお客様からご提供いただきました個人情報は、以下のいずれかに該当する場合を除き、いかなる第三者にも開示いたしません。
               </Text>
-              <List.Root gap="2" pl="6">
+              <List.Root listStylePosition="inside">
                 <List.Item color="gray.600">お客様の同意がある場合</List.Item>
                 <List.Item color="gray.600">
                   法令等により、関係機関より開示を求められた場合

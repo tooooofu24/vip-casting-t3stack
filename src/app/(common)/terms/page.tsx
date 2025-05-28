@@ -36,7 +36,7 @@ export default function TermsPage() {
               <Text color="gray.600">
                 本規約において使用する用語の定義は、以下のとおりとします。
               </Text>
-              <List.Root gap="2" pl="6">
+              <List.Root listStylePosition="inside">
                 <List.Item color="gray.600">
                   「ユーザー」とは、本サービスを利用するすべての者をいいます。
                 </List.Item>

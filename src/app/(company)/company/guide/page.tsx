@@ -119,7 +119,7 @@ export default function CompanyRegistrationGuidePage() {
               <Heading as="h2" fontSize="xl" fontWeight="semibold" mb={4}>
                 登録後のメリット
               </Heading>
-              <List.Root gap={4}>
+              <List.Root listStylePosition="inside">
                 {benefits.map((benefit, index) => (
                   <List.Item
                     key={index}
@@ -170,7 +170,7 @@ export default function CompanyRegistrationGuidePage() {
                   >
                     登録時の注意事項
                   </Heading>
-                  <List.Root gap={2} color="yellow.700">
+                  <List.Root listStylePosition="inside" color="yellow.700">
                     <List.Item>
                       • 登録には法人であることの確認書類が必要です
                     </List.Item>

@@ -173,7 +173,7 @@ export default function EarningsGuidePage() {
           <Alert.Content>
             <Alert.Title>重要な注意事項</Alert.Title>
             <Alert.Description>
-              <List.Root listStyle="disc" ps={4} gap={2}>
+              <List.Root listStylePosition="inside">
                 <List.Item>報酬の受け取りには本人確認が必要です</List.Item>
                 <List.Item>
                   銀行口座は本人名義のものを登録してください

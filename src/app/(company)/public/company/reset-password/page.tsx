@@ -1,6 +1,6 @@
 "use client";
 
-import { ResetPasswordForm } from "@/app/(company)/public/company/reset-password/components/ResetPasswordForm";
+import { ResetPasswordForm } from "@/app/(company)/public/company/reset-password/(components)/ResetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import type { ResetPasswordRequest } from "@/validations/company/resetPassword";

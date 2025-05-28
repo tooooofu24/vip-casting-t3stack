@@ -144,7 +144,7 @@ export default function CampaignDetailPage() {
               <Text fontSize="xl" fontWeight="bold" mb="4">
                 注意事項
               </Text>
-              <List.Root gap="2">
+              <List.Root listStylePosition="inside">
                 {campaignData.cautions.map((caution, index) => (
                   <List.Item
                     key={index}
@@ -167,7 +167,7 @@ export default function CampaignDetailPage() {
               <Text fontSize="xl" fontWeight="bold" mb="4">
                 応募条件
               </Text>
-              <List.Root gap="2">
+              <List.Root listStylePosition="inside">
                 {campaignData.requirements.map((requirement, index) => (
                   <List.Item
                     key={index}
