@@ -1,8 +1,6 @@
 {
   "language": "en,ja",
-  "ignorePaths": [
-    "src/lib/chakra-ui"
-  ],
+  "ignorePaths": ["src/lib/chakra-ui"],
   "words": [
     "Aichi",
     "Akita",
@@ -38,6 +36,7 @@
     "Oita",
     "Okayama",
     "Okinawa",
+    "ONLINE",
     "Osaka",
     "Saga",
     "Saitama",
