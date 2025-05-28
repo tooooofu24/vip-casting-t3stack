@@ -113,6 +113,12 @@ enum Objective {
     SERVICE
 }
 
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
+}
+
 model Company {
     id         String   @id @default(uuid()) @db.Uuid
     createdAt  DateTime @default(now()) @db.Timestamptz(6)
@@ -254,4 +260,85 @@ model CompanyPayment {
     updatedAt          DateTime   @updatedAt @db.Timestamptz(6)
 
     company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+model Influencer {
+    id         String   @id @default(uuid()) @db.Uuid
+    createdAt  DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt  DateTime @updatedAt @db.Timestamptz(6)
+    isApproved Boolean  @default(false)
+
+    information InfluencerInformation?
+    address     InfluencerAddress?
+    sns         InfluencerSns?
+    work        InfluencerWork?
+}
+
+model InfluencerInformation {
+    id             String   @id @default(uuid()) @db.Uuid
+    influencerId   String   @unique @db.Uuid
+    displayName    String   @db.VarChar(255)
+    email          String   @db.VarChar(255)
+    lastName       String   @db.VarChar(100)
+    firstName      String   @db.VarChar(100)
+    lastNameKana   String   @db.VarChar(100)
+    firstNameKana  String   @db.VarChar(100)
+    birthday       DateTime
+    gender         Gender
+    phone          String   @db.VarChar(20)
+    createdAt      DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt      DateTime @updatedAt @db.Timestamptz(6)
+
+    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+}
+
+model InfluencerAddress {
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @unique @db.Uuid
+    postalCode   String     @db.VarChar(7)
+    prefecture   Prefecture
+    city         String     @db.VarChar(255)
+    town         String     @db.VarChar(255)
+    street       String     @db.VarChar(255)
+    building     String?    @db.VarChar(100)
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
+
+    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+}
+
+model InfluencerSns {
+    id                  String   @id @default(uuid()) @db.Uuid
+    influencerId        String   @unique @db.Uuid
+    instagramName       String?  @db.VarChar(255)
+    instagramFollowers  Int?
+    youtubeName         String?  @db.VarChar(255)
+    youtubeSubscribers  Int?
+    tiktokName          String?  @db.VarChar(255)
+    tiktokFollowers     Int?
+    xName               String?  @db.VarChar(255)
+    xFollowers          Int?
+    createdAt           DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt           DateTime @updatedAt @db.Timestamptz(6)
+
+    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+}
+
+model InfluencerWork {
+    id                String   @id @default(uuid()) @db.Uuid
+    influencerId      String   @unique @db.Uuid
+    pastWorks         Json?
+    feePost           Int?
+    feeVideo          Int?
+    feeLive           Int?
+    feeEvent          Int?
+    workTypes         String[]
+    areas             String[]
+    ngProducts        String[]
+    ngCompanies       String[]
+    ngOther           String?
+    createdAt         DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
+
+    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
 }

@@ -50,10 +50,13 @@ export default function RegisterPage() {
                 ))}
               </Steps.List>
               <Steps.Content index={0}>
-                <InfluencerInformationForm />
+                <InfluencerInformationForm onSubmit={() => null} />
               </Steps.Content>
               <Steps.Content index={1}>
-                <InfluencerAddressForm onSubmit={() => {}} onBack={() => {}} />
+                <InfluencerAddressForm
+                  onSubmit={() => null}
+                  onBack={() => null}
+                />
               </Steps.Content>
               <Steps.Content index={2}>
                 <InfluencerSnsForm />
