@@ -5,6 +5,11 @@
 import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
-const config = {};
+const config = {
+  experimental: {
+    typedRoutes: true,
+    optimizePackageImports: ["@chakra-ui/react"],
+  },
+};
 
 export default config;
