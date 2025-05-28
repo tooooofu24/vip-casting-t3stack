@@ -3,17 +3,18 @@
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
+  Alert,
   Box,
   Button,
+  Center,
   Heading,
   Spinner,
   Table,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 
 export default function AdminDashboard() {
-  const { data, isLoading, error, refetch } =
+  const { data, isLoading, refetch, error } =
     api.admin.getUnapprovedCompanies.useQuery();
 
   const { mutate, isPending } = api.admin.approveCompany.useMutation({
@@ -37,11 +38,27 @@ export default function AdminDashboard() {
       <Heading size="lg">未承認会社一覧</Heading>
       <Box bg="white" borderRadius="md" boxShadow="sm" p={4}>
         {isLoading ? (
-          <Spinner />
+          <Center h="100%" p={8}>
+            <Spinner size="xl" />
+          </Center>
         ) : error ? (
-          <Text color="red.500">{error.message}</Text>
+          <Alert.Root status="error">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>エラーが発生しました</Alert.Title>
+              <Alert.Description>{error.message}</Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
         ) : !data || data.length === 0 ? (
-          <Text>未承認の会社はありません。</Text>
+          <Alert.Root status="success">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>未承認の会社はありません</Alert.Title>
+              <Alert.Description>
+                現在、承認待ちの会社はありません。
+              </Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
         ) : (
           <Table.Root>
             <Table.Header>
