@@ -1,7 +1,9 @@
+import { env } from "@/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
 import { publicProcedure } from "@/server/api/trpc";
 import { approveCompanySchema } from "@/validations/admin/approveCompany";
 import { TRPCError } from "@trpc/server";
+import type { Route } from "next";
 
 export const approveCompany = publicProcedure
   .input(approveCompanySchema)
@@ -9,7 +11,7 @@ export const approveCompany = publicProcedure
     // 会社情報取得
     const company = await ctx.db.company.update({
       where: { id: input.companyId },
-      data: { isApproved: false },
+      data: { isApproved: true },
       include: { business: true },
     });
 
@@ -21,14 +23,17 @@ export const approveCompany = publicProcedure
       });
     }
 
+    const email = company.business.email;
+
     // Supabaseユーザー発行
     const supabase = await createSupabaseAdminClient();
-    await supabase.auth.admin.inviteUserByEmail("test@test.com", {
+    const route: Route = `/public/company/forget-password?email=${email}`;
+    await supabase.auth.admin.inviteUserByEmail(email, {
+      redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
       data: {
         role: "company",
         displayName: company.business.contactName,
       },
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     });
 
     return company;
