@@ -1,7 +1,7 @@
 "use client";
 
-import { CampaignCard } from "@/app/(influencer)/campaigns/(components)/CampaignCard";
-import { MOCK_CAMPAIGNS } from "@/app/(influencer)/campaigns/mock";
+import { CampaignCard } from "@/app/(influencer)/influencer/campaigns/(components)/CampaignCard";
+import { MOCK_CAMPAIGNS } from "@/app/(influencer)/influencer/campaigns/mock";
 import {
   Box,
   Button,

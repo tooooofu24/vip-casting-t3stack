@@ -1,7 +1,7 @@
 "use client";
 
-import ChatList from "@/app/(influencer)/messages/(components)/ChatList";
-import ChatRoom from "@/app/(influencer)/messages/(components)/ChatRoom";
+import ChatList from "@/app/(influencer)/influencer/messages/(components)/ChatList";
+import ChatRoom from "@/app/(influencer)/influencer/messages/(components)/ChatRoom";
 import { Box, Card, Container, Grid } from "@chakra-ui/react";
 
 export default function MessagesPage() {

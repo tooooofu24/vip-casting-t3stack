@@ -1,6 +1,6 @@
 "use client";
 
-import { ApplyModal } from "@/app/(influencer)/campaigns/[id]/components/ApplyModal";
+import { ApplyModal } from "@/app/(influencer)/influencer/campaigns/[id]/components/ApplyModal";
 import { Button, Dialog } from "@chakra-ui/react";
 
 export function ApplyButton() {

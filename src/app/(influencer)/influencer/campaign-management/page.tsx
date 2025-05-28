@@ -1,7 +1,7 @@
 "use client";
 
-import { MOCK_CAMPAIGNS } from "@/app/(influencer)/campaigns/mock";
-import CampaignDetailsDialog from "@/app/(influencer)/dashboard/(components)/CampaignDetailsDialog";
+import { MOCK_CAMPAIGNS } from "@/app/(influencer)/influencer/campaigns/mock";
+import CampaignDetailsDialog from "@/app/(influencer)/influencer/dashboard/(components)/CampaignDetailsDialog";
 import {
   Badge,
   Box,

@@ -1,6 +1,6 @@
 "use client";
 
-import { RegistrationSteps } from "@/app/(influencer)/register/(components)/RegistrationSteps";
+import { RegistrationSteps } from "@/app/(influencer)/influencer/register/(components)/RegistrationSteps";
 import {
   Alert,
   Box,

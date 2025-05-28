@@ -1,6 +1,6 @@
 "use client";
 
-import { ApplyButton } from "@/app/(influencer)/campaigns/[id]/components/ApplyButton";
+import { ApplyButton } from "@/app/(influencer)/influencer/campaigns/[id]/components/ApplyButton";
 import {
   Badge,
   Box,
