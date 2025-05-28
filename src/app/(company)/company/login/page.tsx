@@ -31,8 +31,8 @@ const features = [
 
 export default function CompanyLoginPage() {
   return (
-    <Center minH="100vh" px={{ base: 4, sm: 0 }}>
-      <Container maxW="xl" py={{ base: 6, sm: 12 }}>
+    <Center>
+      <Container maxW="xl" py={32}>
         <VStack gap={8}>
           {/* Header */}
           <VStack gap={{ base: 2, sm: 4 }} align="center">
