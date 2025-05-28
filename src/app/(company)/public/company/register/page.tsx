@@ -1,10 +1,10 @@
 "use client";
 
-import { CompanyAddressForm } from "@/app/(company)/company/register/(components)/CompanyAddressForm";
-import { CompanyBusinessForm } from "@/app/(company)/company/register/(components)/CompanyBusinessForm";
-import { CompanyCompletedCard } from "@/app/(company)/company/register/(components)/CompanyCompletedCard";
-import { CompanyInformationForm } from "@/app/(company)/company/register/(components)/CompanyInformationForm";
-import { CompanyPaymentForm } from "@/app/(company)/company/register/(components)/CompanyPaymentForm";
+import { CompanyAddressForm } from "@/app/(company)/public/company/register/(components)/CompanyAddressForm";
+import { CompanyBusinessForm } from "@/app/(company)/public/company/register/(components)/CompanyBusinessForm";
+import { CompanyCompletedCard } from "@/app/(company)/public/company/register/(components)/CompanyCompletedCard";
+import { CompanyInformationForm } from "@/app/(company)/public/company/register/(components)/CompanyInformationForm";
+import { CompanyPaymentForm } from "@/app/(company)/public/company/register/(components)/CompanyPaymentForm";
 import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
@@ -13,6 +13,9 @@ import {
   companyInformationDefaultValues,
   companyPaymentDefaultValues,
   companyRegisterSchema,
+  type CompanyAddressRequest,
+  type CompanyBusinessRequest,
+  type CompanyInformationRequest,
   type CompanyPaymentRequest,
   type CompanyRegisterRequest,
 } from "@/validations/company/register";
@@ -105,20 +108,26 @@ export default function CompanyRegisterPage() {
               <Steps.Content index={0}>
                 <CompanyInformationForm
                   defaultValues={data.information}
-                  onSubmit={(v) => onSubmit("information", v)}
+                  onSubmit={(v: CompanyInformationRequest) =>
+                    onSubmit("information", v)
+                  }
                 />
               </Steps.Content>
               <Steps.Content index={1}>
                 <CompanyAddressForm
                   defaultValues={data.address}
-                  onSubmit={(v) => onSubmit("address", v)}
+                  onSubmit={(v: CompanyAddressRequest) =>
+                    onSubmit("address", v)
+                  }
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
                 <CompanyBusinessForm
                   defaultValues={data.business}
-                  onSubmit={(v) => onSubmit("business", v)}
+                  onSubmit={(v: CompanyBusinessRequest) =>
+                    onSubmit("business", v)
+                  }
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
