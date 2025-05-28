@@ -39,13 +39,17 @@ export function InfluencerSnsForm() {
               <GridItem>
                 <Field.Root>
                   <Field.Label>アカウント名</Field.Label>
-                  <Input placeholder="@username" />
+                  <Input placeholder="@username" required={false} />
                 </Field.Root>
               </GridItem>
               <GridItem>
                 <Field.Root>
                   <Field.Label>フォロワー数</Field.Label>
-                  <Input type="number" placeholder="フォロワー数" />
+                  <Input
+                    type="number"
+                    placeholder="フォロワー数"
+                    required={false}
+                  />
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
@@ -68,13 +72,17 @@ export function InfluencerSnsForm() {
               <GridItem>
                 <Field.Root>
                   <Field.Label>チャンネル名</Field.Label>
-                  <Input placeholder="チャンネル名" />
+                  <Input placeholder="チャンネル名" required={false} />
                 </Field.Root>
               </GridItem>
               <GridItem>
                 <Field.Root>
                   <Field.Label>登録者数</Field.Label>
-                  <Input type="number" placeholder="登録者数" />
+                  <Input
+                    type="number"
+                    placeholder="登録者数"
+                    required={false}
+                  />
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
@@ -97,13 +105,17 @@ export function InfluencerSnsForm() {
               <GridItem>
                 <Field.Root>
                   <Field.Label>アカウント名</Field.Label>
-                  <Input placeholder="@username" />
+                  <Input placeholder="@username" required={false} />
                 </Field.Root>
               </GridItem>
               <GridItem>
                 <Field.Root>
                   <Field.Label>フォロワー数</Field.Label>
-                  <Input type="number" placeholder="フォロワー数" />
+                  <Input
+                    type="number"
+                    placeholder="フォロワー数"
+                    required={false}
+                  />
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
@@ -126,13 +138,17 @@ export function InfluencerSnsForm() {
               <GridItem>
                 <Field.Root>
                   <Field.Label>アカウント名</Field.Label>
-                  <Input placeholder="@username" />
+                  <Input placeholder="@username" required={false} />
                 </Field.Root>
               </GridItem>
               <GridItem>
                 <Field.Root>
                   <Field.Label>フォロワー数</Field.Label>
-                  <Input type="number" placeholder="フォロワー数" />
+                  <Input
+                    type="number"
+                    placeholder="フォロワー数"
+                    required={false}
+                  />
                 </Field.Root>
               </GridItem>
             </SimpleGrid>

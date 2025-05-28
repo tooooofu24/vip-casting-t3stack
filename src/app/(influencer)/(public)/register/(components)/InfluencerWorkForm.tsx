@@ -79,16 +79,19 @@ export function InfluencerWorkForm() {
                           </Icon>
                         }
                       >
-                        <Input placeholder="企業名・ブランド名を入力" />
+                        <Input
+                          placeholder="企業名・ブランド名を入力"
+                          required={false}
+                        />
                       </InputGroup>
                     </Field.Root>
                     <Field.Root>
                       <Field.Label>実施内容</Field.Label>
-                      <Textarea rows={2} />
+                      <Textarea rows={2} required={false} />
                     </Field.Root>
                     <Field.Root>
                       <Field.Label>実施時期</Field.Label>
-                      <Input placeholder="2023年10月" />
+                      <Input placeholder="2023年10月" required={false} />
                     </Field.Root>
                   </VStack>
                   <CloseButton
@@ -118,7 +121,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="30000" />
+                  <Input type="number" placeholder="30000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
@@ -130,7 +133,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="50000" />
+                  <Input type="number" placeholder="50000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
@@ -142,7 +145,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="100000" />
+                  <Input type="number" placeholder="100000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
@@ -154,7 +157,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="150000" />
+                  <Input type="number" placeholder="150000" required={false} />
                 </InputGroup>
               </Field.Root>
             </SimpleGrid>
@@ -226,7 +229,10 @@ export function InfluencerWorkForm() {
             <VStack gap={4}>
               <Field.Root>
                 <Field.Label>NG商材（カンマ区切りで入力）</Field.Label>
-                <Input placeholder="例: タバコ, アダルト, ギャンブル" />
+                <Input
+                  placeholder="例: タバコ, アダルト, ギャンブル"
+                  required={false}
+                />
                 <Wrap gap={2} mt={1}>
                   <WrapItem>
                     <Tag.Root variant="subtle" colorScheme="red">
@@ -241,7 +247,10 @@ export function InfluencerWorkForm() {
 
               <Field.Root>
                 <Field.Label>NG企業（カンマ区切りで入力）</Field.Label>
-                <Input placeholder="例: 〇〇株式会社, △△商事" />
+                <Input
+                  placeholder="例: 〇〇株式会社, △△商事"
+                  required={false}
+                />
                 <Wrap gap={2} mt={1}>
                   <WrapItem>
                     <Tag.Root variant="subtle" colorScheme="red">
@@ -259,6 +268,7 @@ export function InfluencerWorkForm() {
                 <Textarea
                   rows={3}
                   placeholder="例: マッチング成立前の名前開示NG、深夜の撮影NG など"
+                  required={false}
                 />
               </Field.Root>
             </VStack>
