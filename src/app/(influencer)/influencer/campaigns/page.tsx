@@ -154,7 +154,7 @@ export default function CampaignsPage() {
                       </Text>
                     }
                   >
-                    <Input type="number" placeholder="最小" />
+                    <Input placeholder="最小" />
                   </InputGroup>
                   <InputGroup
                     startElement={
@@ -163,7 +163,7 @@ export default function CampaignsPage() {
                       </Text>
                     }
                   >
-                    <Input type="number" placeholder="最大" />
+                    <Input placeholder="最大" />
                   </InputGroup>
                 </SimpleGrid>
               </Field.Root>
@@ -178,7 +178,7 @@ export default function CampaignsPage() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="最小フォロワー数" />
+                  <Input placeholder="最小フォロワー数" />
                 </InputGroup>
               </Field.Root>
 

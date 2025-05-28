@@ -176,7 +176,7 @@ model CompanyBusiness {
     email              String   @db.VarChar(255)
     minBudget          Int
     maxBudget          Int
-    gender             String   @db.VarChar(10)
+    gender             Gender
     pastExperience     String?  @db.Text
     productDescription String?  @db.Text
     createdAt          DateTime @default(now()) @db.Timestamptz(6)
@@ -275,19 +275,19 @@ model Influencer {
 }
 
 model InfluencerInformation {
-    id             String   @id @default(uuid()) @db.Uuid
-    influencerId   String   @unique @db.Uuid
-    displayName    String   @db.VarChar(255)
-    email          String   @db.VarChar(255)
-    lastName       String   @db.VarChar(100)
-    firstName      String   @db.VarChar(100)
-    lastNameKana   String   @db.VarChar(100)
-    firstNameKana  String   @db.VarChar(100)
-    birthday       DateTime
-    gender         Gender
-    phone          String   @db.VarChar(20)
-    createdAt      DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt      DateTime @updatedAt @db.Timestamptz(6)
+    id            String   @id @default(uuid()) @db.Uuid
+    influencerId  String   @unique @db.Uuid
+    displayName   String   @db.VarChar(255)
+    email         String   @db.VarChar(255)
+    lastName      String   @db.VarChar(100)
+    firstName     String   @db.VarChar(100)
+    lastNameKana  String   @db.VarChar(100)
+    firstNameKana String   @db.VarChar(100)
+    birthday      DateTime
+    gender        Gender
+    phone         String   @db.VarChar(20)
+    createdAt     DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt     DateTime @updatedAt @db.Timestamptz(6)
 
     influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
 }
@@ -308,37 +308,37 @@ model InfluencerAddress {
 }
 
 model InfluencerSns {
-    id                  String   @id @default(uuid()) @db.Uuid
-    influencerId        String   @unique @db.Uuid
-    instagramName       String?  @db.VarChar(255)
-    instagramFollowers  Int?
-    youtubeName         String?  @db.VarChar(255)
-    youtubeSubscribers  Int?
-    tiktokName          String?  @db.VarChar(255)
-    tiktokFollowers     Int?
-    xName               String?  @db.VarChar(255)
-    xFollowers          Int?
-    createdAt           DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt           DateTime @updatedAt @db.Timestamptz(6)
+    id                 String   @id @default(uuid()) @db.Uuid
+    influencerId       String   @unique @db.Uuid
+    instagramName      String?  @db.VarChar(255)
+    instagramFollowers Int?
+    youtubeName        String?  @db.VarChar(255)
+    youtubeFollowers   Int?
+    tiktokName         String?  @db.VarChar(255)
+    tiktokFollowers    Int?
+    xName              String?  @db.VarChar(255)
+    xFollowers         Int?
+    createdAt          DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt          DateTime @updatedAt @db.Timestamptz(6)
 
     influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
 }
 
 model InfluencerWork {
-    id                String   @id @default(uuid()) @db.Uuid
-    influencerId      String   @unique @db.Uuid
-    pastWorks         Json?
-    feePost           Int?
-    feeVideo          Int?
-    feeLive           Int?
-    feeEvent          Int?
-    workTypes         String[]
-    areas             String[]
-    ngProducts        String[]
-    ngCompanies       String[]
-    ngOther           String?
-    createdAt         DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt         DateTime @updatedAt @db.Timestamptz(6)
+    id           String   @id @default(uuid()) @db.Uuid
+    influencerId String   @unique @db.Uuid
+    pastWorks    Json?
+    feePost      Int?
+    feeVideo     Int?
+    feeLive      Int?
+    feeEvent     Int?
+    workTypes    String[]
+    areas        String[]
+    ngProducts   String[]
+    ngCompanies  String[]
+    ngOther      String?
+    createdAt    DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime @updatedAt @db.Timestamptz(6)
 
     influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { genders } from "@/const/gender";
 import {
   influencerInformationSchema,
   type InfluencerInformationRequest,
@@ -133,9 +134,11 @@ export function InfluencerInformationForm({
                     required={false}
                     {...register("gender")}
                   >
-                    <option value="male">男性</option>
-                    <option value="female">女性</option>
-                    <option value="other">その他</option>
+                    {genders.map((gender) => (
+                      <option key={gender.value} value={gender.value}>
+                        {gender.label}
+                      </option>
+                    ))}
                   </NativeSelect.Field>
                   <NativeSelect.Indicator />
                 </NativeSelect.Root>

@@ -5,6 +5,9 @@ import { InfluencerCompletedCard } from "@/app/(influencer)/(public)/register/(c
 import { InfluencerInformationForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerInformationForm";
 import { InfluencerSnsForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerSnsForm";
 import { InfluencerWorkForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerWorkForm";
+import { influencerAddressDefaultValues } from "@/validations/influencer/register/address";
+import { influencerInformationDefaultValues } from "@/validations/influencer/register/information";
+import { influencerSnsDefaultValues } from "@/validations/influencer/register/sns";
 import {
   Box,
   Button,
@@ -50,16 +53,34 @@ export default function RegisterPage() {
                 ))}
               </Steps.List>
               <Steps.Content index={0}>
-                <InfluencerInformationForm onSubmit={() => null} />
+                <InfluencerInformationForm
+                  onSubmit={() => {
+                    steps.goToNextStep();
+                  }}
+                  defaultValues={influencerInformationDefaultValues}
+                />
               </Steps.Content>
               <Steps.Content index={1}>
                 <InfluencerAddressForm
-                  onSubmit={() => null}
-                  onBack={() => null}
+                  onSubmit={() => {
+                    steps.goToNextStep();
+                  }}
+                  onBack={() => {
+                    steps.goToPrevStep();
+                  }}
+                  defaultValues={influencerAddressDefaultValues}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
-                <InfluencerSnsForm />
+                <InfluencerSnsForm
+                  onSubmit={() => {
+                    steps.goToNextStep();
+                  }}
+                  onBack={() => {
+                    steps.goToPrevStep();
+                  }}
+                  defaultValues={influencerSnsDefaultValues}
+                />
               </Steps.Content>
               <Steps.Content index={3}>
                 <InfluencerWorkForm />

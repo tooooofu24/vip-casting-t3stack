@@ -123,7 +123,7 @@ export default function CreatePrListingPage() {
 
               <Field.Root required>
                 <Field.Label>投稿回数</Field.Label>
-                <Input type="number" value={mockFormData.postCount} readOnly />
+                <Input value={mockFormData.postCount} readOnly />
               </Field.Root>
 
               <Field.Root required>

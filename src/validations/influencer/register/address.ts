@@ -1,6 +1,5 @@
 import { prefectureValues } from "@/const/prefecture";
 import { z } from "@/lib/zod";
-import { Prefecture } from "@prisma/client";
 
 export const influencerAddressSchema = z.object({
   postalCode: z
@@ -20,7 +19,7 @@ export type InfluencerAddressRequest = z.infer<typeof influencerAddressSchema>;
 // 所在地情報のデフォルト値
 export const influencerAddressDefaultValues: InfluencerAddressRequest = {
   postalCode: "1000001",
-  prefecture: Prefecture.TOKYO,
+  prefecture: "TOKYO",
   city: "千代田区",
   town: "千代田",
   street: "1-1",

@@ -52,9 +52,9 @@ export function InfluencerFilterPanel() {
               フォロワー数
             </Text>
             <HStack gap={2}>
-              <Input placeholder="最小" type="number" />
+              <Input placeholder="最小" />
               <Text>〜</Text>
-              <Input placeholder="最大" type="number" />
+              <Input placeholder="最大" />
             </HStack>
           </Box>
           {/* エンゲージメント率 */}
@@ -63,9 +63,9 @@ export function InfluencerFilterPanel() {
               エンゲージメント率 (%)
             </Text>
             <HStack gap={2}>
-              <Input placeholder="最小" type="number" />
+              <Input placeholder="最小" />
               <Text>〜</Text>
-              <Input placeholder="最大" type="number" />
+              <Input placeholder="最大" />
             </HStack>
           </Box>
           {/* 性別 */}
@@ -89,9 +89,9 @@ export function InfluencerFilterPanel() {
               年齢
             </Text>
             <HStack gap={2}>
-              <Input placeholder="最小" type="number" />
+              <Input placeholder="最小" />
               <Text>〜</Text>
-              <Input placeholder="最大" type="number" />
+              <Input placeholder="最大" />
             </HStack>
           </Box>
           {/* 居住地域 */}
@@ -172,7 +172,7 @@ export function InfluencerFilterPanel() {
             <Text fontSize="sm" fontWeight="medium" mb={2}>
               PR実績数（最小）
             </Text>
-            <Input placeholder="0" type="number" />
+            <Input placeholder="0" />
           </Box>
         </SimpleGrid>
       </Card.Body>

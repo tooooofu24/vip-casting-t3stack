@@ -1,6 +1,5 @@
 import { genderValues } from "@/const/gender";
 import { z } from "@/lib/zod";
-import { Gender } from "@prisma/client";
 
 export const influencerInformationSchema = z.object({
   lastName: z.string().min(1).max(100),
@@ -29,7 +28,7 @@ export const influencerInformationDefaultValues: InfluencerInformationRequest =
     firstNameKana: "タロウ",
     displayName: "山田太郎",
     birthday: "1990-01-01",
-    gender: Gender.MALE,
+    gender: "MALE",
     email: "yamada@example.com",
     phone: "090-1234-5678",
   };

@@ -1,11 +1,12 @@
 import { ageGroupValues } from "@/const/ageGroup";
+import { genderValues } from "@/const/gender";
 import { genreValues } from "@/const/genre";
 import { industryValues } from "@/const/industry";
 import { objectiveValues } from "@/const/objective";
 import { prefectureValues } from "@/const/prefecture";
 import { regionValues } from "@/const/region";
 import { z } from "@/lib/zod";
-import { Prefecture } from "@prisma/client";
+import { Gender, Genre, Objective, Prefecture, Region } from "@prisma/client";
 
 // 会社基本情報
 export const companyInformationSchema = z.object({
@@ -82,7 +83,7 @@ export const companyBusinessSchema = z.object({
   minBudget: z.string().min(1),
   maxBudget: z.string().min(1),
   ageGroups: z.array(z.enum(ageGroupValues)).min(1),
-  gender: z.string().min(1).max(10),
+  gender: z.enum(genderValues),
   regions: z.array(z.enum(regionValues)).min(1),
   genres: z.array(z.enum(genreValues)).min(1),
   objectives: z.array(z.enum(objectiveValues)).min(1),
@@ -101,10 +102,10 @@ export const companyBusinessDefaultValues: CompanyBusinessRequest = {
   minBudget: "30000",
   maxBudget: "100000",
   ageGroups: ["EARLY_20S"],
-  gender: "female",
-  regions: ["KANTO"],
-  genres: ["BEAUTY"],
-  objectives: ["AWARENESS"],
+  gender: Gender.FEMALE,
+  regions: [Region.KANTO],
+  genres: [Genre.BEAUTY],
+  objectives: [Objective.AWARENESS],
   pastExperience: "2023年にInstagramキャンペーンを実施",
   productDescription: "新商品コスメのPR",
 };

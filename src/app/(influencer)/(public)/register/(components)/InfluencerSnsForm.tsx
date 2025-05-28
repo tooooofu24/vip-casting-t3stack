@@ -1,6 +1,11 @@
 "use client";
 
 import {
+  influencerSnsDefaultValues,
+  influencerSnsSchema,
+  type InfluencerSnsRequest,
+} from "@/validations/influencer/register/sns";
+import {
   Alert,
   Box,
   Button,
@@ -10,16 +15,39 @@ import {
   GridItem,
   Icon,
   Input,
+  InputGroup,
   List,
   SimpleGrid,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { LuInstagram, LuTwitter, LuYoutube } from "react-icons/lu";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, type DefaultValues } from "react-hook-form";
+import { FaInstagram, FaTiktok, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { LuUser } from "react-icons/lu";
 
-export function InfluencerSnsForm() {
+export type InfluencerSnsFormProps = {
+  defaultValues?: DefaultValues<InfluencerSnsRequest>;
+  onSubmit: (data: InfluencerSnsRequest) => void;
+  onBack: () => void;
+};
+
+export function InfluencerSnsForm({
+  defaultValues = influencerSnsDefaultValues,
+  onSubmit,
+  onBack,
+}: InfluencerSnsFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InfluencerSnsRequest>({
+    resolver: zodResolver(influencerSnsSchema),
+    defaultValues,
+  });
+
   return (
-    <Card.Root>
+    <Card.Root as="form" onSubmit={handleSubmit(onSubmit)}>
       <Card.Body p={{ base: 6, md: 8 }}>
         <VStack gap={6} align="stretch">
           {/* Instagram */}
@@ -31,25 +59,40 @@ export function InfluencerSnsForm() {
               gap={2}
             >
               <Icon color="fg.muted">
-                <LuInstagram />
+                <FaInstagram />
               </Icon>
               Instagram
             </Text>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} mt={4}>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.instagramName}>
                   <Field.Label>アカウント名</Field.Label>
-                  <Input placeholder="@username" required={false} />
+                  <InputGroup startElement={"@"}>
+                    <Input
+                      placeholder="username"
+                      required={false}
+                      {...register("instagramName")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.instagramName?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.instagramFollowers}>
                   <Field.Label>フォロワー数</Field.Label>
-                  <Input
-                    type="number"
-                    placeholder="フォロワー数"
-                    required={false}
-                  />
+                  <InputGroup endElement="人">
+                    <Input
+                      type="number"
+                      placeholder="10000"
+                      required={false}
+                      {...register("instagramFollowers")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.instagramFollowers?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
@@ -64,25 +107,42 @@ export function InfluencerSnsForm() {
               gap={2}
             >
               <Icon color="fg.muted">
-                <LuYoutube />
+                <FaYoutube />
               </Icon>
               YouTube
             </Text>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} mt={4}>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.youtubeName}>
                   <Field.Label>チャンネル名</Field.Label>
-                  <Input placeholder="チャンネル名" required={false} />
+                  <InputGroup
+                    startElement={<Icon as={LuUser} color="fg.muted" />}
+                  >
+                    <Input
+                      placeholder="チャンネル名"
+                      required={false}
+                      {...register("youtubeName")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.youtubeName?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.youtubeFollowers}>
                   <Field.Label>登録者数</Field.Label>
-                  <Input
-                    type="number"
-                    placeholder="登録者数"
-                    required={false}
-                  />
+                  <InputGroup endElement="人">
+                    <Input
+                      type="number"
+                      placeholder="10000"
+                      required={false}
+                      {...register("youtubeFollowers")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.youtubeFollowers?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
@@ -97,25 +157,40 @@ export function InfluencerSnsForm() {
               gap={2}
             >
               <Icon color="fg.muted">
-                <LuTwitter />
+                <FaTiktok />
               </Icon>
               TikTok
             </Text>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} mt={4}>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.tiktokName}>
                   <Field.Label>アカウント名</Field.Label>
-                  <Input placeholder="@username" required={false} />
+                  <InputGroup startElement={"@"}>
+                    <Input
+                      placeholder="username"
+                      required={false}
+                      {...register("tiktokName")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.tiktokName?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.tiktokFollowers}>
                   <Field.Label>フォロワー数</Field.Label>
-                  <Input
-                    type="number"
-                    placeholder="フォロワー数"
-                    required={false}
-                  />
+                  <InputGroup endElement="人">
+                    <Input
+                      type="number"
+                      placeholder="10000"
+                      required={false}
+                      {...register("tiktokFollowers")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.tiktokFollowers?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
@@ -130,33 +205,48 @@ export function InfluencerSnsForm() {
               gap={2}
             >
               <Icon color="fg.muted">
-                <LuTwitter />
+                <FaXTwitter />
               </Icon>
               X(旧Twitter)
             </Text>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} mt={4}>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.xName}>
                   <Field.Label>アカウント名</Field.Label>
-                  <Input placeholder="@username" required={false} />
+                  <InputGroup startElement={"@"}>
+                    <Input
+                      placeholder="username"
+                      required={false}
+                      {...register("xName")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>{errors.xName?.message}</Field.ErrorText>
                 </Field.Root>
               </GridItem>
               <GridItem>
-                <Field.Root>
+                <Field.Root invalid={!!errors.xFollowers}>
                   <Field.Label>フォロワー数</Field.Label>
-                  <Input
-                    type="number"
-                    placeholder="フォロワー数"
-                    required={false}
-                  />
+                  <InputGroup endElement="人">
+                    <Input
+                      type="number"
+                      placeholder="10000"
+                      required={false}
+                      {...register("xFollowers")}
+                    />
+                  </InputGroup>
+                  <Field.ErrorText>
+                    {errors.xFollowers?.message}
+                  </Field.ErrorText>
                 </Field.Root>
               </GridItem>
             </SimpleGrid>
           </Box>
 
           <ButtonGroup width="full" justifyContent="space-between" mt={4}>
-            <Button variant="outline">戻る</Button>
-            <Button>次へ</Button>
+            <Button variant="outline" onClick={onBack} type="button">
+              戻る
+            </Button>
+            <Button type="submit">次へ</Button>
           </ButtonGroup>
 
           {/* Notice */}

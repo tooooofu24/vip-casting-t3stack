@@ -1,6 +1,7 @@
 "use client";
 
 import { ageGroups } from "@/const/ageGroup";
+import { genders } from "@/const/gender";
 import { genres } from "@/const/genre";
 import { objectives } from "@/const/objective";
 import { regions } from "@/const/region";
@@ -156,7 +157,6 @@ export function CompanyBusinessForm({
                   }
                 >
                   <Input
-                    type="number"
                     placeholder="30000"
                     required={false}
                     {...register("minBudget")}
@@ -177,7 +177,6 @@ export function CompanyBusinessForm({
                   }
                 >
                   <Input
-                    type="number"
                     placeholder="100000"
                     required={false}
                     {...register("maxBudget")}
@@ -254,9 +253,11 @@ export function CompanyBusinessForm({
                     placeholder="選択してください"
                     {...register("gender")}
                   >
-                    <option value="all">指定なし</option>
-                    <option value="male">男性</option>
-                    <option value="female">女性</option>
+                    {genders.map((gender) => (
+                      <option key={gender.value} value={gender.value}>
+                        {gender.label}
+                      </option>
+                    ))}
                   </NativeSelect.Field>
                   <NativeSelect.Indicator />
                 </NativeSelect.Root>

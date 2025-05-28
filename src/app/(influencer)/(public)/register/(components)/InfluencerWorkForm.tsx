@@ -121,7 +121,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="30000" required={false} />
+                  <Input placeholder="30000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
@@ -133,7 +133,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="50000" required={false} />
+                  <Input placeholder="50000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
@@ -145,7 +145,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="100000" required={false} />
+                  <Input placeholder="100000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
@@ -157,7 +157,7 @@ export function InfluencerWorkForm() {
                     </Icon>
                   }
                 >
-                  <Input type="number" placeholder="150000" required={false} />
+                  <Input placeholder="150000" required={false} />
                 </InputGroup>
               </Field.Root>
             </SimpleGrid>
