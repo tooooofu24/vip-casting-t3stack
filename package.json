@@ -28,7 +28,7 @@
     "@prisma/client": "^6.8.2",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.49.8",
-    "@t3-oss/env-nextjs": "^0.13.4",
+    "@t3-oss/env-nextjs": "^0.13.6",
     "@tanstack/react-query": "^5.77.2",
     "@trpc/client": "^11.1.3",
     "@trpc/react-query": "^11.1.3",
@@ -43,14 +43,14 @@
     "react-icons": "^5.5.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.2",
-    "zod": "^3.25.30",
+    "zod": "^3.25.32",
     "zod-i18n-map": "^2.27.0"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^3.19.1",
     "@eslint/eslintrc": "^3.3.1",
-    "@types/node": "^22.15.21",
-    "@types/react": "^19.1.5",
+    "@types/node": "^22.15.23",
+    "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "cspell": "^9.0.2",
     "eslint": "^9.27.0",
@@ -59,7 +59,7 @@
     "prettier": "^3.5.3",
     "prisma": "^6.8.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.32.1"
+    "typescript-eslint": "^8.33.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.39.3"
