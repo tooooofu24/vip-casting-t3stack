@@ -6,6 +6,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import {
   Card,
   Center,
+  Link as ChakraLink,
   Container,
   Heading,
   Icon,
@@ -13,6 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import type { Route } from "next";
+import NextLink from "next/link";
 import { useSearchParams } from "next/navigation";
 import { LuMail } from "react-icons/lu";
 
@@ -57,6 +59,11 @@ export default function ForgetPasswordPage() {
                 onSubmit={onSubmit}
                 defaultValues={{ email }}
               />
+              <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>
+                <NextLink href="/public/company/login">
+                  ログイン画面に戻る
+                </NextLink>
+              </ChakraLink>
             </Card.Body>
           </Card.Root>
         </VStack>

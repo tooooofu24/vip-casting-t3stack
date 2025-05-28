@@ -54,12 +54,14 @@ export default function CompanyLoginPage() {
     if (error) {
       toaster.create({
         type: "error",
-        title: error.message,
+        title: "ログインに失敗しました",
+        description: error.message,
       });
     } else {
       toaster.create({
         type: "error",
-        title: "企業アカウントとしてログインできません",
+        title: "ログインに失敗しました",
+        description: "企業アカウントとしてログインできません",
       });
       await supabase.auth.signOut();
     }
@@ -67,7 +69,7 @@ export default function CompanyLoginPage() {
 
   return (
     <Center>
-      <Container maxW="xl" py={32}>
+      <Container maxW="xl" py={20}>
         <VStack gap={8}>
           {/* Header */}
           <VStack gap={{ base: 2, sm: 4 }} align="center">
@@ -116,7 +118,7 @@ export default function CompanyLoginPage() {
                 <Separator />
 
                 {/* Benefits Section */}
-                <Box pt={6}>
+                <Box>
                   <Text fontWeight="bold" mb={4}>
                     企業アカウントの特徴
                   </Text>

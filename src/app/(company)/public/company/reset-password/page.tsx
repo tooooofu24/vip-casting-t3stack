@@ -7,12 +7,14 @@ import type { ResetPasswordRequest } from "@/validations/company/resetPassword";
 import {
   Card,
   Center,
+  Link as ChakraLink,
   Container,
   Heading,
   Icon,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { LuLock } from "react-icons/lu";
 
 export default function ForgetPasswordPage() {
@@ -47,6 +49,11 @@ export default function ForgetPasswordPage() {
           <Card.Root w="full">
             <Card.Body>
               <ResetPasswordForm onSubmit={onSubmit} />
+              <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>
+                <NextLink href="/public/company/login">
+                  ログイン画面に戻る
+                </NextLink>
+              </ChakraLink>
             </Card.Body>
           </Card.Root>
         </VStack>

@@ -80,7 +80,7 @@ export const CompanyLoginForm = ({ onSubmit, defaultValues }: Props) => {
 
       {/* Remember Me & Forgot Password */}
       <ChakraLink asChild fontSize="sm" ml="auto">
-        <NextLink href="/public/company/forgot-password">
+        <NextLink href="/public/company/forget-password">
           パスワードをお忘れですか？
         </NextLink>
       </ChakraLink>
