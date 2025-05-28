@@ -20,7 +20,7 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { LuBuilding, LuDollarSign, LuPlus, LuSend } from "react-icons/lu";
+import { LuBuilding, LuPlus, LuSend } from "react-icons/lu";
 
 const workTypeOptions = [
   "投稿作成",
@@ -50,62 +50,6 @@ export function InfluencerWorkForm() {
     <Card.Root>
       <Card.Body p={{ base: 6, md: 8 }}>
         <VStack gap={8} align="stretch">
-          {/* Past Works */}
-          <Box>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              mb={4}
-            >
-              <Heading size="md">過去のPR実績</Heading>
-              <Button variant="ghost" size="sm">
-                <Icon>
-                  <LuPlus />
-                </Icon>
-                実績を追加
-              </Button>
-            </Box>
-            <VStack gap={4} align="stretch">
-              <Card.Root variant="outline">
-                <Card.Body position="relative">
-                  <VStack gap={4}>
-                    <Field.Root>
-                      <Field.Label>企業名・ブランド名</Field.Label>
-                      <InputGroup
-                        startElement={
-                          <Icon color="fg.muted">
-                            <LuBuilding />
-                          </Icon>
-                        }
-                      >
-                        <Input
-                          placeholder="企業名・ブランド名を入力"
-                          required={false}
-                        />
-                      </InputGroup>
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>実施内容</Field.Label>
-                      <Textarea rows={2} required={false} />
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>実施時期</Field.Label>
-                      <Input placeholder="2023年10月" required={false} />
-                    </Field.Root>
-                  </VStack>
-                  <CloseButton
-                    position="absolute"
-                    top={1}
-                    right={1}
-                    size="sm"
-                    variant="ghost"
-                  />
-                </Card.Body>
-              </Card.Root>
-            </VStack>
-          </Box>
-
           {/* Desired Fee */}
           <Box>
             <Heading size="md" mb={4}>
@@ -114,49 +58,25 @@ export function InfluencerWorkForm() {
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
               <Field.Root>
                 <Field.Label>投稿1件あたり</Field.Label>
-                <InputGroup
-                  startElement={
-                    <Icon color="fg.muted">
-                      <LuDollarSign />
-                    </Icon>
-                  }
-                >
+                <InputGroup startElement="¥">
                   <Input placeholder="30000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
                 <Field.Label>動画1本あたり</Field.Label>
-                <InputGroup
-                  startElement={
-                    <Icon color="fg.muted">
-                      <LuDollarSign />
-                    </Icon>
-                  }
-                >
+                <InputGroup startElement="¥">
                   <Input placeholder="50000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
                 <Field.Label>ライブ配信1回あたり</Field.Label>
-                <InputGroup
-                  startElement={
-                    <Icon color="fg.muted">
-                      <LuDollarSign />
-                    </Icon>
-                  }
-                >
+                <InputGroup startElement="¥">
                   <Input placeholder="100000" required={false} />
                 </InputGroup>
               </Field.Root>
               <Field.Root>
                 <Field.Label>イベント出演1回あたり</Field.Label>
-                <InputGroup
-                  startElement={
-                    <Icon color="fg.muted">
-                      <LuDollarSign />
-                    </Icon>
-                  }
-                >
+                <InputGroup startElement="¥">
                   <Input placeholder="150000" required={false} />
                 </InputGroup>
               </Field.Root>
@@ -271,6 +191,56 @@ export function InfluencerWorkForm() {
                   required={false}
                 />
               </Field.Root>
+            </VStack>
+          </Box>
+
+          {/* Past Works */}
+          <Box>
+            <Heading size="md" mb={4}>
+              過去のPR実績
+            </Heading>
+            <VStack gap={4} align="stretch">
+              <Card.Root variant="outline">
+                <Card.Body position="relative">
+                  <VStack gap={4}>
+                    <Field.Root>
+                      <Field.Label>企業名・ブランド名</Field.Label>
+                      <InputGroup
+                        startElement={
+                          <Icon color="fg.muted">
+                            <LuBuilding />
+                          </Icon>
+                        }
+                      >
+                        <Input
+                          placeholder="企業名・ブランド名を入力"
+                          required={false}
+                        />
+                      </InputGroup>
+                    </Field.Root>
+                    <Field.Root>
+                      <Field.Label>実施内容</Field.Label>
+                      <Textarea rows={2} required={false} />
+                    </Field.Root>
+                    <Field.Root>
+                      <Field.Label>実施時期</Field.Label>
+                      <Input placeholder="2023年10月" required={false} />
+                    </Field.Root>
+                  </VStack>
+                  <CloseButton
+                    position="absolute"
+                    top={2}
+                    right={2}
+                    size="sm"
+                  />
+                </Card.Body>
+              </Card.Root>
+              <Button variant="ghost" size="sm" ml="auto">
+                <Icon>
+                  <LuPlus />
+                </Icon>
+                実績を追加
+              </Button>
             </VStack>
           </Box>
 

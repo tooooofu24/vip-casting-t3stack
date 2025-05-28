@@ -5,7 +5,6 @@ import { genders } from "@/const/gender";
 import { genres } from "@/const/genre";
 import { objectives } from "@/const/objective";
 import { regions } from "@/const/region";
-import { spacing } from "@/lib/chakra-ui/theme/tokens/spacing";
 import {
   companyBusinessSchema,
   type CompanyBusinessRequest,
@@ -193,7 +192,7 @@ export function CompanyBusinessForm({
               ターゲット層
             </Heading>
             <VStack gap={4} align="stretch">
-              <VStack gap={spacing[1].value} align="stretch">
+              <VStack gap={1.5} align="stretch">
                 <Field.Root invalid={!!errors.ageGroups}>
                   <Field.Label as="p">年齢層</Field.Label>
                 </Field.Root>
@@ -264,7 +263,7 @@ export function CompanyBusinessForm({
                 <Field.ErrorText>{errors.gender?.message}</Field.ErrorText>
               </Field.Root>
 
-              <VStack gap={spacing[1].value} align="stretch">
+              <VStack gap={1.5} align="stretch">
                 <Field.Root invalid={!!errors.regions}>
                   <Field.Label as="p">地域</Field.Label>
                 </Field.Root>
@@ -321,7 +320,7 @@ export function CompanyBusinessForm({
             <Heading size="md" mb={4}>
               希望するインフルエンサーのジャンル
             </Heading>
-            <VStack gap={spacing[1].value} align="stretch">
+            <VStack gap={1.5} align="stretch">
               <Field.Root invalid={!!errors.genres}>
                 <Field.Label as="p">ジャンル</Field.Label>
               </Field.Root>
@@ -373,7 +372,7 @@ export function CompanyBusinessForm({
             <Heading size="md" mb={4}>
               キャンペーンの目的
             </Heading>
-            <VStack gap={spacing[1].value} align="stretch">
+            <VStack gap={1.5} align="stretch">
               <Field.Root invalid={!!errors.objectives}>
                 <Field.Label as="p">目的</Field.Label>
               </Field.Root>

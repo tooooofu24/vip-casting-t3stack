@@ -10,6 +10,7 @@ export const regionValues = [
   Region.CHUGOKU,
   Region.SHIKOKU,
   Region.KYUSHU,
+  Region.ONLINE,
 ] as const;
 
 const regionLabels = {
@@ -22,6 +23,7 @@ const regionLabels = {
   [Region.CHUGOKU]: "中国",
   [Region.SHIKOKU]: "四国",
   [Region.KYUSHU]: "九州",
+  [Region.ONLINE]: "オンライン",
 } satisfies Record<Region, string>;
 
 export const regions = regionValues.map((value) => ({

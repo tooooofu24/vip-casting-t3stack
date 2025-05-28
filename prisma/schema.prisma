@@ -91,6 +91,7 @@ enum Region {
     CHUGOKU
     SHIKOKU
     KYUSHU
+    ONLINE
 }
 
 enum Genre {

@@ -24,7 +24,7 @@ const items = ["基本情報", "住所情報", "SNS情報", "案件情報"] as c
 
 export default function RegisterPage() {
   const steps = useSteps({
-    defaultStep: 0,
+    defaultStep: 3,
     count: items.length,
   });
   return (
