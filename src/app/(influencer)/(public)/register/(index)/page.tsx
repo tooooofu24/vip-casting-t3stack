@@ -1,19 +1,29 @@
 "use client";
 
-import { RegistrationSteps } from "@/app/(influencer)/(public)/register/(components)/RegistrationSteps";
+import { InfluencerCompletedCard } from "@/app/(influencer)/(public)/register/(components)/InfluencerCompletedCard";
+import { InfluencerInformationForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerInformationForm";
+import { InfluencerPersonalForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerPersonalForm";
+import { InfluencerSnsForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerSnsForm";
+import { InfluencerWorkForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerWorkForm";
 import {
   Box,
   Button,
-  Card,
+  ButtonGroup,
   Container,
-  Field,
   Heading,
-  Input,
+  Steps,
   Text,
+  useSteps,
   VStack,
 } from "@chakra-ui/react";
 
+const items = ["基本情報", "個人情報", "SNS情報", "案件情報"] as const;
+
 export default function RegisterPage() {
+  const steps = useSteps({
+    defaultStep: 0,
+    count: items.length,
+  });
   return (
     <Box py={{ base: 8, md: 12 }}>
       <Container maxW="3xl">
@@ -29,58 +39,40 @@ export default function RegisterPage() {
           </VStack>
 
           <VStack gap={4} align="stretch">
-            <RegistrationSteps step={0} />
-
-            {/* Form Content */}
-            <Card.Root>
-              <Card.Body p={{ base: 6, md: 8 }}>
-                <VStack gap={8} align="stretch">
-                  <Field.Root required>
-                    <Field.Label>
-                      メールアドレス
-                      <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input type="email" placeholder="your@email.com" />
-                    <Field.HelperText>
-                      ※ビジネスメール推奨。連絡手段として使用します
-                    </Field.HelperText>
-                  </Field.Root>
-
-                  <Field.Root required>
-                    <Field.Label>
-                      パスワード
-                      <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input type="password" placeholder="8文字以上の英数字" />
-                  </Field.Root>
-
-                  <Field.Root required>
-                    <Field.Label>
-                      パスワード（確認）
-                      <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input type="password" placeholder="パスワードを再入力" />
-                  </Field.Root>
-
-                  <Field.Root required>
-                    <Field.Label>
-                      公開名（活動名）
-                      <Field.RequiredIndicator />
-                    </Field.Label>
-                    <Input placeholder="SNSなどで使用している名前" />
-                    <Field.HelperText>
-                      ※プロフィールページやメッセージで表示される名前です
-                    </Field.HelperText>
-                  </Field.Root>
-                </VStack>
-
-                <Box mt={8}>
-                  <Button size="md" w="full">
-                    次へ
-                  </Button>
-                </Box>
-              </Card.Body>
-            </Card.Root>
+            <Steps.RootProvider value={steps} size="sm">
+              <Steps.List mb={4}>
+                {items.map((title, i) => (
+                  <Steps.Item key={i} index={i} title={title}>
+                    <Steps.Indicator />
+                    <Steps.Title>{title}</Steps.Title>
+                    <Steps.Separator />
+                  </Steps.Item>
+                ))}
+              </Steps.List>
+              <Steps.Content index={0}>
+                <InfluencerInformationForm />
+              </Steps.Content>
+              <Steps.Content index={1}>
+                <InfluencerPersonalForm />
+              </Steps.Content>
+              <Steps.Content index={2}>
+                <InfluencerSnsForm />
+              </Steps.Content>
+              <Steps.Content index={3}>
+                <InfluencerWorkForm />
+              </Steps.Content>
+              <Steps.CompletedContent>
+                <InfluencerCompletedCard />
+              </Steps.CompletedContent>
+              <ButtonGroup size="sm" variant="outline">
+                <Steps.PrevTrigger asChild>
+                  <Button>Prev</Button>
+                </Steps.PrevTrigger>
+                <Steps.NextTrigger asChild>
+                  <Button>Next</Button>
+                </Steps.NextTrigger>
+              </ButtonGroup>
+            </Steps.RootProvider>
           </VStack>
         </VStack>
       </Container>
