@@ -9,7 +9,11 @@ export const register = publicProcedure
       const influencer = await prisma.influencer.create({ data: {} });
       // 2. 各情報をinfluencerIdで紐付けて作成
       await prisma.influencerInformation.create({
-        data: { ...input.information, influencerId: influencer.id },
+        data: {
+          ...input.information,
+          birthday: new Date(input.information.birthday),
+          influencerId: influencer.id,
+        },
       });
       await prisma.influencerAddress.create({
         data: { ...input.address, influencerId: influencer.id },
