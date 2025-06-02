@@ -1,53 +1,57 @@
 "use client";
 
+import { TagInputField } from "@/app/(components)/fields/TagInputField";
+import { InfluencerPrResultsField } from "@/app/(influencer)/(public)/register/(components)/fields/InfluencerPrResultsField";
+import {
+  areaOptions,
+  influencerWorkDefaultValues,
+  influencerWorkSchema,
+  workTypeOptions,
+  type InfluencerWorkRequest,
+} from "@/validations/influencer/register/work";
 import {
   Box,
   Button,
   ButtonGroup,
   Card,
   CheckboxCard,
-  CheckboxGroup,
-  CloseButton,
   Field,
   Heading,
   Icon,
   Input,
   InputGroup,
   SimpleGrid,
-  Tag,
   Textarea,
   VStack,
   Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
-import { LuBuilding, LuPlus, LuSend } from "react-icons/lu";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { LuSend } from "react-icons/lu";
 
-const workTypeOptions = [
-  "投稿作成",
-  "動画制作",
-  "ライブ配信",
-  "イベント出演",
-  "アンバサダー",
-  "モデル撮影",
-  "レビュー記事",
-];
+export type InfluencerWorkFormProps = {
+  defaultValues?: InfluencerWorkRequest;
+  onSubmit?: (data: InfluencerWorkRequest) => void;
+  onBack?: () => void;
+};
 
-const areaOptions = [
-  "全国対応可",
-  "関東エリア",
-  "関西エリア",
-  "東海エリア",
-  "北海道",
-  "東北",
-  "中国",
-  "四国",
-  "九州",
-  "オンラインのみ",
-];
+export function InfluencerWorkForm({
+  defaultValues = influencerWorkDefaultValues,
+  onSubmit = () => undefined,
+  onBack,
+}: InfluencerWorkFormProps) {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<InfluencerWorkRequest>({
+    resolver: zodResolver(influencerWorkSchema),
+    defaultValues,
+  });
 
-export function InfluencerWorkForm() {
   return (
-    <Card.Root>
+    <Card.Root as="form" onSubmit={handleSubmit(onSubmit)}>
       <Card.Body p={{ base: 6, md: 8 }}>
         <VStack gap={8} align="stretch">
           {/* Desired Fee */}
@@ -56,29 +60,53 @@ export function InfluencerWorkForm() {
               希望報酬単価（税抜）
             </Heading>
             <SimpleGrid columns={{ base: 1, md: 2 }} gap={4}>
-              <Field.Root>
+              <Field.Root invalid={!!errors.postFee}>
                 <Field.Label>投稿1件あたり</Field.Label>
                 <InputGroup startElement="¥">
-                  <Input placeholder="30000" required={false} />
+                  <Input
+                    placeholder="30000"
+                    {...register("postFee", {
+                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    })}
+                  />
                 </InputGroup>
+                <Field.ErrorText>{errors.postFee?.message}</Field.ErrorText>
               </Field.Root>
-              <Field.Root>
+              <Field.Root invalid={!!errors.videoFee}>
                 <Field.Label>動画1本あたり</Field.Label>
                 <InputGroup startElement="¥">
-                  <Input placeholder="50000" required={false} />
+                  <Input
+                    placeholder="50000"
+                    {...register("videoFee", {
+                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    })}
+                  />
                 </InputGroup>
+                <Field.ErrorText>{errors.videoFee?.message}</Field.ErrorText>
               </Field.Root>
-              <Field.Root>
+              <Field.Root invalid={!!errors.liveFee}>
                 <Field.Label>ライブ配信1回あたり</Field.Label>
                 <InputGroup startElement="¥">
-                  <Input placeholder="100000" required={false} />
+                  <Input
+                    placeholder="100000"
+                    {...register("liveFee", {
+                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    })}
+                  />
                 </InputGroup>
+                <Field.ErrorText>{errors.liveFee?.message}</Field.ErrorText>
               </Field.Root>
-              <Field.Root>
+              <Field.Root invalid={!!errors.eventFee}>
                 <Field.Label>イベント出演1回あたり</Field.Label>
                 <InputGroup startElement="¥">
-                  <Input placeholder="150000" required={false} />
+                  <Input
+                    placeholder="150000"
+                    {...register("eventFee", {
+                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                    })}
+                  />
                 </InputGroup>
+                <Field.ErrorText>{errors.eventFee?.message}</Field.ErrorText>
               </Field.Root>
             </SimpleGrid>
           </Box>
@@ -88,28 +116,44 @@ export function InfluencerWorkForm() {
             <Heading size="md" mb={4}>
               対応可能な案件の種類
             </Heading>
-            <CheckboxGroup>
-              <Wrap gap={2}>
-                {workTypeOptions.map((type) => (
-                  <CheckboxCard.Root
-                    key={type}
-                    value={type}
-                    variant="outline"
-                    size="sm"
-                    align="center"
-                    flex={0}
-                  >
-                    <CheckboxCard.HiddenInput />
-                    <CheckboxCard.Control>
-                      <CheckboxCard.Label whiteSpace="nowrap">
-                        {type}
-                      </CheckboxCard.Label>
-                      <CheckboxCard.Indicator />
-                    </CheckboxCard.Control>
-                  </CheckboxCard.Root>
-                ))}
-              </Wrap>
-            </CheckboxGroup>
+            <Controller
+              control={control}
+              name="workTypes"
+              render={({
+                field: { value, onChange, ...field },
+                fieldState: { invalid },
+              }) => (
+                <Wrap gap={2}>
+                  {workTypeOptions.map((type) => (
+                    <CheckboxCard.Root
+                      key={type}
+                      value={type}
+                      checked={value?.includes(type)}
+                      invalid={invalid}
+                      onChange={() => {
+                        if (value?.includes(type)) {
+                          onChange(value.filter((v) => v !== type));
+                        } else {
+                          onChange([...(value ?? []), type]);
+                        }
+                      }}
+                      {...field}
+                    >
+                      <CheckboxCard.HiddenInput />
+                      <CheckboxCard.Control>
+                        <CheckboxCard.Label whiteSpace="nowrap">
+                          {type}
+                        </CheckboxCard.Label>
+                        <CheckboxCard.Indicator />
+                      </CheckboxCard.Control>
+                    </CheckboxCard.Root>
+                  ))}
+                </Wrap>
+              )}
+            />
+            <Field.Root invalid={!!errors.workTypes}>
+              <Field.ErrorText>{errors.workTypes?.message}</Field.ErrorText>
+            </Field.Root>
           </Box>
 
           {/* Available Areas */}
@@ -117,28 +161,44 @@ export function InfluencerWorkForm() {
             <Heading size="md" mb={4}>
               活動可能エリア
             </Heading>
-            <CheckboxGroup>
-              <Wrap gap={2}>
-                {areaOptions.map((area) => (
-                  <CheckboxCard.Root
-                    key={area}
-                    value={area}
-                    variant="outline"
-                    size="sm"
-                    align="center"
-                    flex={0}
-                  >
-                    <CheckboxCard.HiddenInput />
-                    <CheckboxCard.Control>
-                      <CheckboxCard.Label whiteSpace="nowrap">
-                        {area}
-                      </CheckboxCard.Label>
-                      <CheckboxCard.Indicator />
-                    </CheckboxCard.Control>
-                  </CheckboxCard.Root>
-                ))}
-              </Wrap>
-            </CheckboxGroup>
+            <Controller
+              control={control}
+              name="areas"
+              render={({
+                field: { value, onChange, ...field },
+                fieldState: { invalid },
+              }) => (
+                <Wrap gap={2}>
+                  {areaOptions.map((area) => (
+                    <CheckboxCard.Root
+                      key={area}
+                      value={area}
+                      checked={value?.includes(area)}
+                      invalid={invalid}
+                      onChange={() => {
+                        if (value?.includes(area)) {
+                          onChange(value.filter((v) => v !== area));
+                        } else {
+                          onChange([...(value ?? []), area]);
+                        }
+                      }}
+                      {...field}
+                    >
+                      <CheckboxCard.HiddenInput />
+                      <CheckboxCard.Control>
+                        <CheckboxCard.Label whiteSpace="nowrap">
+                          {area}
+                        </CheckboxCard.Label>
+                        <CheckboxCard.Indicator />
+                      </CheckboxCard.Control>
+                    </CheckboxCard.Root>
+                  ))}
+                </Wrap>
+              )}
+            />
+            <Field.Root invalid={!!errors.areas}>
+              <Field.ErrorText>{errors.areas?.message}</Field.ErrorText>
+            </Field.Root>
           </Box>
 
           {/* NG List */}
@@ -147,49 +207,46 @@ export function InfluencerWorkForm() {
               NG設定
             </Heading>
             <VStack gap={4}>
-              <Field.Root>
-                <Field.Label>NG商材（カンマ区切りで入力）</Field.Label>
-                <Input
-                  placeholder="例: タバコ, アダルト, ギャンブル"
-                  required={false}
+              <Field.Root invalid={!!errors.ngProducts}>
+                <Field.Label>NG商材</Field.Label>
+                <Controller
+                  control={control}
+                  name="ngProducts"
+                  render={({ field }) => (
+                    <TagInputField
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="例: タバコ、アダルト、ギャンブル"
+                    />
+                  )}
                 />
-                <Wrap gap={2} mt={1}>
-                  <WrapItem>
-                    <Tag.Root variant="subtle" colorScheme="red">
-                      <Tag.Label>タバコ</Tag.Label>
-                      <Tag.EndElement>
-                        <Tag.CloseTrigger />
-                      </Tag.EndElement>
-                    </Tag.Root>
-                  </WrapItem>
-                </Wrap>
+                <Field.ErrorText>{errors.ngProducts?.message}</Field.ErrorText>
               </Field.Root>
 
-              <Field.Root>
-                <Field.Label>NG企業（カンマ区切りで入力）</Field.Label>
-                <Input
-                  placeholder="例: 〇〇株式会社, △△商事"
-                  required={false}
+              <Field.Root invalid={!!errors.ngCompanies}>
+                <Field.Label>NG企業</Field.Label>
+                <Controller
+                  control={control}
+                  name="ngCompanies"
+                  render={({ field }) => (
+                    <TagInputField
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder="例: 〇〇株式会社、△△商事"
+                    />
+                  )}
                 />
-                <Wrap gap={2} mt={1}>
-                  <WrapItem>
-                    <Tag.Root variant="subtle" colorScheme="red">
-                      <Tag.Label>〇〇株式会社</Tag.Label>
-                      <Tag.EndElement>
-                        <Tag.CloseTrigger />
-                      </Tag.EndElement>
-                    </Tag.Root>
-                  </WrapItem>
-                </Wrap>
+                <Field.ErrorText>{errors.ngCompanies?.message}</Field.ErrorText>
               </Field.Root>
 
-              <Field.Root>
+              <Field.Root invalid={!!errors.ngOther}>
                 <Field.Label>その他のNG事項</Field.Label>
                 <Textarea
                   rows={3}
                   placeholder="例: マッチング成立前の名前開示NG、深夜の撮影NG など"
-                  required={false}
+                  {...register("ngOther")}
                 />
+                <Field.ErrorText>{errors.ngOther?.message}</Field.ErrorText>
               </Field.Root>
             </VStack>
           </Box>
@@ -199,53 +256,13 @@ export function InfluencerWorkForm() {
             <Heading size="md" mb={4}>
               過去のPR実績
             </Heading>
-            <VStack gap={4} align="stretch">
-              <Card.Root variant="outline">
-                <Card.Body position="relative">
-                  <VStack gap={4}>
-                    <Field.Root>
-                      <Field.Label>企業名・ブランド名</Field.Label>
-                      <InputGroup
-                        startElement={
-                          <Icon color="fg.muted">
-                            <LuBuilding />
-                          </Icon>
-                        }
-                      >
-                        <Input
-                          placeholder="企業名・ブランド名を入力"
-                          required={false}
-                        />
-                      </InputGroup>
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>実施内容</Field.Label>
-                      <Textarea rows={2} required={false} />
-                    </Field.Root>
-                    <Field.Root>
-                      <Field.Label>実施時期</Field.Label>
-                      <Input placeholder="2023年10月" required={false} />
-                    </Field.Root>
-                  </VStack>
-                  <CloseButton
-                    position="absolute"
-                    top={2}
-                    right={2}
-                    size="sm"
-                  />
-                </Card.Body>
-              </Card.Root>
-              <Button variant="ghost" size="sm" ml="auto">
-                <Icon>
-                  <LuPlus />
-                </Icon>
-                実績を追加
-              </Button>
-            </VStack>
+            <InfluencerPrResultsField control={control} errors={errors} />
           </Box>
 
           <ButtonGroup width="full" justifyContent="space-between" mt={4}>
-            <Button variant="outline">戻る</Button>
+            <Button variant="outline" type="button" onClick={onBack}>
+              戻る
+            </Button>
             <Button type="submit">
               <Icon>
                 <LuSend />

@@ -45,6 +45,8 @@ export function getErrorMessageFromTrpcCode(
       return "リクエストが多すぎます。しばらくしてから再度お試しください。";
     case "CLIENT_CLOSED_REQUEST":
       return "クライアントがリクエストを中断しました。";
+    case "PAYMENT_REQUIRED":
+      return "支払いが必要です。";
     default:
       // case漏れがあれば、ここで型エラーになる
       const _: never = code;

@@ -117,13 +117,7 @@ export function InfluencerFilterPanel() {
               <CheckboxGroup>
                 <Wrap gap={2}>
                   {DUMMY_GENRES.map((genre) => (
-                    <CheckboxCard.Root
-                      key={genre}
-                      size="sm"
-                      value={genre}
-                      align="center"
-                      flex={0}
-                    >
+                    <CheckboxCard.Root key={genre} value={genre}>
                       <CheckboxCard.HiddenInput />
                       <CheckboxCard.Control>
                         <CheckboxCard.Label whiteSpace="nowrap">

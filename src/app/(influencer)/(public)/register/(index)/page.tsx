@@ -8,6 +8,7 @@ import { InfluencerWorkForm } from "@/app/(influencer)/(public)/register/(compon
 import { influencerAddressDefaultValues } from "@/validations/influencer/register/address";
 import { influencerInformationDefaultValues } from "@/validations/influencer/register/information";
 import { influencerSnsDefaultValues } from "@/validations/influencer/register/sns";
+import { influencerWorkDefaultValues } from "@/validations/influencer/register/work";
 import {
   Box,
   Button,
@@ -83,7 +84,15 @@ export default function RegisterPage() {
                 />
               </Steps.Content>
               <Steps.Content index={3}>
-                <InfluencerWorkForm />
+                <InfluencerWorkForm
+                  defaultValues={influencerWorkDefaultValues}
+                  onSubmit={() => {
+                    steps.goToNextStep();
+                  }}
+                  onBack={() => {
+                    steps.goToPrevStep();
+                  }}
+                />
               </Steps.Content>
               <Steps.CompletedContent>
                 <InfluencerCompletedCard />

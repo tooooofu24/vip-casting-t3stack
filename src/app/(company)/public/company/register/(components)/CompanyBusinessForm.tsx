@@ -218,10 +218,6 @@ export function CompanyBusinessForm({
                             }
                           }}
                           {...field}
-                          variant="outline"
-                          size="sm"
-                          align="center"
-                          flex={0}
                         >
                           <CheckboxCard.HiddenInput />
                           <CheckboxCard.Control>
@@ -289,10 +285,6 @@ export function CompanyBusinessForm({
                             }
                           }}
                           {...field}
-                          variant="outline"
-                          size="sm"
-                          align="center"
-                          flex={0}
                         >
                           <CheckboxCard.HiddenInput />
                           <CheckboxCard.Control>
@@ -402,10 +394,6 @@ export function CompanyBusinessForm({
                           }
                         }}
                         {...field}
-                        variant="outline"
-                        size="sm"
-                        align="center"
-                        flex={0}
                       >
                         <CheckboxCard.HiddenInput />
                         <CheckboxCard.Control>
