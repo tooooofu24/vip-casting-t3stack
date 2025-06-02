@@ -1,4 +1,4 @@
-import { Prefecture } from "@prisma/client";
+import { Prefecture } from "@/lib/prisma/generated";
 
 export const prefectureValues = [
   Prefecture.HOKKAIDO,

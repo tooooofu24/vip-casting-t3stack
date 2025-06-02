@@ -1,4 +1,4 @@
-import { Objective } from "@prisma/client";
+import { Objective } from "@/lib/prisma/generated";
 
 export const objectiveValues = [
   Objective.AWARENESS,

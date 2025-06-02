@@ -1,4 +1,4 @@
-import { Gender } from "@prisma/client";
+import { Gender } from "@/lib/prisma/generated";
 
 export const genderValues = [Gender.MALE, Gender.FEMALE, Gender.OTHER] as const;
 

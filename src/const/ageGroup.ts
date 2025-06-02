@@ -1,4 +1,4 @@
-import { AgeGroup } from "@prisma/client";
+import { AgeGroup } from "@/lib/prisma/generated";
 
 export const ageGroupValues = [
   AgeGroup.TEENS,

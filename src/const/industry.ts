@@ -1,4 +1,4 @@
-import { Industry } from "@prisma/client";
+import { Industry } from "@/lib/prisma/generated";
 
 export const industryValues = [
   Industry.RETAIL,

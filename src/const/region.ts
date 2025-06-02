@@ -1,4 +1,4 @@
-import { Region } from "@prisma/client";
+import { Region } from "@/lib/prisma/generated";
 
 export const regionValues = [
   Region.ALL,

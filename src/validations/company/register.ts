@@ -5,8 +5,14 @@ import { industryValues } from "@/const/industry";
 import { objectiveValues } from "@/const/objective";
 import { prefectureValues } from "@/const/prefecture";
 import { regionValues } from "@/const/region";
+import {
+  Gender,
+  Genre,
+  Objective,
+  Prefecture,
+  Region,
+} from "@/lib/prisma/generated";
 import { z } from "@/lib/zod";
-import { Gender, Genre, Objective, Prefecture, Region } from "@prisma/client";
 
 // 会社基本情報
 export const companyInformationSchema = z.object({

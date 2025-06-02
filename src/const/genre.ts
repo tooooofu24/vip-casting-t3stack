@@ -1,4 +1,4 @@
-import { Genre } from "@prisma/client";
+import { Genre } from "@/lib/prisma/generated";
 
 export const genreValues = [
   Genre.BEAUTY,

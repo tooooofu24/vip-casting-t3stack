@@ -5,6 +5,7 @@ import { genders } from "@/const/gender";
 import { genres } from "@/const/genre";
 import { objectives } from "@/const/objective";
 import { regions } from "@/const/region";
+import { type Objective } from "@/lib/prisma/generated";
 import {
   companyBusinessSchema,
   type CompanyBusinessRequest,
@@ -27,7 +28,6 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type Objective } from "@prisma/client";
 import { Controller, useForm, type DefaultValues } from "react-hook-form";
 import { LuDollarSign, LuUser } from "react-icons/lu";
 
