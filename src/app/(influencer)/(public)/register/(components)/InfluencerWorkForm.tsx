@@ -2,11 +2,11 @@
 
 import { TagInputField } from "@/app/(components)/fields/TagInputField";
 import { InfluencerPrResultsField } from "@/app/(influencer)/(public)/register/(components)/fields/InfluencerPrResultsField";
+import { regions } from "@/const/region";
+import { workTypes } from "@/const/workType";
 import {
-  areaOptions,
   influencerWorkDefaultValues,
   influencerWorkSchema,
-  workTypeOptions,
   type InfluencerWorkRequest,
 } from "@/validations/influencer/register/work";
 import {
@@ -124,17 +124,17 @@ export function InfluencerWorkForm({
                 fieldState: { invalid },
               }) => (
                 <Wrap gap={2}>
-                  {workTypeOptions.map((type) => (
+                  {workTypes.map((workType) => (
                     <CheckboxCard.Root
-                      key={type}
-                      value={type}
-                      checked={value?.includes(type)}
+                      key={workType.value}
+                      value={workType.value}
+                      checked={value?.includes(workType.value)}
                       invalid={invalid}
                       onChange={() => {
-                        if (value?.includes(type)) {
-                          onChange(value.filter((v) => v !== type));
+                        if (value?.includes(workType.value)) {
+                          onChange(value.filter((v) => v !== workType.value));
                         } else {
-                          onChange([...(value ?? []), type]);
+                          onChange([...(value ?? []), workType.value]);
                         }
                       }}
                       {...field}
@@ -142,7 +142,7 @@ export function InfluencerWorkForm({
                       <CheckboxCard.HiddenInput />
                       <CheckboxCard.Control>
                         <CheckboxCard.Label whiteSpace="nowrap">
-                          {type}
+                          {workType.label}
                         </CheckboxCard.Label>
                         <CheckboxCard.Indicator />
                       </CheckboxCard.Control>
@@ -163,23 +163,23 @@ export function InfluencerWorkForm({
             </Heading>
             <Controller
               control={control}
-              name="areas"
+              name="regions"
               render={({
                 field: { value, onChange, ...field },
                 fieldState: { invalid },
               }) => (
                 <Wrap gap={2}>
-                  {areaOptions.map((area) => (
+                  {regions.map((region) => (
                     <CheckboxCard.Root
-                      key={area}
-                      value={area}
-                      checked={value?.includes(area)}
+                      key={region.value}
+                      value={region.value}
+                      checked={value?.includes(region.value)}
                       invalid={invalid}
                       onChange={() => {
-                        if (value?.includes(area)) {
-                          onChange(value.filter((v) => v !== area));
+                        if (value?.includes(region.value)) {
+                          onChange(value.filter((v) => v !== region.value));
                         } else {
-                          onChange([...(value ?? []), area]);
+                          onChange([...(value ?? []), region.value]);
                         }
                       }}
                       {...field}
@@ -187,7 +187,7 @@ export function InfluencerWorkForm({
                       <CheckboxCard.HiddenInput />
                       <CheckboxCard.Control>
                         <CheckboxCard.Label whiteSpace="nowrap">
-                          {area}
+                          {region.label}
                         </CheckboxCard.Label>
                         <CheckboxCard.Indicator />
                       </CheckboxCard.Control>
@@ -196,8 +196,8 @@ export function InfluencerWorkForm({
                 </Wrap>
               )}
             />
-            <Field.Root invalid={!!errors.areas}>
-              <Field.ErrorText>{errors.areas?.message}</Field.ErrorText>
+            <Field.Root invalid={!!errors.regions}>
+              <Field.ErrorText>{errors.regions?.message}</Field.ErrorText>
             </Field.Root>
           </Box>
 

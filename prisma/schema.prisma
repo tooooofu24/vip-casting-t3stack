@@ -131,19 +131,6 @@ enum WorkType {
     REVIEW
 }
 
-enum Area {
-    ALL
-    KANTO
-    KANSAI
-    TOKAI
-    HOKKAIDO
-    TOHOKU
-    CHUGOKU
-    SHIKOKU
-    KYUSHU
-    ONLINE
-}
-
 model Company {
     id         String   @id @default(uuid()) @db.Uuid
     createdAt  DateTime @default(now()) @db.Timestamptz(6)
@@ -357,7 +344,7 @@ model InfluencerWork {
     liveFee      Int?
     eventFee     Int?
     workTypes    WorkType[]
-    areas        Area[]
+    regions      Region[]
     ngProducts   String[]
     ngCompanies  String[]
     ngOther      String?

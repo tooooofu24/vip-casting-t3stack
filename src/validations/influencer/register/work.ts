@@ -1,35 +1,15 @@
+import { regionValues } from "@/const/region";
+import { workTypeValues } from "@/const/workType";
+import { Region, WorkType } from "@/lib/prisma/generated";
 import { z } from "@/lib/zod";
-
-export const workTypeOptions = [
-  "投稿作成",
-  "動画制作",
-  "ライブ配信",
-  "イベント出演",
-  "アンバサダー",
-  "モデル撮影",
-  "レビュー記事",
-] as const;
-
-export const areaOptions = [
-  "全国対応可",
-  "関東エリア",
-  "関西エリア",
-  "東海エリア",
-  "北海道",
-  "東北",
-  "中国",
-  "四国",
-  "九州",
-  "オンラインのみ",
-] as const;
 
 export const influencerWorkSchema = z.object({
   postFee: z.number().optional(),
   videoFee: z.number().optional(),
   liveFee: z.number().optional(),
   eventFee: z.number().optional(),
-  workTypes: z.array(z.enum(workTypeOptions)).optional(),
-  areas: z.array(z.enum(areaOptions)).optional(),
+  workTypes: z.array(z.enum(workTypeValues)).optional(),
+  regions: z.array(z.enum(regionValues)).optional(),
   ngProducts: z.array(z.string()).optional(),
   ngCompanies: z.array(z.string()).optional(),
   ngOther: z.string().optional(),
@@ -52,8 +32,8 @@ export const influencerWorkDefaultValues: InfluencerWorkRequest = {
   videoFee: 50000,
   liveFee: 100000,
   eventFee: 150000,
-  workTypes: [workTypeOptions[0]],
-  areas: [areaOptions[0]],
+  workTypes: [WorkType.POST],
+  regions: [Region.ALL],
   ngProducts: ["タバコ"],
   ngCompanies: ["〇〇株式会社"],
   ngOther: "マッチング成立前の名前開示NG",
