@@ -5,14 +5,32 @@ import { InfluencerCompletedCard } from "@/app/(influencer)/(public)/register/(c
 import { InfluencerInformationForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerInformationForm";
 import { InfluencerSnsForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerSnsForm";
 import { InfluencerWorkForm } from "@/app/(influencer)/(public)/register/(components)/InfluencerWorkForm";
-import { influencerAddressDefaultValues } from "@/validations/influencer/register/address";
-import { influencerInformationDefaultValues } from "@/validations/influencer/register/information";
-import { influencerSnsDefaultValues } from "@/validations/influencer/register/sns";
-import { influencerWorkDefaultValues } from "@/validations/influencer/register/work";
+import { showErrorToast } from "@/lib/chakra-ui/toaster";
+import { api } from "@/lib/trpc/react";
+import type { AppRouter } from "@/server/api/root";
+import {
+  influencerRegisterSchema,
+  type InfluencerRegisterRequest,
+} from "@/validations/influencer/register";
+import {
+  influencerAddressDefaultValues,
+  type InfluencerAddressRequest,
+} from "@/validations/influencer/register/address";
+import {
+  influencerInformationDefaultValues,
+  type InfluencerInformationRequest,
+} from "@/validations/influencer/register/information";
+import {
+  influencerSnsDefaultValues,
+  type InfluencerSnsRequest,
+} from "@/validations/influencer/register/sns";
+import {
+  influencerWorkDefaultValues,
+  type InfluencerWorkRequest,
+} from "@/validations/influencer/register/work";
+import type { UseStepsReturn } from "@chakra-ui/react";
 import {
   Box,
-  Button,
-  ButtonGroup,
   Container,
   Heading,
   Steps,
@@ -20,14 +38,58 @@ import {
   useSteps,
   VStack,
 } from "@chakra-ui/react";
+import type { TRPCClientErrorLike } from "@trpc/client";
+import { useState } from "react";
 
 const items = ["基本情報", "住所情報", "SNS情報", "案件情報"] as const;
 
 export default function RegisterPage() {
-  const steps = useSteps({
-    defaultStep: 3,
+  const [data, setData] = useState<Partial<InfluencerRegisterRequest>>({
+    information: influencerInformationDefaultValues,
+    address: influencerAddressDefaultValues,
+    sns: influencerSnsDefaultValues,
+    work: influencerWorkDefaultValues,
+  });
+
+  const steps: UseStepsReturn = useSteps({
+    defaultStep: 0,
     count: items.length,
   });
+
+  const onSubmit = <K extends keyof InfluencerRegisterRequest>(
+    key: K,
+    value: InfluencerRegisterRequest[K],
+  ) => {
+    setData((prev: Partial<InfluencerRegisterRequest>) => ({
+      ...prev,
+      [key]: value,
+    }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    steps.goToNextStep();
+  };
+
+  const register = api.influencer.register.useMutation({
+    onSuccess: async () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      steps.goToNextStep();
+    },
+    onError: (error: unknown) => {
+      const err = error as TRPCClientErrorLike<AppRouter>;
+      showErrorToast(err.data?.code);
+    },
+  });
+
+  const onRegister = (request: InfluencerWorkRequest): void => {
+    const nextData = { ...data, work: request };
+    setData(nextData);
+    const validated = influencerRegisterSchema.safeParse(nextData);
+    if (!validated.success) {
+      showErrorToast(validated.error.message);
+      return;
+    }
+    register.mutate(validated.data);
+  };
+
   return (
     <Box py={{ base: 8, md: 12 }}>
       <Container maxW="3xl">
@@ -55,56 +117,38 @@ export default function RegisterPage() {
               </Steps.List>
               <Steps.Content index={0}>
                 <InfluencerInformationForm
-                  onSubmit={() => {
-                    steps.goToNextStep();
-                  }}
-                  defaultValues={influencerInformationDefaultValues}
+                  onSubmit={(v: InfluencerInformationRequest) =>
+                    onSubmit("information", v)
+                  }
+                  defaultValues={data.information}
                 />
               </Steps.Content>
               <Steps.Content index={1}>
                 <InfluencerAddressForm
-                  onSubmit={() => {
-                    steps.goToNextStep();
-                  }}
-                  onBack={() => {
-                    steps.goToPrevStep();
-                  }}
-                  defaultValues={influencerAddressDefaultValues}
+                  onSubmit={(v: InfluencerAddressRequest) =>
+                    onSubmit("address", v)
+                  }
+                  onBack={() => steps.goToPrevStep()}
+                  defaultValues={data.address}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
                 <InfluencerSnsForm
-                  onSubmit={() => {
-                    steps.goToNextStep();
-                  }}
-                  onBack={() => {
-                    steps.goToPrevStep();
-                  }}
-                  defaultValues={influencerSnsDefaultValues}
+                  onSubmit={(v: InfluencerSnsRequest) => onSubmit("sns", v)}
+                  onBack={() => steps.goToPrevStep()}
+                  defaultValues={data.sns}
                 />
               </Steps.Content>
               <Steps.Content index={3}>
                 <InfluencerWorkForm
-                  defaultValues={influencerWorkDefaultValues}
-                  onSubmit={() => {
-                    steps.goToNextStep();
-                  }}
-                  onBack={() => {
-                    steps.goToPrevStep();
-                  }}
+                  defaultValues={data.work}
+                  onSubmit={onRegister}
+                  onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.CompletedContent>
                 <InfluencerCompletedCard />
               </Steps.CompletedContent>
-              <ButtonGroup size="sm" variant="outline">
-                <Steps.PrevTrigger asChild>
-                  <Button>Prev</Button>
-                </Steps.PrevTrigger>
-                <Steps.NextTrigger asChild>
-                  <Button>Next</Button>
-                </Steps.NextTrigger>
-              </ButtonGroup>
             </Steps.RootProvider>
           </VStack>
         </VStack>

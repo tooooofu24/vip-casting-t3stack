@@ -1,5 +1,6 @@
 import { adminRouter } from "@/server/api/routers/admin";
 import { companyRouter } from "@/server/api/routers/company";
+import { influencerRouter } from "@/server/api/routers/influencer";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
 /**
@@ -10,6 +11,7 @@ import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 export const appRouter = createTRPCRouter({
   admin: adminRouter,
   company: companyRouter,
+  influencer: influencerRouter,
 });
 
 // export type definition of API

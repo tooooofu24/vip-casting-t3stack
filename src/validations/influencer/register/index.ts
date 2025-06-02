@@ -10,3 +10,7 @@ export const influencerRegisterSchema = z.object({
   sns: influencerSnsSchema,
   work: influencerWorkSchema,
 });
+
+export type InfluencerRegisterRequest = z.infer<
+  typeof influencerRegisterSchema
+>;
