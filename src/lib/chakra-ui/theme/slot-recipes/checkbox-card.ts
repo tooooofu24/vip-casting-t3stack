@@ -96,7 +96,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
         },
         control: {
           padding: "3",
-          gap: "1.5",
+          gap: "2",
         },
         addon: {
           px: "3",
