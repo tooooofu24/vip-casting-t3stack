@@ -3,6 +3,7 @@
 
 generator client {
     provider = "prisma-client-js"
+    output   = "../src/lib/prisma/generated"
 }
 
 datasource db {
@@ -118,6 +119,29 @@ enum Gender {
     MALE
     FEMALE
     OTHER
+}
+
+enum WorkType {
+    POST
+    VIDEO
+    LIVE
+    EVENT
+    AMBASSADOR
+    MODEL
+    REVIEW
+}
+
+enum Area {
+    ALL
+    KANTO
+    KANSAI
+    TOKAI
+    HOKKAIDO
+    TOHOKU
+    CHUGOKU
+    SHIKOKU
+    KYUSHU
+    ONLINE
 }
 
 model Company {
@@ -326,20 +350,35 @@ model InfluencerSns {
 }
 
 model InfluencerWork {
-    id           String   @id @default(uuid()) @db.Uuid
-    influencerId String   @unique @db.Uuid
-    pastWorks    Json?
-    feePost      Int?
-    feeVideo     Int?
-    feeLive      Int?
-    feeEvent     Int?
-    workTypes    String[]
-    areas        String[]
+    id           String     @id @default(uuid()) @db.Uuid
+    influencerId String     @unique @db.Uuid
+    postFee      Int?
+    videoFee     Int?
+    liveFee      Int?
+    eventFee     Int?
+    workTypes    WorkType[]
+    areas        Area[]
     ngProducts   String[]
     ngCompanies  String[]
     ngOther      String?
-    createdAt    DateTime @default(now()) @db.Timestamptz(6)
-    updatedAt    DateTime @updatedAt @db.Timestamptz(6)
+    createdAt    DateTime   @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime   @updatedAt @db.Timestamptz(6)
 
-    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    influencer Influencer           @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    prResults  InfluencerPrResult[]
+}
+
+model InfluencerPrResult {
+    id               String   @id @default(uuid()) @db.Uuid
+    influencerWorkId String   @db.Uuid
+    company          String   @db.VarChar(255)
+    content          String   @db.Text
+    year             String   @db.VarChar(4)
+    month            String   @db.VarChar(2)
+    createdAt        DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt        DateTime @updatedAt @db.Timestamptz(6)
+
+    work InfluencerWork @relation(fields: [influencerWorkId], references: [id], onDelete: Cascade)
+
+    @@index([influencerWorkId])
 }
