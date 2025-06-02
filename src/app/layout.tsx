@@ -6,6 +6,7 @@ import type { Metadata, Viewport } from "next";
 import { ChakraProvider } from "@/lib/chakra-ui/provider";
 import { Toaster } from "@/lib/chakra-ui/toaster";
 import { TRPCReactProvider } from "@/lib/trpc/react";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "VIPキャスティング",
@@ -30,7 +31,7 @@ export default function RootLayout({
         <TRPCReactProvider>
           <ChakraProvider defaultTheme="light">
             <Toaster />
-            {children}
+            <Suspense fallback={null}>{children}</Suspense>
           </ChakraProvider>
         </TRPCReactProvider>
       </body>
