@@ -16,7 +16,7 @@ export type SidebarLink = {
   path: Route;
   label: string;
   icon: IconType;
-  active?: boolean;
+  active: boolean;
 };
 
 type Props = {

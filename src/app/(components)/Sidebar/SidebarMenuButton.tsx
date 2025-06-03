@@ -19,8 +19,8 @@ export const SidebarMenuButton = ({
       asChild
       w="full"
       justifyContent="flex-start"
-      colorPalette="gray"
-      variant={active ? "solid" : "ghost"}
+      colorPalette={active ? "purple" : "gray"}
+      variant={active ? "subtle" : "ghost"}
     >
       <Link href={href}>
         {icon && <Icon as={icon} />}

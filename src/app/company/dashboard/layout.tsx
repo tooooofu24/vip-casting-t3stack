@@ -1,5 +1,5 @@
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/app/(components)/constants";
-import { Footer } from "@/app/(components)/Footer/Footer";
+import { SimpleFooter } from "@/app/(components)/Footer/SimpleFooter";
 import { CompanyNavbar } from "@/app/company/(components)/CompanyNavbar";
 import { CompanySidebar } from "@/app/company/(components)/CompanySidebar";
 import { Box } from "@chakra-ui/react";
@@ -15,7 +15,7 @@ export default function CompanyLayout({
         <Box as="main">{children}</Box>
       </Box>
       <Box pl={SIDEBAR_WIDTH}>
-        <Footer />
+        <SimpleFooter />
       </Box>
     </>
   );
