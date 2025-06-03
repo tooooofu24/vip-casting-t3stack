@@ -23,12 +23,10 @@ export const approveCompany = publicProcedure
       });
     }
 
-    const email = company.business.email;
-
     // Supabaseユーザー発行
     const supabase = await createSupabaseAdminClient();
-    const route: Route = `/public/company/forget-password?email=${email}`;
-    await supabase.auth.admin.inviteUserByEmail(email, {
+    const route: Route = "/public/company/invited";
+    await supabase.auth.admin.inviteUserByEmail(company.business.email, {
       redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
       data: {
         role: "company",
