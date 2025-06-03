@@ -33,10 +33,31 @@ export default function AdminDashboard() {
     },
   });
 
+  const {
+    data: influencers,
+    isLoading: isLoadingInfluencers,
+    refetch: refetchInfluencers,
+    error: errorInfluencers,
+  } = api.admin.getUnapprovedInfluencers.useQuery();
+
+  const { mutate: approveInfluencer, isPending: isPendingInfluencer } =
+    api.admin.approveInfluencer.useMutation({
+      onError: (error) => {
+        toaster.create({ type: "error", title: error.message });
+      },
+      onSuccess: () => {
+        void refetchInfluencers();
+        toaster.create({
+          type: "success",
+          title: "インフルエンサーを承認しました",
+        });
+      },
+    });
+
   return (
     <VStack align="stretch" gap={4} py={8} px={{ base: 2, md: 8 }}>
       <Heading size="lg">未承認会社一覧</Heading>
-      <Box bg="white" borderRadius="md" boxShadow="sm" p={4}>
+      <Box bg="white" borderRadius="md" boxShadow="sm" p={4} mb={8}>
         {isLoading ? (
           <Center h="100%" p={8}>
             <Spinner size="xl" />
@@ -105,6 +126,93 @@ export default function AdminDashboard() {
                       colorScheme="teal"
                       loading={isPending}
                       onClick={() => mutate({ companyId: company.id })}
+                    >
+                      承認
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table.Root>
+        )}
+      </Box>
+
+      <Heading size="lg">未承認インフルエンサー一覧</Heading>
+      <Box bg="white" borderRadius="md" boxShadow="sm" p={4}>
+        {isLoadingInfluencers ? (
+          <Center h="100%" p={8}>
+            <Spinner size="xl" />
+          </Center>
+        ) : errorInfluencers ? (
+          <Alert.Root status="error">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>エラーが発生しました</Alert.Title>
+              <Alert.Description>{errorInfluencers.message}</Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        ) : !influencers || influencers.length === 0 ? (
+          <Alert.Root status="success">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>未承認のインフルエンサーはありません</Alert.Title>
+              <Alert.Description>
+                現在、承認待ちのインフルエンサーはありません。
+              </Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        ) : (
+          <Table.Root>
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeader>公開名</Table.ColumnHeader>
+                <Table.ColumnHeader>作成日</Table.ColumnHeader>
+                <Table.ColumnHeader>承認状態</Table.ColumnHeader>
+                <Table.ColumnHeader>住所</Table.ColumnHeader>
+                <Table.ColumnHeader>SNS</Table.ColumnHeader>
+                <Table.ColumnHeader>操作</Table.ColumnHeader>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {influencers.map((influencer) => (
+                <Table.Row key={influencer.id}>
+                  <Table.Cell>
+                    {influencer.information?.displayName ?? "-"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {new Date(influencer.createdAt).toLocaleDateString()}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {influencer.isApproved ? "承認済" : "未承認"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {influencer.address
+                      ? `${influencer.address.prefecture} ${influencer.address.city} ${influencer.address.town}`
+                      : "-"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {influencer.sns
+                      ? [
+                          influencer.sns.instagramName &&
+                            `Instagram: @${influencer.sns.instagramName}`,
+                          influencer.sns.youtubeName &&
+                            `YouTube: ${influencer.sns.youtubeName}`,
+                          influencer.sns.tiktokName &&
+                            `TikTok: @${influencer.sns.tiktokName}`,
+                          influencer.sns.xName && `X: @${influencer.sns.xName}`,
+                        ]
+                          .filter(Boolean)
+                          .join(" / ") || "-"
+                      : "-"}
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      size="sm"
+                      colorScheme="teal"
+                      loading={isPendingInfluencer}
+                      onClick={() =>
+                        approveInfluencer({ influencerId: influencer.id })
+                      }
                     >
                       承認
                     </Button>
