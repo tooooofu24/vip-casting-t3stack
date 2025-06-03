@@ -1,11 +1,11 @@
 import { env } from "@/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
-import { publicProcedure } from "@/server/api/trpc";
+import { adminProcedure } from "@/server/api/trpc";
 import { approveInfluencerSchema } from "@/validations/admin/approveInfluencer";
 import { TRPCError } from "@trpc/server";
 import type { Route } from "next";
 
-export const approveInfluencer = publicProcedure
+export const approveInfluencer = adminProcedure
   .input(approveInfluencerSchema)
   .mutation(async ({ ctx, input }) => {
     // インフルエンサー情報取得・承認

@@ -1,6 +1,6 @@
-import { publicProcedure } from "@/server/api/trpc";
+import { adminProcedure } from "@/server/api/trpc";
 
-export const getUnapprovedInfluencers = publicProcedure.query(
+export const getUnapprovedInfluencers = adminProcedure.query(
   async ({ ctx }) => {
     const influencers = await ctx.db.influencer.findMany({
       where: { isApproved: false },

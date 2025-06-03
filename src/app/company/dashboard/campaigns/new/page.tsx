@@ -2,10 +2,24 @@
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
 import { CompanyCampaignForm } from "@/app/company/dashboard/campaigns/new/(components)/CompanyCampaignForm";
+import { toaster } from "@/lib/chakra-ui/toaster";
+import { api } from "@/lib/trpc/react";
 import { companyCampaignDefaultValues } from "@/validations/company/campaign";
 import { VStack } from "@chakra-ui/react";
 
 export default function PostCampaignPage() {
+  const { mutateAsync } = api.company.campaigns.create.useMutation({
+    onError: (error) => {
+      toaster.create({ type: "error", title: error.message });
+    },
+    onSuccess: () => {
+      toaster.create({
+        type: "success",
+        title: "キャンペーンを登録しました",
+      });
+    },
+  });
+
   return (
     <VStack gap={6} align="stretch">
       <BreadcrumbSection
@@ -17,9 +31,7 @@ export default function PostCampaignPage() {
         description="新しい案件を登録します。必要事項を入力してください。"
       />
       <CompanyCampaignForm
-        onSubmit={(data) => {
-          console.warn("submit", data);
-        }}
+        onSubmit={mutateAsync}
         defaultValues={companyCampaignDefaultValues}
       />
     </VStack>

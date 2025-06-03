@@ -1,6 +1,6 @@
-import { publicProcedure } from "@/server/api/trpc";
+import { adminProcedure } from "@/server/api/trpc";
 
-export const getUnapprovedCompanies = publicProcedure.query(async ({ ctx }) => {
+export const getUnapprovedCompanies = adminProcedure.query(async ({ ctx }) => {
   const companies = await ctx.db.company.findMany({
     where: { isApproved: false },
     include: {

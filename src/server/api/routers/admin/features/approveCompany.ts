@@ -1,11 +1,11 @@
 import { env } from "@/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
-import { publicProcedure } from "@/server/api/trpc";
+import { adminProcedure } from "@/server/api/trpc";
 import { approveCompanySchema } from "@/validations/admin/approveCompany";
 import { TRPCError } from "@trpc/server";
 import type { Route } from "next";
 
-export const approveCompany = publicProcedure
+export const approveCompany = adminProcedure
   .input(approveCompanySchema)
   .mutation(async ({ ctx, input }) => {
     // 会社情報取得
@@ -30,6 +30,7 @@ export const approveCompany = publicProcedure
       redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
       data: {
         role: "company",
+        companyId: company.id,
         displayName: company.business.contactName,
       },
     });

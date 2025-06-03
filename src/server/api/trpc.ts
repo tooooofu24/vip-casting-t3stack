@@ -102,7 +102,7 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 export const publicProcedure = t.procedure.use(timingMiddleware);
 
 // 管理者認証ミドルウェア
-const adminAuthMiddleware = t.middleware(async ({ ctx, next }) => {
+const adminMiddleware = t.middleware(async ({ ctx, next }) => {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
@@ -127,4 +127,38 @@ const adminAuthMiddleware = t.middleware(async ({ ctx, next }) => {
 });
 
 // 管理者専用プロシージャ
-export const adminProcedure = t.procedure.use(adminAuthMiddleware);
+export const adminProcedure = t.procedure.use(adminMiddleware);
+
+// 会社認証ミドルウェア
+const companyMiddleware = t.middleware(async ({ ctx, next }) => {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "認証が必要です" });
+  }
+
+  const isCompany = user.user_metadata?.role === "company";
+  if (!isCompany) {
+    throw new TRPCError({ code: "FORBIDDEN", message: "会社権限が必要です" });
+  }
+
+  const companyId = user.user_metadata?.companyId as string | undefined;
+  if (!companyId) {
+    throw new TRPCError({ code: "FORBIDDEN", message: "会社情報がありません" });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      user,
+      isCompany: true,
+      companyId,
+    },
+  });
+});
+
+// 会社専用プロシージャ
+export const companyProcedure = t.procedure.use(companyMiddleware);

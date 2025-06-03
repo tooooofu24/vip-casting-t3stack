@@ -16,7 +16,7 @@ export const companyCampaignSchema = z.object({
     .min(1)
     .regex(/^\d{4}-\d{2}-\d{2}$/),
   rewardType: z.enum(rewardTypeValues),
-  rewardAmount: z.number().int().positive().max(1000000).optional(),
+  rewardAmount: z.number().int().positive().max(1000000),
   requirements: z.array(z.string().max(100)).max(10).optional(),
   note: z.string().max(1000).optional(),
 });
