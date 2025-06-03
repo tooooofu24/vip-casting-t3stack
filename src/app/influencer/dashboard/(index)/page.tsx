@@ -174,12 +174,9 @@ export default function DashboardPage() {
                     <Badge
                       size="sm"
                       variant="subtle"
-                      colorPalette={
-                        statusConfig[campaign.status as CampaignStatus]
-                          .colorPalette
-                      }
+                      colorPalette={statusConfig[campaign.status].colorPalette}
                     >
-                      {statusConfig[campaign.status as CampaignStatus].label}
+                      {statusConfig[campaign.status].label}
                     </Badge>
                   </Stack>
                   <Stack

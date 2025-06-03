@@ -147,14 +147,10 @@ export default function CampaignManagementPage() {
                           size="sm"
                           variant="subtle"
                           colorPalette={
-                            statusConfig[campaign.status as CampaignStatus]
-                              .colorPalette
+                            statusConfig[campaign.status].colorPalette
                           }
                         >
-                          {
-                            statusConfig[campaign.status as CampaignStatus]
-                              .label
-                          }
+                          {statusConfig[campaign.status].label}
                         </Badge>
                       </Table.Cell>
                       <Table.Cell textAlign="right">
