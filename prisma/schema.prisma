@@ -131,6 +131,28 @@ enum WorkType {
     REVIEW
 }
 
+enum Platform {
+    INSTAGRAM
+    TIKTOK
+    YOUTUBE
+    X
+    FACEBOOK
+    OTHER
+}
+
+enum RewardType {
+    FIXED
+    FOLLOWER
+}
+
+enum CampaignStatus {
+    DRAFT
+    RECRUITING
+    IN_PROGRESS
+    COMPLETED
+    CANCELLED
+}
+
 model Company {
     id         String   @id @default(uuid()) @db.Uuid
     createdAt  DateTime @default(now()) @db.Timestamptz(6)
@@ -141,6 +163,7 @@ model Company {
     address     CompanyAddress?
     business    CompanyBusiness?
     payment     CompanyPayment?
+    Campaign    Campaign[]
 }
 
 model CompanyInformation {
@@ -368,4 +391,27 @@ model InfluencerPrResult {
     work InfluencerWork @relation(fields: [influencerWorkId], references: [id], onDelete: Cascade)
 
     @@index([influencerWorkId])
+}
+
+model Campaign {
+    id             String         @id @default(uuid()) @db.Uuid
+    companyId      String         @db.Uuid
+    title          String         @db.VarChar(255)
+    description    String         @db.Text
+    platform       Platform
+    recruitment    Int
+    applicationDue DateTime
+    postDue        DateTime
+    rewardType     RewardType
+    rewardAmount   Int
+    status         CampaignStatus @default(DRAFT)
+    note           String?        @db.Text
+    requirements   String[]
+    createdAt      DateTime       @default(now()) @db.Timestamptz(6)
+    updatedAt      DateTime       @updatedAt @db.Timestamptz(6)
+
+    // --- リレーション ---
+    company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+    @@index([companyId])
 }

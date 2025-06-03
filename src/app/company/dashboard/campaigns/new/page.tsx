@@ -1,6 +1,8 @@
 "use client";
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
+import { platforms } from "@/const/platform";
+import { rewardTypes } from "@/const/rewardType";
 import {
   Button,
   Card,
@@ -16,8 +18,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { LuSave } from "react-icons/lu";
-
-const PLATFORMS = ["Instagram", "TikTok", "YouTube", "X", "Facebook"];
 
 export default function PostCampaignPage() {
   return (
@@ -54,9 +54,9 @@ export default function PostCampaignPage() {
                 </Field.Label>
                 <NativeSelect.Root>
                   <NativeSelect.Field placeholder="プラットフォームを選択">
-                    {PLATFORMS.map((platform) => (
-                      <option key={platform} value={platform}>
-                        {platform}
+                    {platforms.map((platform) => (
+                      <option key={platform.value} value={platform.value}>
+                        {platform.label}
                       </option>
                     ))}
                   </NativeSelect.Field>
@@ -93,18 +93,15 @@ export default function PostCampaignPage() {
                 <Field.Label>
                   報酬形態 <Field.RequiredIndicator />
                 </Field.Label>
-                <RadioGroup.Root defaultValue="fixed">
-                  <HStack gap="4">
-                    <RadioGroup.Item value="fixed">
-                      <RadioGroup.ItemHiddenInput />
-                      <RadioGroup.ItemIndicator />
-                      <RadioGroup.ItemText>固定報酬</RadioGroup.ItemText>
-                    </RadioGroup.Item>
-                    <RadioGroup.Item value="follower">
-                      <RadioGroup.ItemHiddenInput />
-                      <RadioGroup.ItemIndicator />
-                      <RadioGroup.ItemText>フォロワー単価</RadioGroup.ItemText>
-                    </RadioGroup.Item>
+                <RadioGroup.Root>
+                  <HStack gap="6">
+                    {rewardTypes.map((type) => (
+                      <RadioGroup.Item key={type.value} value={type.value}>
+                        <RadioGroup.ItemHiddenInput />
+                        <RadioGroup.ItemIndicator />
+                        <RadioGroup.ItemText>{type.label}</RadioGroup.ItemText>
+                      </RadioGroup.Item>
+                    ))}
                   </HStack>
                 </RadioGroup.Root>
               </Field.Root>
