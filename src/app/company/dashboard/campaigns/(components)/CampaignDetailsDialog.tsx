@@ -3,7 +3,7 @@
 import type {
   Campaign,
   CampaignApplication,
-} from "@/app/(company)/company/campaigns/mock";
+} from "@/app/company/dashboard/campaigns/mock";
 import {
   Badge,
   Box,

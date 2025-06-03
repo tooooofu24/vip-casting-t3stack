@@ -1,6 +1,6 @@
 "use client";
 
-import type { Campaign } from "@/app/(company)/company/campaigns/mock";
+import type { Campaign } from "@/app/company/dashboard/campaigns/mock";
 import { Box, Card, HStack, Link, Stack, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 

@@ -134,10 +134,7 @@ export default function LoginPage() {
                       会員登録はこちら(審査制)
                     </Button>
                   </NextLink>
-                  <NextLink
-                    href="/public/company/login"
-                    style={{ width: "100%" }}
-                  >
+                  <NextLink href="/influencer/login" style={{ width: "100%" }}>
                     <Button
                       as="span"
                       w="full"

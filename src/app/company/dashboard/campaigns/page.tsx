@@ -1,10 +1,10 @@
 "use client";
 
-import { CampaignDetailsDialog } from "@/app/(company)/company/campaigns/(components)/CampaignDetailsDialog";
+import { CampaignDetailsDialog } from "@/app/company/dashboard/campaigns/(components)/CampaignDetailsDialog";
 import {
   mockCampaigns,
   type Campaign,
-} from "@/app/(company)/company/campaigns/mock";
+} from "@/app/company/dashboard/campaigns/mock";
 import {
   Badge,
   Box,
@@ -96,7 +96,7 @@ export default function CampaignManagementPage() {
             案件管理
           </Text>
           <HStack gap="4">
-            <Link href="/company/post">
+            <Link href="/influencer/dashboard/pr-listing/create">
               <Button>
                 <Icon as={LuPlus} />
                 案件を作成

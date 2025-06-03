@@ -155,7 +155,7 @@ export default function PostCampaignPage() {
             <HStack justify="flex-end" gap="4">
               <Button
                 variant="ghost"
-                onClick={() => router.push("/company/campaigns")}
+                onClick={() => router.push("/influencer/dashboard/campaigns")}
               >
                 キャンセル
               </Button>

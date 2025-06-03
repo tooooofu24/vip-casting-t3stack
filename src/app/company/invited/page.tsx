@@ -19,10 +19,10 @@ export default function InvitedRedirectPage() {
       void supabase.auth
         .setSession({ access_token, refresh_token })
         .then(() => {
-          router.replace("/public/company/reset-password");
+          router.replace("/influencer/reset-password");
         });
     } else {
-      router.replace("/public/company/login");
+      router.replace("/influencer/login");
     }
   }, [router]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { InfluencerFilterPanel } from "@/app/(company)/company/influencers/(components)/InfluencerFilterPanel";
+import { InfluencerFilterPanel } from "@/app/company/dashboard/influencers/(components)/InfluencerFilterPanel";
 import {
   Accordion,
   Avatar,

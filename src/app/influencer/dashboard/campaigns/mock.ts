@@ -1,7 +1,7 @@
 import type {
   Campaign,
   CampaignStatus,
-} from "@/app/(company)/company/campaigns/mock";
+} from "@/app/company/dashboard/campaigns/mock";
 
 export const MOCK_CAMPAIGNS: Campaign[] = [
   {

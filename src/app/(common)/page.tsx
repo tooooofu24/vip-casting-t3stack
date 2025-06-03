@@ -104,7 +104,7 @@ export default function HomePage() {
                   </Button>
                 </Link>
               )}
-              <Link href="/company/campaigns">
+              <Link href="/influencer/dashboard/campaigns">
                 <Button as="span" size="lg" variant="solid">
                   限定案件を見る
                   <Icon size="lg" ml={2}>
@@ -236,7 +236,7 @@ export default function HomePage() {
                     会員登録はこちら(審査制)
                   </Button>
                 </Link>
-                <Link href="/company/campaigns">
+                <Link href="/influencer/dashboard/campaigns">
                   <Button as="span" variant="ghost" size="lg">
                     限定案件を見る
                   </Button>

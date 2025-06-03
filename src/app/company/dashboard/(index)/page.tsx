@@ -175,7 +175,7 @@ export default function CompanyDashboardPage() {
                 対応中の案件
               </Heading>
               <ChakraLink asChild>
-                <Link href="/company/campaigns">
+                <Link href="/influencer/dashboard/campaigns">
                   <Text color="purple.600" fontSize="sm" fontWeight="medium">
                     すべての案件を見る →
                   </Text>

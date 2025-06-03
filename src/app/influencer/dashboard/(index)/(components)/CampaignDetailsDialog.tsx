@@ -1,6 +1,6 @@
 "use client";
 
-import type { Campaign } from "@/app/(company)/company/campaigns/mock";
+import type { Campaign } from "@/app/company/dashboard/campaigns/mock";
 import {
   Alert,
   Box,

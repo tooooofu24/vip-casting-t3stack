@@ -1,6 +1,6 @@
 "use client";
 
-import type { CampaignStatus } from "@/app/(company)/company/campaigns/mock";
+import type { CampaignStatus } from "@/app/company/dashboard/campaigns/mock";
 import CampaignDetailsDialog from "@/app/influencer/dashboard/(index)/(components)/CampaignDetailsDialog";
 import { MOCK_CAMPAIGNS } from "@/app/influencer/dashboard/campaigns/mock";
 
@@ -147,10 +147,14 @@ export default function CampaignManagementPage() {
                           size="sm"
                           variant="subtle"
                           colorPalette={
-                            statusConfig[campaign.status].colorPalette
+                            statusConfig[campaign.status as CampaignStatus]
+                              .colorPalette
                           }
                         >
-                          {statusConfig[campaign.status].label}
+                          {
+                            statusConfig[campaign.status as CampaignStatus]
+                              .label
+                          }
                         </Badge>
                       </Table.Cell>
                       <Table.Cell textAlign="right">

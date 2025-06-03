@@ -1,6 +1,6 @@
 "use client";
 
-import { ResetPasswordForm } from "@/app/(company)/public/company/reset-password/(components)/ResetPasswordForm";
+import { ResetPasswordForm } from "@/app/company/reset-password/(components)/ResetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import type { ResetPasswordRequest } from "@/validations/company/resetPassword";
@@ -50,9 +50,7 @@ export default function ForgetPasswordPage() {
             <Card.Body>
               <ResetPasswordForm onSubmit={onSubmit} />
               <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>
-                <NextLink href="/public/company/login">
-                  ログイン画面に戻る
-                </NextLink>
+                <NextLink href="/influencer/login">ログイン画面に戻る</NextLink>
               </ChakraLink>
             </Card.Body>
           </Card.Root>

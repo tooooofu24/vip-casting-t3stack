@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyLoginForm } from "@/app/(company)/public/company/login/(components)/CompanyLoginForm";
+import { CompanyLoginForm } from "@/app/company/login/(components)/CompanyLoginForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import {
@@ -98,10 +98,7 @@ export default function CompanyLoginPage() {
 
                 {/* Additional Links */}
                 <VStack gap={4}>
-                  <NextLink
-                    href="/public/company/register"
-                    style={{ width: "100%" }}
-                  >
+                  <NextLink href="/company/register" style={{ width: "100%" }}>
                     <Button as="span" w="full" variant="outline">
                       企業アカウントを新規登録
                     </Button>

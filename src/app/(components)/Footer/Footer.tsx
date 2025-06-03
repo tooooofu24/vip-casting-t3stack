@@ -25,8 +25,8 @@ const influencerLinks: FooterLink[] = [
 ];
 
 const companyLinks: FooterLink[] = [
-  { href: "/company/post", children: "案件を掲載する" },
-  { href: "/company/guide", children: "登録方法" },
+  { href: "/influencer/dashboard/pr-listing", children: "案件を掲載する" },
+  { href: "/influencer/dashboard/guide/registration", children: "登録方法" },
   { href: "/", children: "料金" },
   {
     href: "/case-studies",

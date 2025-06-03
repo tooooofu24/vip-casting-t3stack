@@ -1,6 +1,6 @@
 "use client";
 
-import { ForgetPasswordForm } from "@/app/(company)/public/company/forget-password/(components)/ForgetPasswordForm";
+import { ForgetPasswordForm } from "@/app/company/forget-password/(components)/ForgetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import {
@@ -23,7 +23,7 @@ export default function ForgetPasswordPage() {
   const email = searchParams.get("email") ?? undefined;
 
   const onSubmit = async ({ email }: { email: string }) => {
-    const route: Route = "/public/company/reset-password";
+    const route: Route = "/influencer/reset-password";
     const supabase = createSupabaseBrowserClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}${route}`,
@@ -60,9 +60,7 @@ export default function ForgetPasswordPage() {
                 defaultValues={{ email }}
               />
               <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>
-                <NextLink href="/public/company/login">
-                  ログイン画面に戻る
-                </NextLink>
+                <NextLink href="/influencer/login">ログイン画面に戻る</NextLink>
               </ChakraLink>
             </Card.Body>
           </Card.Root>
