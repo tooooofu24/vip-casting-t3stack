@@ -5,7 +5,7 @@ import { Box, Heading, HStack, Icon, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuCrown } from "react-icons/lu";
 
-export function AdminNavbar() {
+export function CompanyNavbar() {
   return (
     <Box
       as="header"

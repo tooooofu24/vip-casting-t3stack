@@ -1,8 +1,6 @@
 "use client";
 
-import { Sidebar } from "@/app/(components)/Sidebar/Sidebar";
-import type { Route } from "next";
-import type { IconType } from "react-icons/lib";
+import { Sidebar, type SidebarLink } from "@/app/(components)/Sidebar/Sidebar";
 import {
   LuBell,
   LuBuilding2,
@@ -14,7 +12,7 @@ import {
   LuUser,
 } from "react-icons/lu";
 
-const sidebarLinks: { path: Route; label: string; icon: IconType }[] = [
+const links: SidebarLink[] = [
   {
     path: "/influencer/dashboard",
     label: "ダッシュボード",
@@ -49,6 +47,6 @@ const sidebarLinks: { path: Route; label: string; icon: IconType }[] = [
   { path: "/influencer/dashboard/settings", label: "設定", icon: LuSettings },
 ];
 
-export const AdminSidebar = () => {
-  return <Sidebar links={sidebarLinks} />;
+export const CompanySidebar = () => {
+  return <Sidebar links={links} />;
 };

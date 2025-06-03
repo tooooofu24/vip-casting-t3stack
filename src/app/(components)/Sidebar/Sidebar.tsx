@@ -12,7 +12,7 @@ import {
 import type { Route } from "next";
 import type { IconType } from "react-icons/lib";
 
-type Link = {
+export type SidebarLink = {
   path: Route;
   label: string;
   icon: IconType;
@@ -20,7 +20,7 @@ type Link = {
 };
 
 type Props = {
-  links: Link[];
+  links: SidebarLink[];
 };
 
 export const Sidebar = ({ links }: Props) => {
