@@ -150,8 +150,8 @@ export default function LoginPage() {
                   </Text>
                   <List.Root listStylePosition="inside">
                     {features.map((feature) => (
-                      <List.Item key={feature}>
-                        <Text color="fg.muted">{feature}</Text>
+                      <List.Item key={feature} color="fg.muted">
+                        {feature}
                       </List.Item>
                     ))}
                   </List.Root>
