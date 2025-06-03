@@ -1,6 +1,8 @@
 {
   "language": "en,ja",
-  "ignorePaths": ["src/lib/chakra-ui"],
+  "ignorePaths": [
+    "src/lib/chakra-ui"
+  ],
   "words": [
     "Aichi",
     "Akita",
@@ -19,6 +21,7 @@
     "Hokkaido",
     "Hyogo",
     "Ibaraki",
+    "influencers",
     "Ishikawa",
     "Iwate",
     "Kagawa",
