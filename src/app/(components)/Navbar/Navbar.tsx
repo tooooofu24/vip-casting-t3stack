@@ -4,7 +4,6 @@ import { HEADER_HEIGHT } from "@/app/(components)/constants";
 import { AuthenticatedActions } from "@/app/(components)/Navbar/AuthenticatedContent";
 import { NavigationLinks } from "@/app/(components)/Navbar/NavigationLinks";
 import { UnauthenticatedContent } from "@/app/(components)/Navbar/UnauthenticatedContent";
-import { SidebarButton } from "@/app/(components)/Sidebar/SidebarButton";
 import { Box, Heading, HStack, Icon, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { LuCrown } from "react-icons/lu";
@@ -26,7 +25,6 @@ export function Navbar() {
     >
       <HStack justify="space-between" h="100%">
         <HStack gap={{ base: 2, md: 6 }}>
-          <SidebarButton />
           <Heading
             fontSize={{ base: "lg", md: "xl" }}
             fontWeight="bold"

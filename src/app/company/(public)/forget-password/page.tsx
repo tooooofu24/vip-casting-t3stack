@@ -1,9 +1,8 @@
 "use client";
 
-import { ResetPasswordForm } from "@/app/company/reset-password/(components)/ResetPasswordForm";
+import { ForgetPasswordForm } from "@/app/company/(public)/forget-password/(components)/ForgetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
-import type { ResetPasswordRequest } from "@/validations/company/resetPassword";
 import {
   Card,
   Center,
@@ -14,20 +13,28 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import type { Route } from "next";
 import NextLink from "next/link";
-import { LuLock } from "react-icons/lu";
+import { useSearchParams } from "next/navigation";
+import { LuMail } from "react-icons/lu";
 
 export default function ForgetPasswordPage() {
-  const onSubmit = async ({ password }: ResetPasswordRequest) => {
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email") ?? undefined;
+
+  const onSubmit = async ({ email }: { email: string }) => {
+    const route: Route = "/influencer/reset-password";
     const supabase = createSupabaseBrowserClient();
-    const { error } = await supabase.auth.updateUser({ password });
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}${route}`,
+    });
     if (error) {
       showErrorToast(error.message);
       return;
     }
     toaster.create({
       type: "success",
-      title: "パスワードを設定しました",
+      title: "パスワードリセットメールを送信しました",
     });
   };
   return (
@@ -36,19 +43,22 @@ export default function ForgetPasswordPage() {
         <VStack gap={8}>
           {/* Header */}
           <VStack gap={{ base: 2, sm: 4 }} align="center">
-            <Icon as={LuLock} boxSize={12} color="purple.600" />
+            <Icon as={LuMail} boxSize={12} color="purple.600" />
             <Heading as="h1" size={{ base: "xl", sm: "2xl" }} fontWeight="bold">
-              パスワード設定
+              パスワードリセット
             </Heading>
             <Text color="fg.muted" textAlign="center">
-              新しいパスワードを入力してください
+              パスワード再設定用のメールを送信します
             </Text>
           </VStack>
 
-          {/* Set Password Form */}
+          {/* Forget Password Form */}
           <Card.Root w="full">
             <Card.Body>
-              <ResetPasswordForm onSubmit={onSubmit} />
+              <ForgetPasswordForm
+                onSubmit={onSubmit}
+                defaultValues={{ email }}
+              />
               <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>
                 <NextLink href="/influencer/login">ログイン画面に戻る</NextLink>
               </ChakraLink>

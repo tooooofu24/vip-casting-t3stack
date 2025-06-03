@@ -1,10 +1,10 @@
 "use client";
 
-import { CompanyAddressForm } from "@/app/company/register/(components)/CompanyAddressForm";
-import { CompanyBusinessForm } from "@/app/company/register/(components)/CompanyBusinessForm";
-import { CompanyCompletedCard } from "@/app/company/register/(components)/CompanyCompletedCard";
-import { CompanyInformationForm } from "@/app/company/register/(components)/CompanyInformationForm";
-import { CompanyPaymentForm } from "@/app/company/register/(components)/CompanyPaymentForm";
+import { CompanyAddressForm } from "@/app/company/(public)/register/(components)/CompanyAddressForm";
+import { CompanyBusinessForm } from "@/app/company/(public)/register/(components)/CompanyBusinessForm";
+import { CompanyCompletedCard } from "@/app/company/(public)/register/(components)/CompanyCompletedCard";
+import { CompanyInformationForm } from "@/app/company/(public)/register/(components)/CompanyInformationForm";
+import { CompanyPaymentForm } from "@/app/company/(public)/register/(components)/CompanyPaymentForm";
 import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {

@@ -1,6 +1,6 @@
 import { HEADER_HEIGHT } from "@/app/(components)/constants";
 import { Footer } from "@/app/(components)/Footer/Footer";
-import { Navbar } from "@/app/(components)/Navbar/Navbar";
+import { AdminNavbar } from "@/app/company/(components)/AdminNavbar";
 import { Box } from "@chakra-ui/react";
 
 export default function CompanyLayout({
@@ -8,11 +8,9 @@ export default function CompanyLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <Navbar />
-      <Box pt={HEADER_HEIGHT} minH="full">
-        <Box as="main" minH="full">
-          {children}
-        </Box>
+      <AdminNavbar />
+      <Box pt={HEADER_HEIGHT}>
+        <Box as="main">{children}</Box>
       </Box>
       <Footer />
     </>

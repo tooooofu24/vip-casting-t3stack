@@ -1,6 +1,6 @@
 "use client";
 
-import { CompanyLoginForm } from "@/app/company/login/(components)/CompanyLoginForm";
+import { CompanyLoginForm } from "@/app/company/(public)/login/(components)/CompanyLoginForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import {

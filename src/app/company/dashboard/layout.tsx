@@ -1,6 +1,7 @@
-import { HEADER_HEIGHT } from "@/app/(components)/constants";
+import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/app/(components)/constants";
 import { Footer } from "@/app/(components)/Footer/Footer";
-import { Navbar } from "@/app/(components)/Navbar/Navbar";
+import { AdminNavbar } from "@/app/company/(components)/AdminNavbar";
+import { AdminSidebar } from "@/app/company/(components)/AdminSidebar";
 import { Box } from "@chakra-ui/react";
 
 export default function CompanyLayout({
@@ -8,13 +9,14 @@ export default function CompanyLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <Navbar />
-      <Box pt={HEADER_HEIGHT} h="full">
-        <Box as="main" h="full">
-          {children}
-        </Box>
+      <AdminNavbar />
+      <AdminSidebar />
+      <Box pt={HEADER_HEIGHT} pl={SIDEBAR_WIDTH}>
+        <Box as="main">{children}</Box>
       </Box>
-      <Footer />
+      <Box pl={SIDEBAR_WIDTH}>
+        <Footer />
+      </Box>
     </>
   );
 }

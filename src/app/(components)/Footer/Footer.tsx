@@ -64,7 +64,7 @@ export function Footer() {
   return (
     <Box as="footer" bg="tailwindGray.800">
       <Container maxW="container.xl" px={4} py={12}>
-        <SimpleGrid columns={{ base: 1, md: 4 }} gap={8}>
+        <SimpleGrid columns={{ base: 1, md: 4 }} gap={8} justifyItems="center">
           <FooterSection title="インフルエンサー向け" links={influencerLinks} />
           <FooterSection title="企業向け" links={companyLinks} />
           <FooterSection title="会社情報" links={aboutLinks} />
