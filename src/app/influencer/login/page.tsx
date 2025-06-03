@@ -31,7 +31,7 @@ const features = [
 
 export default function LoginPage() {
   return (
-    <Center minH="100vh" px={{ base: 4, sm: 0 }}>
+    <Center px={{ base: 4, sm: 0 }}>
       <Container maxW="xl" py={{ base: 6, sm: 12 }}>
         <VStack gap={8}>
           {/* Header */}
@@ -126,24 +126,24 @@ export default function LoginPage() {
 
                 {/* Additional Links */}
                 <VStack gap={4}>
-                  <NextLink
-                    href="/influencer/register"
-                    style={{ width: "100%" }}
+                  <Button
+                    w="full"
+                    variant="outline"
+                    colorPalette="gray"
+                    asChild
                   >
-                    <Button as="span" w="full" variant="outline">
+                    <NextLink href="/influencer/register">
                       会員登録はこちら(審査制)
-                    </Button>
-                  </NextLink>
-                  <NextLink href="/influencer/login" style={{ width: "100%" }}>
-                    <Button
-                      as="span"
-                      w="full"
-                      variant="outline"
-                      colorPalette="gray"
-                    >
-                      企業の方はこちら
-                    </Button>
-                  </NextLink>
+                    </NextLink>
+                  </Button>
+                  <Button
+                    w="full"
+                    variant="outline"
+                    colorPalette="gray"
+                    asChild
+                  >
+                    <NextLink href="/company/login">企業の方はこちら</NextLink>
+                  </Button>
                 </VStack>
 
                 <Separator />

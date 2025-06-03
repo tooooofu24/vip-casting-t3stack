@@ -9,8 +9,8 @@ export default function CompanyLayout({
   return (
     <>
       <Navbar />
-      <Box pt={HEADER_HEIGHT} h="full">
-        <Box as="main" h="full">
+      <Box pt={HEADER_HEIGHT} minH="full">
+        <Box as="main" minH="full">
           {children}
         </Box>
       </Box>

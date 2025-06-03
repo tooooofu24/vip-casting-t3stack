@@ -3,6 +3,7 @@ import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
 import { publicProcedure } from "@/server/api/trpc";
 import { approveInfluencerSchema } from "@/validations/admin/approveInfluencer";
 import { TRPCError } from "@trpc/server";
+import type { Route } from "next";
 
 export const approveInfluencer = publicProcedure
   .input(approveInfluencerSchema)
@@ -21,12 +22,10 @@ export const approveInfluencer = publicProcedure
       });
     }
 
-    const email = influencer.information.email;
-
     // Supabaseユーザー招待
     const supabase = await createSupabaseAdminClient();
-    const route = `/public/influencer/invited?email=${email}`;
-    await supabase.auth.admin.inviteUserByEmail(email, {
+    const route: Route = "/set-session";
+    await supabase.auth.admin.inviteUserByEmail(influencer.information.email, {
       redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
       data: {
         role: "influencer",

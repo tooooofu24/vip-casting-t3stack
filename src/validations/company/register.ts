@@ -104,7 +104,7 @@ export const companyBusinessDefaultValues: CompanyBusinessRequest = {
   department: "マーケティング部",
   position: "マネージャー",
   phone: "03-1234-5678",
-  email: "hanako@example.com",
+  email: "company@example.com",
   minBudget: "30000",
   maxBudget: "100000",
   ageGroups: ["EARLY_20S"],

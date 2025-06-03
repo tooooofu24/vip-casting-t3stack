@@ -39,25 +39,33 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const isAdmin = user?.user_metadata.role === "admin";
-  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin/");
+  const requireAdmin = request.nextUrl.pathname.startsWith("/admin/dashboard");
 
-  if (isAdminRoute && !isAdmin) {
+  if (requireAdmin && !isAdmin) {
     const url = request.nextUrl.clone();
-    url.pathname = "/admin-login";
+    url.pathname = "/admin/login";
     return NextResponse.redirect(url);
   }
 
-  // TODO: ログインしていない場合はログインページへリダイレクト
-  //   if (
-  //     !user &&
-  //     !request.nextUrl.pathname.startsWith("/login") &&
-  //     !request.nextUrl.pathname.startsWith("/auth")
-  //   ) {
-  //     // ユーザーが存在しない場合、ログインページへリダイレクトするなどの対応を行います。
-  //     const url = request.nextUrl.clone();
-  //     url.pathname = "/login";
-  //     return NextResponse.redirect(url);
-  //   }
+  const isInfluencer = user?.user_metadata.role === "influencer";
+  const requireInfluencer = request.nextUrl.pathname.startsWith(
+    "/influencer/dashboard",
+  );
+
+  if (requireInfluencer && !isInfluencer) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/influencer/login";
+    return NextResponse.redirect(url);
+  }
+
+  const isCompany = user?.user_metadata.role === "company";
+  const requireCompany =
+    request.nextUrl.pathname.startsWith("/company/dashboard");
+  if (requireCompany && !isCompany) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/company/login";
+    return NextResponse.redirect(url);
+  }
 
   // 重要: 必ず supabaseResponse オブジェクトをそのまま返してください。
   // 新しく NextResponse.next() でレスポンスを作成する場合は、

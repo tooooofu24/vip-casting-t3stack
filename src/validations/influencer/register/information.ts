@@ -29,6 +29,6 @@ export const influencerInformationDefaultValues: InfluencerInformationRequest =
     displayName: "山田太郎",
     birthday: "1990-01-01",
     gender: "MALE",
-    email: "yamada@example.com",
+    email: "influencer@example.com",
     phone: "090-1234-5678",
   };

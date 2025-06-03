@@ -25,7 +25,7 @@ export const approveCompany = publicProcedure
 
     // Supabaseユーザー発行
     const supabase = await createSupabaseAdminClient();
-    const route: Route = "/influencer/invited";
+    const route: Route = "/set-session";
     await supabase.auth.admin.inviteUserByEmail(company.business.email, {
       redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
       data: {

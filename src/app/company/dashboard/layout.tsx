@@ -3,14 +3,14 @@ import { Footer } from "@/app/(components)/Footer/Footer";
 import { Navbar } from "@/app/(components)/Navbar/Navbar";
 import { Box } from "@chakra-ui/react";
 
-export default function CommonLayout({
+export default function CompanyLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
       <Navbar />
-      <Box pt={HEADER_HEIGHT} minH="full">
-        <Box as="main" minH="full">
+      <Box pt={HEADER_HEIGHT} h="full">
+        <Box as="main" h="full">
           {children}
         </Box>
       </Box>

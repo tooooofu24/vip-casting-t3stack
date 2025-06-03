@@ -9,8 +9,10 @@ export default function InfluencerLayout({
   return (
     <>
       <Navbar />
-      <Box pt={HEADER_HEIGHT}>
-        <Box as="main">{children}</Box>
+      <Box pt={HEADER_HEIGHT} minH="full">
+        <Box as="main" minH="full">
+          {children}
+        </Box>
       </Box>
       <Footer />
     </>
