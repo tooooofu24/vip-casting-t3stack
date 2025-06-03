@@ -41,7 +41,7 @@ export default function SetSessionPage() {
   }, [router]);
 
   return (
-    <Center h="full">
+    <Center h="80vh">
       <Spinner size="xl" />
     </Center>
   );

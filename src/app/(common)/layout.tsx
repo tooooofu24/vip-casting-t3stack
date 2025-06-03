@@ -9,10 +9,8 @@ export default function CommonLayout({
   return (
     <>
       <Navbar />
-      <Box pt={HEADER_HEIGHT} minH="full">
-        <Box as="main" minH="full">
-          {children}
-        </Box>
+      <Box pt={HEADER_HEIGHT}>
+        <Box as="main">{children}</Box>
       </Box>
       <Footer />
     </>
