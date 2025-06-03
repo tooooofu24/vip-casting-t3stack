@@ -183,12 +183,12 @@ export default function CreatePrListingPage() {
 
           {/* Submit Buttons */}
           <HStack justify="flex-end" gap={4} w="full">
-            <Link href="/pr-listing">
+            <Link href="/influencer/pr-listing">
               <Button as="span" variant="ghost">
                 キャンセル
               </Button>
             </Link>
-            <Link href="/pr-listing">
+            <Link href="/influencer/pr-listing">
               <Button as="span">
                 <Icon as={LuSend} />
                 公開する

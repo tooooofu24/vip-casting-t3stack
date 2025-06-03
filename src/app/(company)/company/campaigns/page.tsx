@@ -143,7 +143,9 @@ export default function CampaignManagementPage() {
                         <HStack justify="space-between" align="start">
                           <Stack gap="1">
                             <HStack gap="2">
-                              <Link href={`/company/campaigns/${campaign.id}`}>
+                              <Link
+                                href={`/influencer/campaigns/${campaign.id}`}
+                              >
                                 <Text fontSize="lg">{campaign.title}</Text>
                               </Link>
                               <Badge

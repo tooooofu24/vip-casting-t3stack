@@ -137,7 +137,7 @@ export default function CompanyRegistrationGuidePage() {
 
           {/* CTA */}
           <Box textAlign="center">
-            <Link href="/company/register" passHref>
+            <Link href="/public/company/register">
               <Button
                 size="lg"
                 px={6}

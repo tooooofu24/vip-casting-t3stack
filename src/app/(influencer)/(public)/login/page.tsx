@@ -99,7 +99,9 @@ export default function LoginPage() {
                     <Checkbox.Label>ログイン状態を保持</Checkbox.Label>
                   </Checkbox.Root>
                   <ChakraLink asChild fontSize="sm">
-                    <NextLink href="">パスワードをお忘れですか？</NextLink>
+                    <NextLink href="/forget-password">
+                      パスワードをお忘れですか？
+                    </NextLink>
                   </ChakraLink>
                 </Stack>
 
@@ -129,7 +131,10 @@ export default function LoginPage() {
                       会員登録はこちら(審査制)
                     </Button>
                   </NextLink>
-                  <NextLink href="/company/login" style={{ width: "100%" }}>
+                  <NextLink
+                    href="/public/company/login"
+                    style={{ width: "100%" }}
+                  >
                     <Button
                       as="span"
                       w="full"

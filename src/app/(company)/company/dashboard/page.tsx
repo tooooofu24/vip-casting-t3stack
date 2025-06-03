@@ -200,7 +200,7 @@ export default function CompanyDashboardPage() {
                     <Table.Row key={campaign.id}>
                       <Table.Cell>
                         <ChakraLink asChild>
-                          <Link href={`/company/campaigns/${campaign.id}`}>
+                          <Link href={`/influencer/campaigns/${campaign.id}`}>
                             <Text color="blue.600" fontWeight="medium">
                               {campaign.title}
                             </Text>

@@ -16,9 +16,9 @@ import { type ComponentProps } from "react";
 type FooterLink = ComponentProps<typeof FooterLink>;
 
 const influencerLinks: FooterLink[] = [
-  { href: "/campaigns", children: "案件を探す" },
+  { href: "/influencer/campaigns", children: "案件を探す" },
   {
-    href: "/guide/registration",
+    href: "/influencer/guide/registration",
     children: "登録方法",
     badge: <Badge variant="solid">簡単3分</Badge>,
   },
@@ -27,7 +27,7 @@ const influencerLinks: FooterLink[] = [
 const companyLinks: FooterLink[] = [
   { href: "/company/post", children: "案件を掲載する" },
   { href: "/company/guide", children: "登録方法" },
-  { href: "/company/pricing", children: "料金" },
+  { href: "/", children: "料金" },
   {
     href: "/case-studies",
     children: "成功事例",
@@ -44,7 +44,7 @@ const aboutLinks: FooterLink[] = [
   { href: "/privacy", children: "プライバシーポリシー" },
   { href: "/terms", children: "利用規約" },
   {
-    href: "/careers",
+    href: "/",
     children: "採用情報",
     badge: (
       <Badge colorPalette="blue" variant="solid">
@@ -57,7 +57,7 @@ const aboutLinks: FooterLink[] = [
 const supportLinks: FooterLink[] = [
   { href: "/help", children: "ヘルプセンター" },
   { href: "/contact", children: "お問い合わせ" },
-  { href: "/guide/verification", children: "本人確認について" },
+  { href: "/", children: "本人確認について" },
 ];
 
 export function Footer() {

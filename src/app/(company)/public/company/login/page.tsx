@@ -98,7 +98,10 @@ export default function CompanyLoginPage() {
 
                 {/* Additional Links */}
                 <VStack gap={4}>
-                  <NextLink href="/company/register" style={{ width: "100%" }}>
+                  <NextLink
+                    href="/public/company/register"
+                    style={{ width: "100%" }}
+                  >
                     <Button as="span" w="full" variant="outline">
                       企業アカウントを新規登録
                     </Button>

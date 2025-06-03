@@ -20,6 +20,7 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
+import type { Route } from "next";
 import Link from "next/link";
 import {
   LuBook,
@@ -63,21 +64,25 @@ const faqs: FAQItem[] = [
   },
 ];
 
-const guidelines = [
+const guidelines: {
+  title: string;
+  description: string;
+  link: Route;
+}[] = [
   {
     title: "投稿ガイドライン",
     description: "投稿時の注意事項や禁止事項について",
-    link: "/guidelines/posting",
+    link: "/help",
   },
   {
     title: "コミュニケーションガイドライン",
     description: "企業とのやり取りにおける注意点",
-    link: "/guidelines/communication",
+    link: "/help",
   },
   {
     title: "報酬受け取りガイドライン",
     description: "報酬の受け取り方や確定申告について",
-    link: "/guidelines/payment",
+    link: "/help",
   },
 ];
 

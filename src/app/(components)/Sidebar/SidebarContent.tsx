@@ -10,8 +10,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import type { Route } from "next";
 import NextLink from "next/link";
 import { usePathname } from "next/navigation";
+import type { IconType } from "react-icons/lib";
 import {
   LuBell,
   LuBuilding2,
@@ -23,15 +25,23 @@ import {
   LuUser,
 } from "react-icons/lu";
 
-const sidebarLinks = [
-  { path: "/dashboard", label: "ダッシュボード", icon: LuLayoutDashboard },
-  { path: "/campaign-management", label: "案件管理", icon: LuBuilding2 },
-  { path: "/campaigns", label: "案件を探す", icon: LuFileText },
-  { path: "/pr-listing", label: "案件を募集する", icon: LuMail },
-  { path: "/messages", label: "メッセージ", icon: LuMessageSquare },
-  { path: "/notifications", label: "通知", icon: LuBell },
-  { path: "/profile", label: "プロフィール", icon: LuUser },
-  { path: "/settings", label: "設定", icon: LuSettings },
+const sidebarLinks: { path: Route; label: string; icon: IconType }[] = [
+  {
+    path: "/influencer/dashboard",
+    label: "ダッシュボード",
+    icon: LuLayoutDashboard,
+  },
+  {
+    path: "/influencer/campaign-management",
+    label: "案件管理",
+    icon: LuBuilding2,
+  },
+  { path: "/influencer/campaigns", label: "案件を探す", icon: LuFileText },
+  { path: "/influencer/pr-listing", label: "案件を募集する", icon: LuMail },
+  { path: "/influencer/messages", label: "メッセージ", icon: LuMessageSquare },
+  { path: "/", label: "通知", icon: LuBell },
+  { path: "/influencer/profile", label: "プロフィール", icon: LuUser },
+  { path: "/influencer/settings", label: "設定", icon: LuSettings },
 ];
 
 export function SidebarContent() {

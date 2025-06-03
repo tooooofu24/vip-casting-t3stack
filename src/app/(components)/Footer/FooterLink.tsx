@@ -1,12 +1,13 @@
 "use client";
 
 import { Link as ChakraLink, HStack } from "@chakra-ui/react";
+import type { Route } from "next";
 import NextLink from "next/link";
 import { type ReactNode } from "react";
 
 type Props = {
-  href: string;
-  children: string;
+  href: Route;
+  children: ReactNode;
   badge?: ReactNode;
 };
 

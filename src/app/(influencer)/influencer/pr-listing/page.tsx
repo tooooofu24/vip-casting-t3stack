@@ -48,7 +48,7 @@ export default function PrListingListPage() {
           <Heading as="h1" fontSize="2xl" fontWeight="bold">
             PR募集一覧
           </Heading>
-          <Link href="/pr-listing/create">
+          <Link href="/influencer/pr-listing/create">
             <Button as="span">
               <Icon as={LuPlus} />
               新規募集
@@ -58,7 +58,10 @@ export default function PrListingListPage() {
 
         <VStack gap={4} align="stretch">
           {mockPrListings.map((listing) => (
-            <Link key={listing.id} href={`/pr-listing/${listing.id}`}>
+            <Link
+              key={listing.id}
+              href={`/influencer/pr-listing/${listing.id}`}
+            >
               <Card.Root as="span">
                 <Card.Body p={6}>
                   <Stack gap={4}>

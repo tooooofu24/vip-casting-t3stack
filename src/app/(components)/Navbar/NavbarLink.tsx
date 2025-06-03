@@ -1,11 +1,12 @@
 "use client";
 
 import { Link as ChakraLink } from "@chakra-ui/react";
+import type { Route } from "next";
 import NextLink from "next/link";
 import { type ReactNode } from "react";
 
 type Props = {
-  path: string;
+  path: Route;
   children: ReactNode;
 };
 
