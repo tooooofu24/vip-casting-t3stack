@@ -34,7 +34,7 @@ export default function CaseStudiesPage() {
                 まずは無料会員登録から始めましょう。
               </Text>
               <ChakraLink asChild display="inline" w="auto">
-                <Link href="/register">
+                <Link href="/influencer/register">
                   <Button size="lg" px="8" _hover={{ bg: "purple.500" }}>
                     無料会員登録する
                     <Icon ml="2">

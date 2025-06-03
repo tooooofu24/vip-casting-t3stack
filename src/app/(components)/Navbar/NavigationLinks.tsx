@@ -4,10 +4,10 @@ import type { Route } from "next";
 
 const navLinks: { path: Route; label: string }[] = [
   { path: "/influencer/dashboard", label: "ダッシュボード" },
-  { path: "/influencer/campaign-management", label: "案件管理" },
-  { path: "/influencer/campaigns", label: "案件を探す" },
-  { path: "/influencer/pr-listing", label: "案件を募集する" },
-  { path: "/influencer/messages", label: "メッセージ" },
+  { path: "/influencer/dashboard/campaign-management", label: "案件管理" },
+  { path: "/influencer/dashboard/campaigns", label: "案件を探す" },
+  { path: "/influencer/dashboard/pr-listing", label: "案件を募集する" },
+  { path: "/influencer/dashboard/messages", label: "メッセージ" },
 ];
 
 export function NavigationLinks() {

@@ -32,16 +32,32 @@ const sidebarLinks: { path: Route; label: string; icon: IconType }[] = [
     icon: LuLayoutDashboard,
   },
   {
-    path: "/influencer/campaign-management",
+    path: "/influencer/dashboard/campaign-management",
     label: "案件管理",
     icon: LuBuilding2,
   },
-  { path: "/influencer/campaigns", label: "案件を探す", icon: LuFileText },
-  { path: "/influencer/pr-listing", label: "案件を募集する", icon: LuMail },
-  { path: "/influencer/messages", label: "メッセージ", icon: LuMessageSquare },
+  {
+    path: "/influencer/dashboard/campaigns",
+    label: "案件を探す",
+    icon: LuFileText,
+  },
+  {
+    path: "/influencer/dashboard/pr-listing",
+    label: "案件を募集する",
+    icon: LuMail,
+  },
+  {
+    path: "/influencer/dashboard/messages",
+    label: "メッセージ",
+    icon: LuMessageSquare,
+  },
   { path: "/", label: "通知", icon: LuBell },
-  { path: "/influencer/profile", label: "プロフィール", icon: LuUser },
-  { path: "/influencer/settings", label: "設定", icon: LuSettings },
+  {
+    path: "/influencer/dashboard/profile",
+    label: "プロフィール",
+    icon: LuUser,
+  },
+  { path: "/influencer/dashboard/settings", label: "設定", icon: LuSettings },
 ];
 
 export function SidebarContent() {

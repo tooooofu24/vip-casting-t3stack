@@ -106,7 +106,7 @@ export default function CompanyLoginPage() {
                       企業アカウントを新規登録
                     </Button>
                   </NextLink>
-                  <NextLink href="/login" style={{ width: "100%" }}>
+                  <NextLink href="/influencer/login" style={{ width: "100%" }}>
                     <Button
                       as="span"
                       w="full"

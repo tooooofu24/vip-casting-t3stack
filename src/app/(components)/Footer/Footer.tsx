@@ -16,9 +16,9 @@ import { type ComponentProps } from "react";
 type FooterLink = ComponentProps<typeof FooterLink>;
 
 const influencerLinks: FooterLink[] = [
-  { href: "/influencer/campaigns", children: "案件を探す" },
+  { href: "/influencer/dashboard/campaigns", children: "案件を探す" },
   {
-    href: "/influencer/guide/registration",
+    href: "/influencer/dashboard/guide/registration",
     children: "登録方法",
     badge: <Badge variant="solid">簡単3分</Badge>,
   },

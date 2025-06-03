@@ -3,7 +3,6 @@ import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
 import { publicProcedure } from "@/server/api/trpc";
 import { approveInfluencerSchema } from "@/validations/admin/approveInfluencer";
 import { TRPCError } from "@trpc/server";
-import type { Route } from "next";
 
 export const approveInfluencer = publicProcedure
   .input(approveInfluencerSchema)
@@ -26,7 +25,7 @@ export const approveInfluencer = publicProcedure
 
     // Supabaseユーザー招待
     const supabase = await createSupabaseAdminClient();
-    const route: Route = `/forget-password?email=${email}`;
+    const route = `/public/influencer/invited?email=${email}`;
     await supabase.auth.admin.inviteUserByEmail(email, {
       redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
       data: {

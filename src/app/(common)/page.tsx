@@ -89,7 +89,7 @@ export default function HomePage() {
             </Text>
             <HStack gap={4}>
               {!isAuthenticated && (
-                <Link href="/register">
+                <Link href="/influencer/register">
                   <Button
                     as="span"
                     bg="white"
@@ -231,7 +231,7 @@ export default function HomePage() {
                 まずは案件をチェックしてみませんか？
               </Text>
               <Stack direction={{ base: "column", sm: "row" }} gap={4}>
-                <Link href="/register">
+                <Link href="/influencer/register">
                   <Button as="span" size="lg">
                     会員登録はこちら(審査制)
                   </Button>

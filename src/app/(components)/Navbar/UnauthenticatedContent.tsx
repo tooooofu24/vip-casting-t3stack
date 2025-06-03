@@ -26,7 +26,7 @@ export function UnauthenticatedContent() {
       </IconButton>
       <Box display={{ base: "none", sm: "block" }}>
         <ChakraLink asChild>
-          <NextLink href="/login">
+          <NextLink href="/influencer/login">
             <Button size={{ base: "sm", md: "md" }}>ログイン</Button>
           </NextLink>
         </ChakraLink>

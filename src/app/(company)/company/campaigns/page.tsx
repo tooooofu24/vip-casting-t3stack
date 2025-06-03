@@ -144,7 +144,7 @@ export default function CampaignManagementPage() {
                           <Stack gap="1">
                             <HStack gap="2">
                               <Link
-                                href={`/influencer/campaigns/${campaign.id}`}
+                                href={`/influencer/dashboard/campaigns/${campaign.id}`}
                               >
                                 <Text fontSize="lg">{campaign.title}</Text>
                               </Link>
