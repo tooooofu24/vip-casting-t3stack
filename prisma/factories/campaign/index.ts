@@ -1,0 +1,1 @@
+export { campaignFactory } from "./campaign";

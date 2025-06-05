@@ -54,6 +54,13 @@ export default tseslint.config(
     },
   },
   {
+    files: ["prisma/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": "off",
+      "no-console": "off",
+    },
+  },
+  {
     linterOptions: {
       reportUnusedDisableDirectives: true,
     },
