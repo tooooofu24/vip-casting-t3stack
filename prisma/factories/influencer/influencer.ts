@@ -7,7 +7,7 @@ import { influencerWorkFactory } from "./influencerWork";
 
 export function influencerFactory(): Prisma.InfluencerUncheckedCreateInput {
   return {
-    id: faker.string.uuid(),
+    supabaseId: faker.string.uuid(),
     isApproved: true,
     information: {
       create: influencerInformationFactory(),

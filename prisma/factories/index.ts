@@ -4,6 +4,7 @@ export { companyFactory } from "./company";
 export { influencerFactory } from "./influencer";
 export { campaignFactory } from "./campaign";
 export { userFactory } from "./user";
+export { adminFactory } from "./admin";
 
 // ===== Company Sub-Factories =====
 // Fine-grained factories for individual company-related tables
@@ -29,3 +30,4 @@ export * from "./company";
 export * from "./influencer";
 export * from "./campaign";
 export * from "./user";
+export * from "./admin";

@@ -105,23 +105,37 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
 const adminMiddleware = t.middleware(async ({ ctx, next }) => {
   const supabase = await createSupabaseServerClient();
   const {
-    data: { user },
+    data: { user: supabaseUser },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!supabaseUser) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "認証が必要です" });
   }
 
-  const isAdmin = user.user_metadata?.role === "admin";
+  const isAdmin = supabaseUser.user_metadata?.role === "admin";
   if (!isAdmin) {
     throw new TRPCError({ code: "FORBIDDEN", message: "管理者権限が必要です" });
+  }
+
+  // Admin.supabaseId = auth.id でAdminレコードを取得
+  const admin = await ctx.db.admin.findUnique({
+    where: { supabaseId: supabaseUser.id },
+  });
+
+  if (!admin) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "管理者情報が見つかりません",
+    });
   }
 
   return next({
     ctx: {
       ...ctx,
-      user,
+      supabaseUser,
+      admin,
       isAdmin: true,
+      adminId: admin.id,
     },
   });
 });
@@ -133,23 +147,38 @@ export const adminProcedure = t.procedure.use(adminMiddleware);
 const companyMiddleware = t.middleware(async ({ ctx, next }) => {
   const supabase = await createSupabaseServerClient();
   const {
-    data: { user },
+    data: { user: supabaseUser },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!supabaseUser) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "認証が必要です" });
   }
 
-  const isCompany = user.user_metadata?.role === "company";
+  const isCompany = supabaseUser.user_metadata?.role === "company";
   if (!isCompany) {
     throw new TRPCError({ code: "FORBIDDEN", message: "会社権限が必要です" });
+  }
+
+  // User.supabaseId = auth.id でユーザーを検索し、User.companyId を取得
+  const user = await ctx.db.user.findUnique({
+    where: { supabaseId: supabaseUser.id },
+  });
+
+  if (!user) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "ユーザー情報が見つかりません",
+    });
   }
 
   return next({
     ctx: {
       ...ctx,
+      supabaseUser,
       user,
       isCompany: true,
+      userId: user.id,
+      companyId: user.companyId,
     },
   });
 });
@@ -161,14 +190,14 @@ export const companyProcedure = t.procedure.use(companyMiddleware);
 const influencerMiddleware = t.middleware(async ({ ctx, next }) => {
   const supabase = await createSupabaseServerClient();
   const {
-    data: { user },
+    data: { user: supabaseUser },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!supabaseUser) {
     throw new TRPCError({ code: "UNAUTHORIZED", message: "認証が必要です" });
   }
 
-  const isInfluencer = user.user_metadata?.role === "influencer";
+  const isInfluencer = supabaseUser.user_metadata?.role === "influencer";
   if (!isInfluencer) {
     throw new TRPCError({
       code: "FORBIDDEN",
@@ -176,11 +205,25 @@ const influencerMiddleware = t.middleware(async ({ ctx, next }) => {
     });
   }
 
+  // Influencer.supabaseId = auth.id でInfluencerレコードを取得
+  const influencer = await ctx.db.influencer.findUnique({
+    where: { supabaseId: supabaseUser.id },
+  });
+
+  if (!influencer) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "インフルエンサー情報が見つかりません",
+    });
+  }
+
   return next({
     ctx: {
       ...ctx,
-      user,
+      supabaseUser,
+      influencer,
       isInfluencer: true,
+      influencerId: influencer.id,
     },
   });
 });

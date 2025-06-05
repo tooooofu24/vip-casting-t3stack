@@ -26,12 +26,27 @@ export const approveCompany = adminProcedure
     // Supabaseユーザー発行
     const supabase = await createSupabaseAdminClient();
     const route: Route = "/set-session";
-    await supabase.auth.admin.inviteUserByEmail(company.business.email, {
-      redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
+    const { data: authData, error: authError } =
+      await supabase.auth.admin.inviteUserByEmail(company.business.email, {
+        redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
+        data: {
+          role: "company",
+          displayName: company.business.contactName,
+        },
+      });
+
+    if (authError || !authData.user) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `ユーザー作成に失敗しました: ${authError?.message}`,
+      });
+    }
+
+    // Prisma User レコードを作成
+    await ctx.db.user.create({
       data: {
-        role: "company",
+        supabaseId: authData.user.id,
         companyId: company.id,
-        displayName: company.business.contactName,
       },
     });
 
