@@ -28,6 +28,7 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 - `npm run db:migrate` - マイグレーションを適用（本番用）
 - `npm run db:push` - スキーマ変更を直接適用（開発用）
 - `npm run db:studio` - Prisma Studio GUIを開く
+- `npm run db:seed` - サンプルデータをシード（実行後は`npm run format && npm run check`を実行）
 
 ## アーキテクチャ
 
@@ -115,3 +116,22 @@ afplay /System/Library/Sounds/Glass.aiff
 - タスクが完了した時
 - ユーザーの確認や入力が必要な時
 - 重要な処理が終了した時
+
+## コード完了後の必須コマンド
+
+**コードを書き終わったら必ず実行すること：**
+
+```bash
+npm run format && npm run check
+```
+
+これにより以下が実行されます：
+
+- `npm run format` - Prettierでコード整形
+- `npm run check` - ESLintとTypeScript型チェック
+
+**エラーが発生した場合は必ず修正すること：**
+
+- TypeScriptエラー：型の不整合やインポートエラーを修正
+- ESLintエラー：コードスタイルやベストプラクティス違反を修正
+- すべてのエラーを解決してから作業完了とする

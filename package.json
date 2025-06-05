@@ -10,6 +10,8 @@
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:reset": "prisma migrate reset && npm run db:seed",
     "dev": "next dev",
     "format": "prettier --check --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "postinstall": "prisma generate",
@@ -49,6 +51,7 @@
   "devDependencies": {
     "@chakra-ui/cli": "^3.19.2",
     "@eslint/eslintrc": "^3.3.1",
+    "@faker-js/faker": "^9.8.0",
     "@types/node": "^22.15.29",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
@@ -58,6 +61,7 @@
     "knip": "^5.60.2",
     "prettier": "^3.5.3",
     "prisma": "^6.9.0",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.33.1"
   },
