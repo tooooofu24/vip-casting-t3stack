@@ -9,12 +9,14 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 ## 開発コマンド
 
 ### 基本開発
+
 - `npm run dev` - 開発サーバーを起動
 - `npm run build` - 本番用ビルド
 - `npm run preview` - ビルドしてローカルで本番サーバーを起動
 - `npm run start` - 本番サーバーを起動
 
 ### コード品質
+
 - `npm run lint` - ESLintを実行
 - `npm run lint:fix` - ESLintを自動修正付きで実行
 - `npm run typecheck` - TypeScriptの型チェック
@@ -24,15 +26,17 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 - `npm run knip` - 未使用の依存関係とファイルを削除
 
 ### データベース
+
 - `npm run db:generate` - Prismaマイグレーションを生成（開発用）
 - `npm run db:migrate` - マイグレーションを適用（本番用）
 - `npm run db:push` - スキーマ変更を直接適用（開発用）
 - `npm run db:studio` - Prisma Studio GUIを開く
-- `npm run db:seed` - サンプルデータをシード（実行後は`npm run format && npm run check`を実行）
+- `npm run db:seed` - サンプルデータをシード
 
 ## アーキテクチャ
 
 ### 技術スタック
+
 - **フレームワーク**: Next.js 15（App Router使用）
 - **API**: tRPCによる型安全なAPI
 - **データベース**: Supabase経由のPostgreSQL（Prisma ORM使用）
@@ -42,6 +46,7 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 - **状態管理**: TanStack Query（tRPC経由）
 
 ### ディレクトリ構造
+
 - `/src/app/` - Next.js App Routerのページとレイアウト
   - `(common)/` - 公開ページ（ホーム、会社概要、お問い合わせなど）
   - `admin/` - 管理者ダッシュボードと認証
@@ -63,6 +68,7 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 1. **認証フロー**: 管理者、企業、インフルエンサー用の3つの独立した認証システム（それぞれ独自のログイン/登録フロー）
 
 2. **tRPCルーター構造**: 機能ベースのモジュラー設計：
+
    ```
    appRouter
    ├── admin（企業/インフルエンサー承認、サインアップ）
@@ -77,7 +83,9 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 5. **UIコンポーネント**: カスタムテーマ設定を持つChakra UIコンポーネントの一貫した使用
 
 ### 環境変数
+
 `src/env.js`で定義される必須変数：
+
 - `DATABASE_URL` - PostgreSQL接続文字列
 - `NEXT_PUBLIC_APP_URL` - アプリケーションURL
 - `NEXT_PUBLIC_SUPABASE_URL` - SupabaseプロジェクトURL
@@ -87,6 +95,7 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 ## コーディング規約
 
 ### tRPCプロシージャの実装
+
 - 認証が必要なエンドポイントでは適切なミドルウェアを使用:
   - `adminProcedure` - 管理者権限が必要
   - `companyProcedure` - 企業ユーザー権限が必要（`ctx.companyId`が使用可能）
@@ -94,6 +103,7 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
 - Zodのインポートは`import { z } from "@/lib/zod"`を使用（直接インポートは禁止）
 
 ### Prisma Enumの使用
+
 - Enumのインポート: `import type { Platform, CampaignStatus } from "@/lib/prisma/generated"`
 - ラベル定義は既存の定数ファイルを使用:
   - `/src/const/platform.ts` - プラットフォーム名
@@ -101,21 +111,10 @@ VIPキャスティングは、T3 Stack（Next.js、tRPC、Prisma、Supabase、Ch
   - その他のEnumも同様に`/src/const/`配下に定義済み
 
 ### フロントエンドでのデータ取得
+
 - tRPC APIの呼び出し: `api.company.campaigns.getCampaigns.useQuery()`
 - 空データの場合はフロントエンドで制御（APIでエラーを投げない）
 - ローディング状態は`isLoading`、エラー状態は`error`を使用
-
-## Claude作業時の通知音
-
-ユーザーのアクション要求やタスク完了時に以下のコマンドで音を鳴らす：
-```bash
-afplay /System/Library/Sounds/Glass.aiff
-```
-
-以下の場面で音を鳴らすこと：
-- タスクが完了した時
-- ユーザーの確認や入力が必要な時
-- 重要な処理が終了した時
 
 ## コード完了後の必須コマンド
 

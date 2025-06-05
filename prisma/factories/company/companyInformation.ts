@@ -2,17 +2,11 @@ import type { Prisma } from "@/lib/prisma/generated";
 import { Industry } from "@/lib/prisma/generated";
 import { faker } from "@faker-js/faker/locale/ja";
 
-type Props = {
-  companyId: string;
-};
-
-export function companyInformationFactory({
-  companyId,
-}: Props): Prisma.CompanyInformationUncheckedCreateInput {
-  const companyName = faker.company.name() + "株式会社";
-  const displayName = faker.company.name();
+export function companyInformationFactory(): Prisma.CompanyInformationCreateWithoutCompanyInput {
+  const companyName = faker.company.name().slice(0, 240) + "株式会社";
+  const displayName = faker.company.name().slice(0, 240);
   const websiteUrl = `https://${faker.internet.domainName()}`;
-  const ceoName = faker.person.fullName();
+  const ceoName = faker.person.fullName().slice(0, 90);
 
   return {
     companyName,
@@ -26,6 +20,5 @@ export function companyInformationFactory({
     websiteUrl,
     purpose: faker.lorem.paragraph(),
     note: faker.lorem.sentence(),
-    companyId,
   };
 }

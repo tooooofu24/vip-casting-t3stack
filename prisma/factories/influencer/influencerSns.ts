@@ -48,13 +48,7 @@ function createSnsData(): SnsData {
   return snsData;
 }
 
-type Props = {
-  influencerId: string;
-};
-
-export function influencerSnsFactory({
-  influencerId,
-}: Props): Prisma.InfluencerSnsUncheckedCreateInput {
+export function influencerSnsFactory(): Prisma.InfluencerSnsCreateWithoutInfluencerInput {
   const snsData = createSnsData();
 
   return {
@@ -66,6 +60,5 @@ export function influencerSnsFactory({
     tiktokFollowers: snsData.tiktokFollowers ?? null,
     xName: snsData.xName ?? null,
     xFollowers: snsData.xFollowers ?? null,
-    influencerId,
   };
 }

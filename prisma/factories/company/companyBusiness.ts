@@ -12,15 +12,9 @@ const DEPARTMENTS = ["マーケティング部", "営業部", "広報部", "企�
 
 const POSITIONS = ["部長", "課長", "主任", "担当者"];
 
-type Props = {
-  companyId: string;
-};
-
-export function companyBusinessFactory({
-  companyId,
-}: Props): Prisma.CompanyBusinessUncheckedCreateInput {
+export function companyBusinessFactory(): Prisma.CompanyBusinessCreateWithoutCompanyInput {
   return {
-    contactName: faker.person.fullName(),
+    contactName: faker.person.fullName().slice(0, 90),
     department: faker.helpers.arrayElement(DEPARTMENTS),
     position: faker.helpers.arrayElement(POSITIONS),
     phone:
@@ -56,6 +50,5 @@ export function companyBusinessFactory({
         .arrayElements(Object.values(Objective), { min: 1, max: 3 })
         .map((objective) => ({ objective })),
     },
-    companyId,
   };
 }

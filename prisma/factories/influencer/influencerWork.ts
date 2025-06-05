@@ -13,13 +13,7 @@ const NG_PRODUCTS = [
 
 const NG_COMPANIES = ["競合他社A", "競合他社B"];
 
-type Props = {
-  influencerId: string;
-};
-
-export function influencerWorkFactory({
-  influencerId,
-}: Props): Prisma.InfluencerWorkUncheckedCreateInput {
+export function influencerWorkFactory(): Prisma.InfluencerWorkCreateWithoutInfluencerInput {
   return {
     postFee: faker.number.int({ min: 10000, max: 100000 }),
     videoFee: faker.number.int({ min: 30000, max: 300000 }),
@@ -52,6 +46,5 @@ export function influencerWorkFactory({
         }),
       ),
     },
-    influencerId,
   };
 }

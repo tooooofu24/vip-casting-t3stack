@@ -21,10 +21,16 @@ async function main() {
     console.warn("Creating companies...");
     const companies = [];
     for (let i = 0; i < 8; i++) {
-      const company = await prisma.company.create({
-        data: companyFactory(),
-      });
-      companies.push(company);
+      try {
+        console.warn(`Creating company ${i + 1}...`);
+        const company = await prisma.company.create({
+          data: companyFactory(),
+        });
+        companies.push(company);
+      } catch (error) {
+        console.error(`Error creating company ${i + 1}:`, error);
+        throw error;
+      }
     }
     console.warn(`✅ Created ${companies.length} companies`);
 

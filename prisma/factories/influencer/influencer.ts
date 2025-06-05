@@ -5,22 +5,19 @@ import { influencerSnsFactory } from "./influencerSns";
 import { influencerWorkFactory } from "./influencerWork";
 
 export function influencerFactory(): Prisma.InfluencerUncheckedCreateInput {
-  // 一時的なinfluencerIdを生成（実際の作成時に置き換えられる）
-  const tempInfluencerId = "temp-influencer-id";
-
   return {
     isApproved: true,
     information: {
-      create: influencerInformationFactory({ influencerId: tempInfluencerId }),
+      create: influencerInformationFactory(),
     },
     address: {
-      create: influencerAddressFactory({ influencerId: tempInfluencerId }),
+      create: influencerAddressFactory(),
     },
     sns: {
-      create: influencerSnsFactory({ influencerId: tempInfluencerId }),
+      create: influencerSnsFactory(),
     },
     work: {
-      create: influencerWorkFactory({ influencerId: tempInfluencerId }),
+      create: influencerWorkFactory(),
     },
   };
 }

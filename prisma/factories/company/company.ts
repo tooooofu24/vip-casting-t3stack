@@ -6,21 +6,19 @@ import { companyInformationFactory } from "./companyInformation";
 import { companyPaymentFactory } from "./companyPayment";
 
 export function companyFactory(): Prisma.CompanyUncheckedCreateInput {
-  const tempCompanyId = faker.string.uuid();
-
   return {
     isApproved: faker.datatype.boolean(),
     information: {
-      create: companyInformationFactory({ companyId: tempCompanyId }),
+      create: companyInformationFactory(),
     },
     address: {
-      create: companyAddressFactory({ companyId: tempCompanyId }),
+      create: companyAddressFactory(),
     },
     business: {
-      create: companyBusinessFactory({ companyId: tempCompanyId }),
+      create: companyBusinessFactory(),
     },
     payment: {
-      create: companyPaymentFactory({ companyId: tempCompanyId }),
+      create: companyPaymentFactory(),
     },
   };
 }

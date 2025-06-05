@@ -2,13 +2,7 @@ import type { Prisma } from "@/lib/prisma/generated";
 import { Gender } from "@/lib/prisma/generated";
 import { faker } from "@faker-js/faker/locale/ja";
 
-type Props = {
-  influencerId: string;
-};
-
-export function influencerInformationFactory({
-  influencerId,
-}: Props): Prisma.InfluencerInformationUncheckedCreateInput {
+export function influencerInformationFactory(): Prisma.InfluencerInformationCreateWithoutInfluencerInput {
   const gender = faker.helpers.enumValue(Gender);
   const firstName = faker.person.firstName(
     gender === Gender.MALE ? "male" : "female",
@@ -34,6 +28,5 @@ export function influencerInformationFactory({
       faker.string.numeric(4) +
       "-" +
       faker.string.numeric(4),
-    influencerId,
   };
 }
