@@ -5,8 +5,9 @@ export const register = publicProcedure
   .input(companyRegisterSchema)
   .mutation(async ({ ctx, input }) => {
     return await ctx.db.$transaction(async (prisma) => {
-      // 1. Company作成
-      const company = await prisma.company.create({ data: {} });
+      const company = await prisma.company.create({
+        data: {},
+      });
       // 2. 各情報をcompanyIdで紐付けて作成
       await prisma.companyInformation.create({
         data: {

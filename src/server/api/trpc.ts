@@ -145,20 +145,45 @@ const companyMiddleware = t.middleware(async ({ ctx, next }) => {
     throw new TRPCError({ code: "FORBIDDEN", message: "会社権限が必要です" });
   }
 
-  const companyId = user.user_metadata?.companyId as string | undefined;
-  if (!companyId) {
-    throw new TRPCError({ code: "FORBIDDEN", message: "会社情報がありません" });
-  }
-
   return next({
     ctx: {
       ...ctx,
       user,
       isCompany: true,
-      companyId,
     },
   });
 });
 
 // 会社専用プロシージャ
 export const companyProcedure = t.procedure.use(companyMiddleware);
+
+// インフルエンサー認証ミドルウェア
+const influencerMiddleware = t.middleware(async ({ ctx, next }) => {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new TRPCError({ code: "UNAUTHORIZED", message: "認証が必要です" });
+  }
+
+  const isInfluencer = user.user_metadata?.role === "influencer";
+  if (!isInfluencer) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "インフルエンサー権限が必要です",
+    });
+  }
+
+  return next({
+    ctx: {
+      ...ctx,
+      user,
+      isInfluencer: true,
+    },
+  });
+});
+
+// インフルエンサー専用プロシージャ
+export const influencerProcedure = t.procedure.use(influencerMiddleware);

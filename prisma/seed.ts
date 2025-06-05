@@ -1,70 +1,40 @@
 import { PrismaClient } from "@/lib/prisma/generated";
 import {
-  // Main factories for complete entities
+  campaignFactory,
   companyFactory,
   influencerFactory,
-  campaignFactory,
-  // Sub-factories for individual tables (if needed)
-  // companyInformationFactory,
-  // influencerSnsFactory,
-  // etc...
+  userFactory,
 } from "./factories";
-import { faker } from "@faker-js/faker/locale/ja";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  console.warn("🌱 Starting database seeding...");
+  const companies = [];
+  for (let i = 0; i < 8; i++) {
+    const company = await prisma.company.create({
+      data: companyFactory(),
+    });
+    companies.push(company);
+  }
 
-  try {
-    // 1. Create Companies
-    console.warn("Creating companies...");
-    const companies = [];
-    for (let i = 0; i < 8; i++) {
-      try {
-        console.warn(`Creating company ${i + 1}...`);
-        const company = await prisma.company.create({
-          data: companyFactory(),
-        });
-        companies.push(company);
-      } catch (error) {
-        console.error(`Error creating company ${i + 1}:`, error);
-        throw error;
-      }
-    }
-    console.warn(`✅ Created ${companies.length} companies`);
+  for (const company of companies) {
+    await prisma.user.create({
+      data: userFactory(company.id),
+    });
+  }
 
-    // 2. Create Influencers
-    console.warn("Creating influencers...");
-    const influencers = [];
-    for (let i = 0; i < 25; i++) {
-      const influencer = await prisma.influencer.create({
-        data: influencerFactory(),
+  for (let i = 0; i < 25; i++) {
+    await prisma.influencer.create({
+      data: influencerFactory(),
+    });
+  }
+
+  for (const company of companies) {
+    for (let i = 0; i < 10; i++) {
+      await prisma.campaign.create({
+        data: campaignFactory(company.id),
       });
-      influencers.push(influencer);
     }
-    console.warn(`✅ Created ${influencers.length} influencers`);
-
-    // 3. Create Campaigns
-    console.warn("Creating campaigns...");
-    const campaigns = [];
-    for (let i = 0; i < 20; i++) {
-      const companyId = faker.helpers.arrayElement(companies).id;
-      const campaign = await prisma.campaign.create({
-        data: campaignFactory(companyId),
-      });
-      campaigns.push(campaign);
-    }
-    console.warn(`✅ Created ${campaigns.length} campaigns`);
-
-    console.warn("🎉 Seed completed successfully!");
-    console.warn("📊 Summary:");
-    console.warn(`   - Companies: ${companies.length}`);
-    console.warn(`   - Influencers: ${influencers.length}`);
-    console.warn(`   - Campaigns: ${campaigns.length}`);
-  } catch (error) {
-    console.error("❌ Seed failed:", error);
-    throw error;
   }
 }
 
