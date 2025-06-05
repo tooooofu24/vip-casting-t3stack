@@ -5,9 +5,9 @@ import { CampaignForm } from "@/app/company/dashboard/campaigns/(components)/Cam
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
-  companyCampaignDefaultValues,
-  companyCampaignSchema,
-} from "@/validations/company/campaign";
+  createCampaignDefaultValues,
+  createCampaignSchema,
+} from "@/validations/company/campaign/createCampaign";
 import { VStack } from "@chakra-ui/react";
 
 export default function PostCampaignPage() {
@@ -35,8 +35,8 @@ export default function PostCampaignPage() {
       />
       <CampaignForm
         onSubmit={mutateAsync}
-        defaultValues={companyCampaignDefaultValues}
-        schema={companyCampaignSchema}
+        defaultValues={createCampaignDefaultValues}
+        schema={createCampaignSchema}
       />
     </VStack>
   );

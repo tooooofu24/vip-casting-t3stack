@@ -1,8 +1,8 @@
 import { companyProcedure } from "@/server/api/trpc";
-import { companyCampaignSchema } from "@/validations/company/campaign";
+import { createCampaignSchema } from "@/validations/company/campaign/createCampaign";
 
 export const createCampaign = companyProcedure
-  .input(companyCampaignSchema)
+  .input(createCampaignSchema)
   .mutation(async ({ ctx, input }) => {
     const campaign = await ctx.db.campaign.create({
       data: {

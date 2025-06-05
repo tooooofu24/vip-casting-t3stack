@@ -2,7 +2,7 @@ import { platformValues } from "@/const/platform";
 import { rewardTypeValues } from "@/const/rewardType";
 import { z } from "@/lib/zod";
 
-export const companyCampaignSchema = z.object({
+export const createCampaignSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().min(1).max(2000),
   platform: z.enum(platformValues),
@@ -21,9 +21,9 @@ export const companyCampaignSchema = z.object({
   note: z.string().max(1000).optional(),
 });
 
-export type CompanyCampaignRequest = z.infer<typeof companyCampaignSchema>;
+export type CreateCampaignRequest = z.infer<typeof createCampaignSchema>;
 
-export const companyCampaignDefaultValues: CompanyCampaignRequest = {
+export const createCampaignDefaultValues: CreateCampaignRequest = {
   title: "新商品PRキャンペーン",
   description:
     "新発売のコスメをPRしていただく案件です。InstagramやTikTokでの投稿をお願いします。",

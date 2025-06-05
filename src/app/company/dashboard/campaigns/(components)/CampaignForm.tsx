@@ -3,7 +3,8 @@
 import { TagInputField } from "@/app/(components)/fields/TagInputField";
 import { platforms } from "@/const/platform";
 import { rewardTypes } from "@/const/rewardType";
-import { type CompanyCampaignRequest } from "@/validations/company/campaign";
+import { type CreateCampaignRequest } from "@/validations/company/campaign/createCampaign";
+import type { UpdateCampaignRequest } from "@/validations/company/campaign/updateCampaign";
 import {
   Button,
   Card,
@@ -24,11 +25,13 @@ import { Controller, useForm } from "react-hook-form";
 import { LuSave } from "react-icons/lu";
 import type { ZodSchema } from "zod";
 
-interface Props {
-  onSubmit: (data: CompanyCampaignRequest) => void;
-  schema: ZodSchema<CompanyCampaignRequest>;
-  defaultValues?: DefaultValues<CompanyCampaignRequest>;
-}
+type CampaignFormData = CreateCampaignRequest | UpdateCampaignRequest;
+
+type Props = {
+  onSubmit: (data: CampaignFormData) => void;
+  schema: ZodSchema<CampaignFormData>;
+  defaultValues?: DefaultValues<CampaignFormData>;
+};
 
 export const CampaignForm = ({ onSubmit, defaultValues, schema }: Props) => {
   const {
@@ -36,7 +39,7 @@ export const CampaignForm = ({ onSubmit, defaultValues, schema }: Props) => {
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
-  } = useForm<CompanyCampaignRequest>({
+  } = useForm<CampaignFormData>({
     resolver: zodResolver(schema),
     defaultValues,
   });
@@ -45,6 +48,7 @@ export const CampaignForm = ({ onSubmit, defaultValues, schema }: Props) => {
     <Card.Root bg="white" as="form" onSubmit={handleSubmit(onSubmit)}>
       <Card.Body>
         <VStack gap="6" align="stretch">
+          <input type="hidden" {...register("id" as keyof CampaignFormData)} />
           <Field.Root required invalid={!!errors.title}>
             <Field.Label>
               案件タイトル <Field.RequiredIndicator />

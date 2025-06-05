@@ -73,6 +73,7 @@ export default function CampaignManagementPage() {
               <Table.ColumnHeader>投稿期限</Table.ColumnHeader>
               <Table.ColumnHeader>報酬</Table.ColumnHeader>
               <Table.ColumnHeader>ステータス</Table.ColumnHeader>
+              <Table.ColumnHeader>操作</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -97,6 +98,17 @@ export default function CampaignManagementPage() {
                   <Badge colorPalette={campaignStatusColors[campaign.status]}>
                     {statusLabels[campaign.status]}
                   </Badge>
+                </Table.Cell>
+                <Table.Cell>
+                  <ChakraLink asChild>
+                    <Link
+                      href={`/company/dashboard/campaigns/edit/${campaign.id}`}
+                    >
+                      <Button size="sm" variant="outline">
+                        編集
+                      </Button>
+                    </Link>
+                  </ChakraLink>
                 </Table.Cell>
               </Table.Row>
             ))}

@@ -7,7 +7,7 @@
  */
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
-import { ZodError } from "zod"; // eslint-disable-line no-restricted-imports
+import { ZodError } from "zod";
 
 import { createSupabaseServerClient } from "@/lib/supabase/serverClient";
 import { db } from "@/server/db";
