@@ -1,11 +1,12 @@
 "use client";
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
-import { campaignStatuses } from "@/const/campaignStatus";
+import { campaignStatusColors, campaignStatuses } from "@/const/campaignStatus";
 import { platforms } from "@/const/platform";
 import type { CampaignStatus, Platform } from "@/lib/prisma/generated";
 import { api } from "@/lib/trpc/react";
 import {
+  Badge,
   Box,
   Button,
   Link as ChakraLink,
@@ -26,14 +27,6 @@ const statusLabels = campaignStatuses.reduce(
   (acc, status) => ({ ...acc, [status.value]: status.label }),
   {} as Record<CampaignStatus, string>,
 );
-
-const statusColors: Record<CampaignStatus, string> = {
-  DRAFT: "gray.500",
-  RECRUITING: "green.500",
-  IN_PROGRESS: "blue.500",
-  COMPLETED: "purple.500",
-  CANCELLED: "red.500",
-};
 
 export default function CampaignManagementPage() {
   const { data, isLoading } = api.company.campaigns.get.useQuery();
@@ -101,12 +94,9 @@ export default function CampaignManagementPage() {
                     : `¥${campaign.rewardAmount.toLocaleString()}/フォロワー`}
                 </Table.Cell>
                 <Table.Cell>
-                  <Text
-                    color={statusColors[campaign.status]}
-                    fontWeight="medium"
-                  >
+                  <Badge colorPalette={campaignStatusColors[campaign.status]}>
                     {statusLabels[campaign.status]}
-                  </Text>
+                  </Badge>
                 </Table.Cell>
               </Table.Row>
             ))}
