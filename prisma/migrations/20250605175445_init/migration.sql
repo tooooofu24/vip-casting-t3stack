@@ -37,6 +37,7 @@ CREATE TYPE "AccountType" AS ENUM ('NORMAL', 'CURRENT');
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" UUID NOT NULL,
+    "supabaseId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -46,6 +47,7 @@ CREATE TABLE "Admin" (
 -- CreateTable
 CREATE TABLE "User" (
     "id" UUID NOT NULL,
+    "supabaseId" UUID NOT NULL,
     "companyId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -188,6 +190,7 @@ CREATE TABLE "CompanyPayment" (
 -- CreateTable
 CREATE TABLE "Influencer" (
     "id" UUID NOT NULL,
+    "supabaseId" UUID,
     "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
     "isApproved" BOOLEAN NOT NULL DEFAULT false,
@@ -303,6 +306,12 @@ CREATE TABLE "Campaign" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Admin_supabaseId_key" ON "Admin"("supabaseId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_supabaseId_key" ON "User"("supabaseId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "CompanyInformation_companyId_key" ON "CompanyInformation"("companyId");
 
 -- CreateIndex
@@ -337,6 +346,9 @@ CREATE UNIQUE INDEX "CompanyBusinessObjective_companyBusinessId_objective_key" O
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CompanyPayment_companyId_key" ON "CompanyPayment"("companyId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Influencer_supabaseId_key" ON "Influencer"("supabaseId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "InfluencerInformation_influencerId_key" ON "InfluencerInformation"("influencerId");

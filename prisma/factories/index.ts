@@ -6,6 +6,10 @@ export { campaignFactory } from "./campaign";
 export { userFactory } from "./user";
 export { adminFactory } from "./admin";
 
+// ===== Supabase Factories =====
+// Factories for Supabase Auth users
+export { createSupabaseUser } from "./supabase";
+
 // ===== Company Sub-Factories =====
 // Fine-grained factories for individual company-related tables
 export {

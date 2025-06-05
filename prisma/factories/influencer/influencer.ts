@@ -1,13 +1,14 @@
 import type { Prisma } from "@/lib/prisma/generated";
-import { faker } from "@faker-js/faker/locale/ja";
-import { influencerInformationFactory } from "./influencerInformation";
 import { influencerAddressFactory } from "./influencerAddress";
+import { influencerInformationFactory } from "./influencerInformation";
 import { influencerSnsFactory } from "./influencerSns";
 import { influencerWorkFactory } from "./influencerWork";
 
-export function influencerFactory(): Prisma.InfluencerUncheckedCreateInput {
+export function influencerFactory(
+  supabaseId: string,
+): Prisma.InfluencerUncheckedCreateInput {
   return {
-    supabaseId: faker.string.uuid(),
+    supabaseId: supabaseId,
     isApproved: true,
     information: {
       create: influencerInformationFactory(),
