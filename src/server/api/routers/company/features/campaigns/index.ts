@@ -1,5 +1,5 @@
 import { createCampaign } from "@/server/api/routers/company/features/campaigns/create";
-import { getCampaigns } from "@/server/api/routers/company/features/campaigns/getCampaigns";
+import { getCampaigns } from "@/server/api/routers/company/features/campaigns/get";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 export const campaignsRouter = createTRPCRouter({

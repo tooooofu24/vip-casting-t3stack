@@ -1,29 +1,15 @@
 import { faker } from "@faker-js/faker/locale/ja";
-import {
-  createClient,
-  type AdminUserAttributes,
-  type User,
-} from "@supabase/supabase-js";
-
-// Supabase Admin Client for creating users
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  },
-);
+import { type AdminUserAttributes, type User } from "@supabase/supabase-js";
+import { supabaseAdmin } from "./client";
 
 type Props = {
+  email?: string;
   role: "admin" | "company" | "influencer";
 };
 
 function supabaseUserFactory(options: Props): AdminUserAttributes {
   return {
-    email: faker.internet.email(),
+    email: options.email ?? faker.internet.email(),
     password: "password",
     email_confirm: true,
     user_metadata: {
