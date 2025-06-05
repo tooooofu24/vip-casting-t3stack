@@ -1,39 +1,58 @@
 "use client";
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
+import { campaignStatuses } from "@/const/campaignStatus";
+import { platforms } from "@/const/platform";
+import type { CampaignStatus, Platform } from "@/lib/prisma/generated";
+import { api } from "@/lib/trpc/react";
 import {
   Box,
   Button,
   Link as ChakraLink,
   HStack,
+  Spinner,
   Table,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-const mockCampaigns = [
-  {
-    id: "1",
-    title: "美容系商品のPR募集",
-    platform: "Instagram",
-    draftDeadline: "2024-04-15",
-    postDate: "2024-04-20",
-    budget: "¥50,000",
-    status: "募集中",
-  },
-  {
-    id: "2",
-    title: "食品系商品のレビュー",
-    platform: "TikTok",
-    draftDeadline: "2024-04-18",
-    postDate: "2024-04-25",
-    budget: "¥30,000",
-    status: "募集中",
-  },
-];
+const platformLabels = platforms.reduce(
+  (acc, platform) => ({ ...acc, [platform.value]: platform.label }),
+  {} as Record<Platform, string>,
+);
+
+const statusLabels = campaignStatuses.reduce(
+  (acc, status) => ({ ...acc, [status.value]: status.label }),
+  {} as Record<CampaignStatus, string>,
+);
+
+const statusColors: Record<CampaignStatus, string> = {
+  DRAFT: "gray.500",
+  RECRUITING: "green.500",
+  IN_PROGRESS: "blue.500",
+  COMPLETED: "purple.500",
+  CANCELLED: "red.500",
+};
 
 export default function CampaignManagementPage() {
+  const { data, isLoading } = api.company.campaigns.get.useQuery();
+
+  if (isLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minH="400px"
+      >
+        <Spinner size="xl" color="purple.500" />
+      </Box>
+    );
+  }
+
+  const campaigns = data?.campaigns ?? [];
+
   return (
     <VStack gap={6} align="stretch">
       <BreadcrumbSection
@@ -57,26 +76,43 @@ export default function CampaignManagementPage() {
             <Table.Row>
               <Table.ColumnHeader>案件名</Table.ColumnHeader>
               <Table.ColumnHeader>プラットフォーム</Table.ColumnHeader>
-              <Table.ColumnHeader>下書き提出</Table.ColumnHeader>
-              <Table.ColumnHeader>投稿日</Table.ColumnHeader>
+              <Table.ColumnHeader>応募期限</Table.ColumnHeader>
+              <Table.ColumnHeader>投稿期限</Table.ColumnHeader>
               <Table.ColumnHeader>報酬</Table.ColumnHeader>
               <Table.ColumnHeader>ステータス</Table.ColumnHeader>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {mockCampaigns.map((campaign) => (
+            {campaigns.map((campaign) => (
               <Table.Row key={campaign.id} _hover={{ bg: "gray.50" }}>
                 <Table.Cell fontWeight="medium">{campaign.title}</Table.Cell>
-                <Table.Cell>{campaign.platform}</Table.Cell>
-                <Table.Cell>{campaign.draftDeadline}</Table.Cell>
-                <Table.Cell>{campaign.postDate}</Table.Cell>
-                <Table.Cell>{campaign.budget}</Table.Cell>
-                <Table.Cell>{campaign.status}</Table.Cell>
+                <Table.Cell>{platformLabels[campaign.platform]}</Table.Cell>
+                <Table.Cell>
+                  {new Date(campaign.applicationDue).toLocaleDateString(
+                    "ja-JP",
+                  )}
+                </Table.Cell>
+                <Table.Cell>
+                  {new Date(campaign.postDue).toLocaleDateString("ja-JP")}
+                </Table.Cell>
+                <Table.Cell>
+                  {campaign.rewardType === "FIXED"
+                    ? `¥${campaign.rewardAmount.toLocaleString()}`
+                    : `¥${campaign.rewardAmount.toLocaleString()}/フォロワー`}
+                </Table.Cell>
+                <Table.Cell>
+                  <Text
+                    color={statusColors[campaign.status]}
+                    fontWeight="medium"
+                  >
+                    {statusLabels[campaign.status]}
+                  </Text>
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table.Root>
-        {mockCampaigns.length === 0 && (
+        {campaigns.length === 0 && (
           <Box py={12} textAlign="center" color="gray.400">
             案件がありません。
           </Box>
