@@ -22,7 +22,13 @@ export default tseslint.config(
         "error",
         {
           patterns: ["../*", "./*"],
-          paths: ["zod"],
+          paths: [
+            {
+              name: "zod",
+              importNames: ["z"],
+              message: "Please import 'z' from '@/lib/zod' instead.",
+            },
+          ],
         },
       ],
       "@typescript-eslint/array-type": "off",

@@ -3,10 +3,7 @@
 import { TagInputField } from "@/app/(components)/fields/TagInputField";
 import { platforms } from "@/const/platform";
 import { rewardTypes } from "@/const/rewardType";
-import {
-  companyCampaignSchema,
-  type CompanyCampaignRequest,
-} from "@/validations/company/campaign";
+import { type CompanyCampaignRequest } from "@/validations/company/campaign";
 import {
   Button,
   Card,
@@ -25,20 +22,22 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { DefaultValues } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { LuSave } from "react-icons/lu";
+import type { ZodSchema } from "zod";
 
 interface Props {
   onSubmit: (data: CompanyCampaignRequest) => void;
+  schema: ZodSchema<CompanyCampaignRequest>;
   defaultValues?: DefaultValues<CompanyCampaignRequest>;
 }
 
-export const CompanyCampaignForm = ({ onSubmit, defaultValues }: Props) => {
+export const CampaignForm = ({ onSubmit, defaultValues, schema }: Props) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors, isSubmitting },
   } = useForm<CompanyCampaignRequest>({
-    resolver: zodResolver(companyCampaignSchema),
+    resolver: zodResolver(schema),
     defaultValues,
   });
 

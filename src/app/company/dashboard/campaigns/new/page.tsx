@@ -1,10 +1,13 @@
 "use client";
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
-import { CompanyCampaignForm } from "@/app/company/dashboard/campaigns/new/(components)/CompanyCampaignForm";
+import { CampaignForm } from "@/app/company/dashboard/campaigns/(components)/CampaignForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
-import { companyCampaignDefaultValues } from "@/validations/company/campaign";
+import {
+  companyCampaignDefaultValues,
+  companyCampaignSchema,
+} from "@/validations/company/campaign";
 import { VStack } from "@chakra-ui/react";
 
 export default function PostCampaignPage() {
@@ -30,9 +33,10 @@ export default function PostCampaignPage() {
         title="新規案件作成"
         description="新しい案件を登録します。必要事項を入力してください。"
       />
-      <CompanyCampaignForm
+      <CampaignForm
         onSubmit={mutateAsync}
         defaultValues={companyCampaignDefaultValues}
+        schema={companyCampaignSchema}
       />
     </VStack>
   );
