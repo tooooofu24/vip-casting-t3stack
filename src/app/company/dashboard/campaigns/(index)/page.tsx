@@ -29,7 +29,12 @@ const statusLabels = campaignStatuses.reduce(
 );
 
 export default function CampaignManagementPage() {
-  const { data, isLoading } = api.company.campaigns.get.useQuery();
+  const { data, isLoading } = api.company.campaigns.get.useQuery(
+    {},
+    {
+      refetchOnMount: "always",
+    },
+  );
 
   if (isLoading) {
     return (
