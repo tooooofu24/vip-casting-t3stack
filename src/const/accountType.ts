@@ -9,7 +9,7 @@ export const ACCOUNT_TYPE_LABELS: Record<AccountType, string> = {
 
 export const ACCOUNT_TYPE_OPTIONS = Object.entries(ACCOUNT_TYPE_LABELS).map(
   ([value, label]) => ({
-    value: value as AccountType,
+    value,
     label,
   }),
 );

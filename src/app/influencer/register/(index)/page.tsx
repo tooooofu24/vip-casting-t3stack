@@ -7,7 +7,6 @@ import { InfluencerSnsForm } from "@/app/influencer/register/(components)/Influe
 import { InfluencerWorkForm } from "@/app/influencer/register/(components)/InfluencerWorkForm";
 import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
-import type { AppRouter } from "@/server/api/root";
 import {
   influencerRegisterSchema,
   type InfluencerRegisterRequest,
@@ -38,7 +37,6 @@ import {
   useSteps,
   VStack,
 } from "@chakra-ui/react";
-import type { TRPCClientErrorLike } from "@trpc/client";
 import { useState } from "react";
 
 const items = ["基本情報", "住所情報", "SNS情報", "案件情報"] as const;
@@ -74,8 +72,7 @@ export default function RegisterPage() {
       steps.goToNextStep();
     },
     onError: (error: unknown) => {
-      const err = error as TRPCClientErrorLike<AppRouter>;
-      showErrorToast(err.data?.code);
+      showErrorToast(error instanceof Error ? error.message : "不明なエラー");
     },
   });
 

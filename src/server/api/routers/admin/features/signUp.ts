@@ -17,6 +17,7 @@ export const signUp = publicProcedure.mutation(async () => {
   });
   if (error) {
     throw new TRPCError({
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       code: supabaseErrorCodeToTrpcCode(error.code as SupabaseErrorCode),
       message: error.message,
       cause: error.cause,

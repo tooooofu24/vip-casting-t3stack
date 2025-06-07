@@ -89,6 +89,7 @@ export default function CompanyProfilePage() {
       reader.onloadend = () => {
         setProfile((prev) => ({
           ...prev,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           logo: reader.result as string,
         }));
       };

@@ -8,6 +8,7 @@ const createPrismaClient = () =>
       env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
   });
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const globalForPrisma = globalThis as unknown as {
   prisma: ReturnType<typeof createPrismaClient> | undefined;
 };

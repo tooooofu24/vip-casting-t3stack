@@ -50,6 +50,13 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+      "@typescript-eslint/consistent-type-assertions": [
+        "error",
+        {
+          assertionStyle: "never",
+        },
+      ],
+
       "no-console": ["error", { allow: ["warn", "error"] }],
     },
   },

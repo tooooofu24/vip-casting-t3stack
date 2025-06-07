@@ -29,6 +29,7 @@ export function useColorMode(): UseColorModeReturn {
     setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
   return {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     colorMode: resolvedTheme as ColorMode,
     setColorMode: setTheme,
     toggleColorMode,

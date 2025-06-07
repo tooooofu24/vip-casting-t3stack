@@ -33,7 +33,9 @@ const mockFormData = {
   title: "【Instagram】ファッションアイテムのPR募集",
   description:
     "20代向けファッションアイテムのPRを募集しています。\n自然な形での商品紹介をお願いします。",
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   platforms: ["Instagram"] as Platform[],
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   genres: ["ファッション"] as Genre[],
   postCount: 2,
   price: "50000",

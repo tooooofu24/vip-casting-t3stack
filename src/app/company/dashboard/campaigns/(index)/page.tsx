@@ -1,9 +1,8 @@
 "use client";
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
-import { campaignStatusColors, campaignStatuses } from "@/const/campaignStatus";
-import { platforms } from "@/const/platform";
-import type { CampaignStatus, Platform } from "@/lib/prisma/generated";
+import { campaignStatusColors } from "@/const/campaignStatus";
+import { CampaignStatus, Platform } from "@/lib/prisma/generated";
 import { api } from "@/lib/trpc/react";
 import {
   Badge,
@@ -17,16 +16,6 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
-
-const platformLabels = platforms.reduce(
-  (acc, platform) => ({ ...acc, [platform.value]: platform.label }),
-  {} as Record<Platform, string>,
-);
-
-const statusLabels = campaignStatuses.reduce(
-  (acc, status) => ({ ...acc, [status.value]: status.label }),
-  {} as Record<CampaignStatus, string>,
-);
 
 export default function CampaignManagementPage() {
   const { data, isLoading } = api.company.campaigns.get.useQuery(
@@ -85,7 +74,7 @@ export default function CampaignManagementPage() {
             {campaigns.map((campaign) => (
               <Table.Row key={campaign.id} _hover={{ bg: "gray.50" }}>
                 <Table.Cell fontWeight="medium">{campaign.title}</Table.Cell>
-                <Table.Cell>{platformLabels[campaign.platform]}</Table.Cell>
+                <Table.Cell>{Platform[campaign.platform]}</Table.Cell>
                 <Table.Cell>
                   {new Date(campaign.applicationDue).toLocaleDateString(
                     "ja-JP",
@@ -101,7 +90,7 @@ export default function CampaignManagementPage() {
                 </Table.Cell>
                 <Table.Cell>
                   <Badge colorPalette={campaignStatusColors[campaign.status]}>
-                    {statusLabels[campaign.status]}
+                    {CampaignStatus[campaign.status]}
                   </Badge>
                 </Table.Cell>
                 <Table.Cell>

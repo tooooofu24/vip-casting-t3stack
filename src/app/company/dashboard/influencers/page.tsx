@@ -191,6 +191,7 @@ export default function InfluencersPage() {
                     >
                       {Object.entries(influencer.platforms).map(
                         ([platform, data]) => {
+                          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
                           const { followers, engagement } = data as {
                             followers: number;
                             engagement: number;

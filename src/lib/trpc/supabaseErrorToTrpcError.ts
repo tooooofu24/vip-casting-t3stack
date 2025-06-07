@@ -3,7 +3,7 @@ import type { ErrorCode as SupabaseErrorCode } from "@supabase/auth-js/src/lib/e
 import type { TRPC_ERROR_CODE_KEY } from "@trpc/server/unstable-core-do-not-import";
 
 export function supabaseErrorCodeToTrpcCode(
-  code: SupabaseErrorCode,
+  code: SupabaseErrorCode | undefined,
 ): TRPC_ERROR_CODE_KEY {
   switch (code) {
     // 400系: Bad Request
@@ -149,6 +149,8 @@ export function supabaseErrorCodeToTrpcCode(
     case "otp_expired":
     case "otp_disabled":
     case "sms_send_failed":
+      return "INTERNAL_SERVER_ERROR";
+    case undefined:
       return "INTERNAL_SERVER_ERROR";
 
     default:

@@ -47,6 +47,7 @@ export default function CampaignManagementPage() {
   };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     setSelectedStatus(e.target.value as CampaignStatus | "all");
   };
 
