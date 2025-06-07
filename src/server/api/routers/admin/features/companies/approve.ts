@@ -5,7 +5,7 @@ import { approveCompanySchema } from "@/validations/admin/approveCompany";
 import { TRPCError } from "@trpc/server";
 import type { Route } from "next";
 
-export const approveCompany = adminProcedure
+export const approve = adminProcedure
   .input(approveCompanySchema)
   .mutation(async ({ ctx, input }) => {
     // 会社情報取得

@@ -5,7 +5,7 @@ import { approveInfluencerSchema } from "@/validations/admin/approveInfluencer";
 import { TRPCError } from "@trpc/server";
 import type { Route } from "next";
 
-export const approveInfluencer = adminProcedure
+export const approve = adminProcedure
   .input(approveInfluencerSchema)
   .mutation(async ({ ctx, input }) => {
     // インフルエンサー情報取得・承認
