@@ -3,8 +3,10 @@
 import { TagInputField } from "@/app/(components)/fields/TagInputField";
 import { platforms } from "@/const/platform";
 import { rewardTypes } from "@/const/rewardType";
-import { type CreateCampaignRequest } from "@/validations/company/campaign/createCampaign";
-import type { UpdateCampaignRequest } from "@/validations/company/campaign/updateCampaign";
+import type {
+  CampaignFormData,
+  CampaignFormSchema,
+} from "@/validations/company/campaign";
 import {
   Button,
   Card,
@@ -23,13 +25,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { DefaultValues } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { LuSave } from "react-icons/lu";
-import type { ZodSchema } from "zod";
-
-type CampaignFormData = CreateCampaignRequest | UpdateCampaignRequest;
 
 type Props = {
   onSubmit: (data: CampaignFormData) => void;
-  schema: ZodSchema<CampaignFormData>;
+  schema: CampaignFormSchema;
   defaultValues?: DefaultValues<CampaignFormData>;
 };
 
@@ -48,7 +47,7 @@ export const CampaignForm = ({ onSubmit, defaultValues, schema }: Props) => {
     <Card.Root bg="white" as="form" onSubmit={handleSubmit(onSubmit)}>
       <Card.Body>
         <VStack gap="6" align="stretch">
-          <input type="hidden" {...register("id" as keyof CampaignFormData)} />
+          <input type="hidden" {...register("id")} />
           <Field.Root required invalid={!!errors.title}>
             <Field.Label>
               案件タイトル <Field.RequiredIndicator />
