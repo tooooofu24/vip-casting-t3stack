@@ -4,7 +4,7 @@ import { AdminLoginForm } from "@/app/admin/login/(components)/AdminLoginForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";
-import type { AdminLoginRequest } from "@/validations/admin/adminLogin";
+import type { AdminLoginRequest } from "@/validations/admin/auth";
 import {
   Button,
   Card,
@@ -21,7 +21,7 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const supabase = createSupabaseBrowserClient();
   const { mutateAsync: signUp, isPending: isSignUpPending } =
-    api.admin.signUp.useMutation({
+    api.admin.auth.signUp.useMutation({
       onSuccess: () => {
         toaster.create({
           type: "success",
@@ -79,7 +79,15 @@ export default function AdminLoginPage() {
               </Heading>
             </HStack>
             <AdminLoginForm onSubmit={signIn} />
-            <Button mt={4} onClick={() => signUp()} loading={isSignUpPending}>
+            <Button 
+              mt={4} 
+              onClick={() => void signUp({
+                email: "admin@example.com",
+                password: "password123",
+                displayName: "Admin User"
+              })} 
+              loading={isSignUpPending}
+            >
               サインアップ
             </Button>
             <Button mt={4} onClick={() => supabase.auth.signOut()}>

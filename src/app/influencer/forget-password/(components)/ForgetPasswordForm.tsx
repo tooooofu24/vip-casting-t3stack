@@ -1,7 +1,7 @@
 "use client";
 
-import type { ForgetPasswordRequest } from "@/validations/company/forgetPassword";
-import { forgetPasswordSchema } from "@/validations/company/forgetPassword";
+import type { InfluencerForgetPasswordRequest } from "@/validations/influencer/auth";
+import { influencerForgetPasswordSchema } from "@/validations/influencer/auth";
 import {
   Alert,
   Button,
@@ -19,8 +19,8 @@ import { useForm } from "react-hook-form";
 import { LuArrowRight, LuMail } from "react-icons/lu";
 
 type Props = {
-  onSubmit: (data: ForgetPasswordRequest) => void;
-  defaultValues?: DefaultValues<ForgetPasswordRequest>;
+  onSubmit: (data: InfluencerForgetPasswordRequest) => void;
+  defaultValues?: DefaultValues<InfluencerForgetPasswordRequest>;
 };
 
 export const ForgetPasswordForm = ({ onSubmit, defaultValues }: Props) => {
@@ -28,8 +28,8 @@ export const ForgetPasswordForm = ({ onSubmit, defaultValues }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ForgetPasswordRequest>({
-    resolver: zodResolver(forgetPasswordSchema),
+  } = useForm<InfluencerForgetPasswordRequest>({
+    resolver: zodResolver(influencerForgetPasswordSchema),
     defaultValues,
   });
 

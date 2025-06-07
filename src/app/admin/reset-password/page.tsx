@@ -3,7 +3,7 @@
 import { ResetPasswordForm } from "@/app/admin/reset-password/(components)/ResetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
-import type { ResetPasswordRequest } from "@/validations/company/resetPassword";
+import type { AdminResetPasswordRequest } from "@/validations/admin/auth";
 import {
   Card,
   Center,
@@ -18,9 +18,9 @@ import NextLink from "next/link";
 import { LuLock } from "react-icons/lu";
 
 export default function ResetPasswordPage() {
-  const onSubmit = async ({ password }: ResetPasswordRequest) => {
+  const onSubmit = async ({ newPassword }: AdminResetPasswordRequest) => {
     const supabase = createSupabaseBrowserClient();
-    const { error } = await supabase.auth.updateUser({ password });
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
     if (error) {
       showErrorToast(error.message);
       return;

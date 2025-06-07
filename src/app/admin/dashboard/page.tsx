@@ -15,9 +15,9 @@ import {
 
 export default function AdminDashboard() {
   const { data, isLoading, refetch, error } =
-    api.admin.getUnapprovedCompanies.useQuery();
+    api.admin.companies.getUnapproved.useQuery();
 
-  const { mutate, isPending } = api.admin.approveCompany.useMutation({
+  const { mutate, isPending } = api.admin.companies.approve.useMutation({
     onError: (error) => {
       toaster.create({
         type: "error",
@@ -38,10 +38,10 @@ export default function AdminDashboard() {
     isLoading: isLoadingInfluencers,
     refetch: refetchInfluencers,
     error: errorInfluencers,
-  } = api.admin.getUnapprovedInfluencers.useQuery();
+  } = api.admin.influencers.getUnapproved.useQuery();
 
   const { mutate: approveInfluencer, isPending: isPendingInfluencer } =
-    api.admin.approveInfluencer.useMutation({
+    api.admin.influencers.approve.useMutation({
       onError: (error) => {
         toaster.create({ type: "error", title: error.message });
       },

@@ -1,7 +1,7 @@
 import { env } from "@/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
 import { adminProcedure } from "@/server/api/trpc";
-import { approveInfluencerSchema } from "@/validations/admin/approveInfluencer";
+import { approveInfluencerSchema } from "@/validations/admin/influencers";
 import { TRPCError } from "@trpc/server";
 import type { Route } from "next";
 

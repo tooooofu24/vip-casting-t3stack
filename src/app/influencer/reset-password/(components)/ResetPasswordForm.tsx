@@ -1,9 +1,9 @@
 "use client";
 
 import {
-  resetPasswordSchema,
-  type ResetPasswordRequest,
-} from "@/validations/company/resetPassword";
+  influencerResetPasswordSchema,
+  type InfluencerResetPasswordRequest,
+} from "@/validations/influencer/auth";
 import {
   Alert,
   Button,
@@ -20,7 +20,7 @@ import { useForm } from "react-hook-form";
 import { LuArrowRight, LuLock } from "react-icons/lu";
 
 type Props = {
-  onSubmit: (data: ResetPasswordRequest) => void;
+  onSubmit: (data: InfluencerResetPasswordRequest) => void;
 };
 
 export const ResetPasswordForm = ({ onSubmit }: Props) => {
@@ -28,14 +28,14 @@ export const ResetPasswordForm = ({ onSubmit }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ResetPasswordRequest>({
-    resolver: zodResolver(resetPasswordSchema),
+  } = useForm<InfluencerResetPasswordRequest>({
+    resolver: zodResolver(influencerResetPasswordSchema),
   });
 
   return (
     <Stack as="form" gap={4} onSubmit={handleSubmit(onSubmit)}>
       {/* New Password Field */}
-      <Field.Root invalid={!!errors.password}>
+      <Field.Root invalid={!!errors.newPassword}>
         <Field.Label>新しいパスワード</Field.Label>
         <InputGroup
           startElement={
@@ -48,30 +48,10 @@ export const ResetPasswordForm = ({ onSubmit }: Props) => {
             type="password"
             placeholder="新しいパスワードを入力"
             autoComplete="new-password"
-            {...register("password")}
+            {...register("newPassword")}
           />
         </InputGroup>
-        <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
-      </Field.Root>
-
-      {/* Confirm Password Field */}
-      <Field.Root invalid={!!errors.confirmPassword}>
-        <Field.Label>新しいパスワード（確認）</Field.Label>
-        <InputGroup
-          startElement={
-            <Icon>
-              <LuLock />
-            </Icon>
-          }
-        >
-          <Input
-            type="password"
-            placeholder="もう一度入力"
-            autoComplete="new-password"
-            {...register("confirmPassword")}
-          />
-        </InputGroup>
-        <Field.ErrorText>{errors.confirmPassword?.message}</Field.ErrorText>
+        <Field.ErrorText>{errors.newPassword?.message}</Field.ErrorText>
       </Field.Root>
 
       {/* Error Alert */}
