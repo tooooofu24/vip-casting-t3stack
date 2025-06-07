@@ -1,6 +1,6 @@
-import { getCampaignsSchema } from "@/validations/influencer/campaign/getCampaigns";
-import { publicProcedure } from "@/server/api/trpc";
 import { CampaignStatus } from "@/lib/prisma/generated";
+import { publicProcedure } from "@/server/api/trpc";
+import { getCampaignsSchema } from "@/validations/influencer/campaign/getCampaigns";
 
 export const getCampaigns = publicProcedure
   .input(getCampaignsSchema)
@@ -72,8 +72,7 @@ export const getCampaigns = publicProcedure
               information: {
                 select: {
                   displayName: true,
-                  corporateName: true,
-                  businessSummary: true,
+                  corporateNumber: true,
                 },
               },
               business: {
@@ -103,11 +102,11 @@ export const getCampaigns = publicProcedure
       requirements: campaign.requirements,
       createdAt: campaign.createdAt,
       company: {
-        displayName: campaign.company.information?.displayName || "",
-        corporateName: campaign.company.information?.corporateName || "",
-        businessSummary: campaign.company.information?.businessSummary || "",
-        genres: campaign.company.business?.genres.map((g) => g.genre) || [],
-        regions: campaign.company.business?.regions.map((r) => r.region) || [],
+        displayName: campaign.company?.information?.displayName ?? "",
+        corporateNumber: campaign.company?.information?.corporateNumber ?? "",
+        genres: campaign.company?.business?.genres?.map((g) => g.genre) ?? [],
+        regions:
+          campaign.company?.business?.regions?.map((r) => r.region) ?? [],
       },
     }));
 

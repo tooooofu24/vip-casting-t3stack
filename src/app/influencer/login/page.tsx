@@ -1,19 +1,16 @@
 "use client";
 
+import { InfluencerLoginForm } from "@/app/influencer/login/(components)/InfluencerLoginForm";
+import { toaster } from "@/lib/chakra-ui/toaster";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import {
   Box,
   Button,
   Card,
   Center,
-  Link as ChakraLink,
-  Checkbox,
   Container,
-  Field,
   Heading,
   HStack,
-  Icon,
-  Input,
-  InputGroup,
   List,
   Separator,
   Stack,
@@ -21,7 +18,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { LuArrowRight, LuLock, LuMail } from "react-icons/lu";
+import { useRouter } from "next/navigation";
 
 const features = [
   "厳選された高単価案件のみを取扱",
@@ -30,6 +27,44 @@ const features = [
 ] as const;
 
 export default function LoginPage() {
+  const router = useRouter();
+  const supabase = createSupabaseBrowserClient();
+
+  const signIn = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (data.user?.user_metadata.role === "influencer") {
+      toaster.create({
+        type: "success",
+        title: "ログインに成功しました",
+      });
+      router.push("/influencer/dashboard");
+      return;
+    }
+    if (error) {
+      toaster.create({
+        type: "error",
+        title: "ログインに失敗しました",
+        description: error.message,
+      });
+    } else {
+      toaster.create({
+        type: "error",
+        title: "ログインに失敗しました",
+        description: "インフルエンサーアカウントとしてログインできません",
+      });
+      await supabase.auth.signOut();
+    }
+  };
+
   return (
     <Center px={{ base: 4, sm: 0 }}>
       <Container maxW="xl" py={{ base: 6, sm: 12 }}>
@@ -48,72 +83,7 @@ export default function LoginPage() {
           <Card.Root w="full">
             <Card.Body p={{ base: 4, sm: 6, md: 8 }}>
               <Stack gap={{ base: 4, sm: 6 }}>
-                {/* Email Field */}
-                <Field.Root>
-                  <Field.Label>メールアドレス</Field.Label>
-                  <InputGroup
-                    startElement={
-                      <Icon>
-                        <LuMail />
-                      </Icon>
-                    }
-                  >
-                    <Input
-                      type="email"
-                      placeholder="example@example.com"
-                      autoComplete="email"
-                      required
-                    />
-                  </InputGroup>
-                </Field.Root>
-
-                {/* Password Field */}
-                <Field.Root>
-                  <Field.Label>パスワード</Field.Label>
-                  <InputGroup
-                    startElement={
-                      <Icon>
-                        <LuLock />
-                      </Icon>
-                    }
-                  >
-                    <Input
-                      type="password"
-                      placeholder="パスワードを入力"
-                      autoComplete="current-password"
-                      required
-                    />
-                  </InputGroup>
-                </Field.Root>
-
-                {/* Remember Me & Forgot Password */}
-                <Stack
-                  direction={{ base: "column", sm: "row" }}
-                  justify="space-between"
-                  align={{ base: "flex-start", sm: "center" }}
-                  gap={2}
-                >
-                  <Checkbox.Root>
-                    <Checkbox.HiddenInput />
-                    <Checkbox.Control />
-                    <Checkbox.Label>ログイン状態を保持</Checkbox.Label>
-                  </Checkbox.Root>
-                  <ChakraLink asChild fontSize="sm">
-                    <NextLink href="/influencer/forget-password">
-                      パスワードをお忘れですか？
-                    </NextLink>
-                  </ChakraLink>
-                </Stack>
-
-                {/* Login Button */}
-                <Button colorPalette="primary" w="full">
-                  <HStack>
-                    <Text>ログイン</Text>
-                    <Icon>
-                      <LuArrowRight />
-                    </Icon>
-                  </HStack>
-                </Button>
+                <InfluencerLoginForm onSubmit={signIn} />
 
                 {/* Separator */}
                 <HStack>
