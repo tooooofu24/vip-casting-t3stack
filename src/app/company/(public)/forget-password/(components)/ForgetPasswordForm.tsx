@@ -1,7 +1,7 @@
 "use client";
 
-import type { CompanyForgetPasswordRequest } from "@/server/api/routers/company/validations/auth/forgetPassword";
-import { companyForgetPasswordSchema } from "@/server/api/routers/company/validations/auth/forgetPassword";
+import type { CompanyForgetPasswordRequest } from "@/server/api/routers/company/features/auth/forgetPassword/validation";
+import { companyForgetPasswordSchema } from "@/server/api/routers/company/features/auth/forgetPassword/validation";
 import {
   Alert,
   Button,

@@ -4,7 +4,7 @@ import { prefectures } from "@/const/prefecture";
 import {
   companyAddressSchema,
   type CompanyAddressRequest,
-} from "@/server/api/routers/company/validations/register";
+} from "@/server/api/routers/company/features/auth/register/validation";
 import {
   Button,
   ButtonGroup,

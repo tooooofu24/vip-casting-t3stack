@@ -4,7 +4,7 @@ import { industries } from "@/const/industry";
 import {
   companyInformationSchema,
   type CompanyInformationRequest,
-} from "@/server/api/routers/company/validations/register";
+} from "@/server/api/routers/company/features/auth/register/validation";
 import {
   Alert,
   Box,

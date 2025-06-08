@@ -9,7 +9,7 @@ import { type Objective } from "@/lib/prisma/generated";
 import {
   companyBusinessSchema,
   type CompanyBusinessRequest,
-} from "@/server/api/routers/company/validations/register";
+} from "@/server/api/routers/company/features/auth/register/validation";
 import {
   Box,
   Button,

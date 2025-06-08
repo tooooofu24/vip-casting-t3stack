@@ -7,12 +7,12 @@ import { objectiveValues } from "@/const/objective";
 import { prefectureValues } from "@/const/prefecture";
 import { regionValues } from "@/const/region";
 import {
+  AccountType,
   Gender,
   Genre,
   Objective,
   Prefecture,
   Region,
-  AccountType,
 } from "@/lib/prisma/generated";
 import { z } from "@/lib/zod";
 

@@ -18,7 +18,7 @@ import {
   type CompanyInformationRequest,
   type CompanyPaymentRequest,
   type CompanyRegisterRequest,
-} from "@/server/api/routers/company/validations/register";
+} from "@/server/api/routers/company/features/auth/register/validation";
 import {
   Box,
   Container,
@@ -57,7 +57,7 @@ export default function CompanyRegisterPage() {
     steps.goToNextStep();
   };
 
-  const register = api.company.register.useMutation({
+  const register = api.company.auth.register.useMutation({
     onSuccess: async () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
       steps.goToNextStep();

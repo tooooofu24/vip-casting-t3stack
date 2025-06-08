@@ -1,5 +1,5 @@
 import { z } from "@/lib/zod";
-import { createCampaignSchema } from "@/server/api/routers/company/validations/campaign/createCampaign";
+import { createCampaignSchema } from "@/server/api/routers/company/features/campaigns/validations/createCampaign";
 
 export const updateCampaignSchema = createCampaignSchema.extend({
   id: z.string().uuid(),

@@ -1,5 +1,5 @@
 import { companyProcedure } from "@/server/api/trpc";
-import { createCampaignSchema } from "@/server/api/routers/company/validations/campaign/createCampaign";
+import { createCampaignSchema } from "@/server/api/routers/company/features/campaigns/validations/createCampaign";
 
 export const createCampaign = companyProcedure
   .input(createCampaignSchema)
