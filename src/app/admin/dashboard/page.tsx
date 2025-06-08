@@ -14,8 +14,9 @@ import {
 } from "@chakra-ui/react";
 
 export default function AdminDashboard() {
-  const { data, isLoading, refetch, error } =
-    api.admin.companies.getUnapproved.useQuery();
+  const { data, isLoading, refetch, error } = api.admin.companies.get.useQuery({
+    isApproved: false,
+  });
 
   const { mutate, isPending } = api.admin.companies.approve.useMutation({
     onError: (error) => {

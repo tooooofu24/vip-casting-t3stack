@@ -5,7 +5,10 @@ export const get = adminProcedure
   .input(getCompaniesSchema)
   .query(async ({ ctx, input }) => {
     const companies = await ctx.db.company.findMany({
-      where: input.isApproved !== undefined ? { isApproved: input.isApproved } : undefined,
+      where:
+        input.isApproved !== undefined
+          ? { isApproved: input.isApproved }
+          : undefined,
       include: {
         information: true,
         address: true,
