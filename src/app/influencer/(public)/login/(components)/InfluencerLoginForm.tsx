@@ -7,7 +7,6 @@ import {
 import {
   Button,
   Link as ChakraLink,
-  Checkbox,
   Field,
   Icon,
   Input,
@@ -78,23 +77,11 @@ export const InfluencerLoginForm = ({ onSubmit, defaultValues }: Props) => {
       </Field.Root>
 
       {/* Remember Me & Forgot Password */}
-      <Stack
-        direction={{ base: "column", sm: "row" }}
-        justify="space-between"
-        align={{ base: "flex-start", sm: "center" }}
-        gap={2}
-      >
-        <Checkbox.Root>
-          <Checkbox.HiddenInput />
-          <Checkbox.Control />
-          <Checkbox.Label>ログイン状態を保持</Checkbox.Label>
-        </Checkbox.Root>
-        <ChakraLink asChild fontSize="sm">
-          <NextLink href="/influencer/forget-password">
-            パスワードをお忘れですか？
-          </NextLink>
-        </ChakraLink>
-      </Stack>
+      <ChakraLink asChild fontSize="sm" ml="auto">
+        <NextLink href="/company/forget-password">
+          パスワードをお忘れですか？
+        </NextLink>
+      </ChakraLink>
 
       {/* Login Button */}
       <Button
