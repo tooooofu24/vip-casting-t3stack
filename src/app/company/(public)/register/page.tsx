@@ -9,12 +9,9 @@ import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
   companyRegisterSchema,
-  type CompanyAddressRequest,
-  type CompanyBusinessRequest,
-  type CompanyInformationRequest,
-  type CompanyPaymentRequest,
+  type CompanyRegisterRequest,
 } from "@/server/api/routers/company/features/auth/register/validation";
-import type { CompanyRegisterRequest } from "@/server/api/routers/company/features/auth/register/validations";
+import type { CompanyPaymentRequest } from "@/server/api/routers/company/features/auth/register/validations/payment";
 
 import {
   Box,
@@ -100,26 +97,20 @@ export default function CompanyRegisterPage() {
               <Steps.Content index={0}>
                 <CompanyInformationForm
                   defaultValues={data.information}
-                  onSubmit={(v: CompanyInformationRequest) =>
-                    onSubmit("information", v)
-                  }
+                  onSubmit={(v) => onSubmit("information", v)}
                 />
               </Steps.Content>
               <Steps.Content index={1}>
                 <CompanyAddressForm
                   defaultValues={data.address}
-                  onSubmit={(v: CompanyAddressRequest) =>
-                    onSubmit("address", v)
-                  }
+                  onSubmit={(v) => onSubmit("address", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
                 <CompanyBusinessForm
                   defaultValues={data.business}
-                  onSubmit={(v: CompanyBusinessRequest) =>
-                    onSubmit("business", v)
-                  }
+                  onSubmit={(v) => onSubmit("business", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
