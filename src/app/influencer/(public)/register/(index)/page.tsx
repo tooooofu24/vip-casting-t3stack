@@ -79,7 +79,7 @@ export default function RegisterPage() {
       showErrorToast(validated.error.message);
       return;
     }
-    register.mutate(validated.data);
+    void register.mutateAsync(validated.data);
   };
 
   return (

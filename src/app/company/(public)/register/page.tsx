@@ -70,7 +70,7 @@ export default function CompanyRegisterPage() {
       showErrorToast(validated.error.message);
       return;
     }
-    return register.mutate(validated.data);
+    return register.mutateAsync(validated.data);
   };
 
   return (

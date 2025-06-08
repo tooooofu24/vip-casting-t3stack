@@ -1,9 +1,9 @@
 import { env } from "@/env";
+import { SUPABASE_REDIRECT_URL } from "@/lib/supabase/const";
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
 import { approveInfluencerSchema } from "@/server/api/routers/admin/features/influencers/approve/validation";
 import { adminProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
-import type { Route } from "next";
 
 export const approve = adminProcedure
   .input(approveInfluencerSchema)
@@ -57,11 +57,10 @@ export const approve = adminProcedure
 
     // Supabaseユーザー招待
     const supabase = await createSupabaseAdminClient();
-    const route: Route = "/set-session";
     const { error: authError } = await supabase.auth.admin.inviteUserByEmail(
       influencer.information.email,
       {
-        redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
+        redirectTo: `${env.NEXT_PUBLIC_APP_URL}${SUPABASE_REDIRECT_URL}`,
         data: {
           role: "influencer",
           displayName: influencer.information.displayName,

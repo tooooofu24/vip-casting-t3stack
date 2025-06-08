@@ -87,7 +87,7 @@ export default function EditCampaignPage() {
           note: campaign.note ?? "",
         }}
         onSubmit={(data) => {
-          updateCampaign.mutate({
+          void updateCampaign.mutateAsync({
             ...data,
             id: campaign.id,
           });

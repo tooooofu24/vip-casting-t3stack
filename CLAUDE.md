@@ -104,7 +104,7 @@ export const myFeatureSchema = z.object({
 
 ```typescript
 // /src/app/[role]/dashboard/my-feature/page.tsx
-const { mutate } = api.company.myFeature.useMutation();
+const { mutateAsync } = api.company.myFeature.useMutation();
 ```
 
 ### 4. Enum定数定義（Prisma Enumを使用する場合）

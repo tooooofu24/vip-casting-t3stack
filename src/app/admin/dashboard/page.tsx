@@ -18,7 +18,7 @@ export default function AdminDashboard() {
     isApproved: false,
   });
 
-  const { mutate, isPending } = api.admin.companies.approve.useMutation({
+  const { mutateAsync, isPending } = api.admin.companies.approve.useMutation({
     onError: (error) => {
       toaster.create({
         type: "error",
@@ -43,7 +43,7 @@ export default function AdminDashboard() {
     isApproved: false,
   });
 
-  const { mutate: approveInfluencer, isPending: isPendingInfluencer } =
+  const { mutateAsync: approveInfluencer, isPending: isPendingInfluencer } =
     api.admin.influencers.approve.useMutation({
       onError: (error) => {
         toaster.create({ type: "error", title: error.message });
@@ -128,7 +128,7 @@ export default function AdminDashboard() {
                       size="sm"
                       colorScheme="teal"
                       loading={isPending}
-                      onClick={() => mutate({ companyId: company.id })}
+                      onClick={() => mutateAsync({ companyId: company.id })}
                     >
                       承認
                     </Button>
