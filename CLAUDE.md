@@ -19,7 +19,7 @@ VIPキャスティングは、インフルエンサーと企業のマッチン�
 npm run dev
 
 # コード品質（コミット前に必ず実行）
-npm run format && npm run check
+npm run check
 
 # DBスキーマ変更時
 npm run db:push && npm run db:generate
