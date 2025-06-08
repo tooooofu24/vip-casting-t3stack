@@ -1,7 +1,7 @@
 "use client";
 
-import type { InfluencerForgetPasswordRequest } from "@/server/api/routers/influencer/features/auth/forgetPassword/validation";
-import { influencerForgetPasswordSchema } from "@/server/api/routers/influencer/features/auth/forgetPassword/validation";
+import type { InfluencerForgetPasswordRequest } from "@/server/api/routers/influencer/features/password/forget/validation";
+import { influencerForgetPasswordSchema } from "@/server/api/routers/influencer/features/password/forget/validation";
 import {
   Alert,
   Button,
