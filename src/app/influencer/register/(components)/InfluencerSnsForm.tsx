@@ -4,7 +4,7 @@ import {
   influencerSnsDefaultValues,
   influencerSnsSchema,
   type InfluencerSnsRequest,
-} from "@/server/api/routers/influencer/features/register/sns";
+} from "@/server/api/routers/influencer/features/register/validations/sns";
 import {
   Alert,
   Box,

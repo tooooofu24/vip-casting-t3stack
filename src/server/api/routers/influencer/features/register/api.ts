@@ -1,18 +1,7 @@
 import type { Prisma } from "@/lib/prisma/generated";
-import { z } from "@/lib/zod";
+import { influencerRegisterSchema } from "@/server/api/routers/influencer/features/register/validations";
 import { publicProcedure } from "@/server/api/trpc";
 import type { StrictPropertyCheck } from "@/util/StrictPropertyCheck";
-import { influencerAddressSchema } from "@/server/api/routers/influencer/features/register/address";
-import { influencerInformationSchema } from "@/server/api/routers/influencer/features/register/information";
-import { influencerSnsSchema } from "@/server/api/routers/influencer/features/register/sns";
-import { influencerWorkSchema } from "@/server/api/routers/influencer/features/register/work";
-
-const influencerRegisterSchema = z.object({
-  information: influencerInformationSchema,
-  address: influencerAddressSchema,
-  sns: influencerSnsSchema,
-  work: influencerWorkSchema,
-});
 
 export const register = publicProcedure
   .input(influencerRegisterSchema)

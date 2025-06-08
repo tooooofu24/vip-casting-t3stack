@@ -1,4 +1,4 @@
-import { type InfluencerWorkRequest } from "@/server/api/routers/influencer/features/register/work";
+import { type InfluencerWorkRequest } from "@/server/api/routers/influencer/features/register/validations/work";
 import {
   Button,
   Card,
