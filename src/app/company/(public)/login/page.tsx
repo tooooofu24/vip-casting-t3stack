@@ -3,6 +3,7 @@
 import { CompanyLoginForm } from "@/app/company/(public)/login/(components)/CompanyLoginForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
+import { api } from "@/lib/trpc/react";
 import {
   Box,
   Button,
@@ -32,40 +33,23 @@ export default function CompanyLoginPage() {
   const router = useRouter();
   const supabase = createSupabaseBrowserClient();
 
-  const signIn = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (data.user?.user_metadata.role === "company") {
+  const { mutateAsync } = api.company.auth.login.useMutation({
+    onSuccess: async ({ session: { access_token, refresh_token } }) => {
+      await supabase.auth.setSession({ access_token, refresh_token });
       toaster.create({
+        title: "ログインしました",
         type: "success",
-        title: "ログインに成功しました",
       });
       router.push("/company/dashboard");
-      return;
-    }
-    if (error) {
+    },
+    onError: (error) => {
       toaster.create({
-        type: "error",
-        title: "ログインに失敗しました",
+        title: "ログインエラー",
         description: error.message,
-      });
-    } else {
-      toaster.create({
         type: "error",
-        title: "ログインに失敗しました",
-        description: "企業アカウントとしてログインできません",
       });
-      await supabase.auth.signOut();
-    }
-  };
+    },
+  });
 
   return (
     <Center>
@@ -86,7 +70,7 @@ export default function CompanyLoginPage() {
           <Card.Root w="full">
             <Card.Body>
               <Stack gap={6} w="full">
-                <CompanyLoginForm onSubmit={signIn} />
+                <CompanyLoginForm onSubmit={mutateAsync} />
                 {/* Separator */}
                 <HStack>
                   <Separator flex="1" />
