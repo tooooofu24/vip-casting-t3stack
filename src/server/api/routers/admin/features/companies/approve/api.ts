@@ -1,57 +1,53 @@
 import { env } from "@/env";
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
+import { approveCompanySchema } from "@/server/api/routers/admin/features/companies/approve/validation";
 import { adminProcedure } from "@/server/api/trpc";
-import { approveInfluencerSchema } from "@/validations/admin/influencers";
 import { TRPCError } from "@trpc/server";
 import type { Route } from "next";
 
 export const approve = adminProcedure
-  .input(approveInfluencerSchema)
+  .input(approveCompanySchema)
   .mutation(async ({ ctx, input }) => {
-    // インフルエンサー情報取得・承認
-    const influencer = await ctx.db.influencer.findUnique({
-      where: { id: input.influencerId },
+    // 会社情報取得・承認
+    const company = await ctx.db.company.findUnique({
+      where: { id: input.companyId },
       include: {
         information: true,
         address: true,
-        sns: true,
-        work: {
-          include: {
-            prResults: true,
-          },
-        },
+        business: true,
+        payment: true,
       },
     });
 
-    if (!influencer) {
+    if (!company) {
       throw new TRPCError({
         code: "NOT_FOUND",
-        message: "インフルエンサーが見つかりません。",
+        message: "会社が見つかりません。",
       });
     }
 
-    if (!influencer.information) {
+    if (!company.information) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "インフルエンサー情報がありません。",
+        message: "会社情報がありません。",
       });
     }
-    if (!influencer.address) {
+    if (!company.address) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "インフルエンサー住所情報がありません。",
+        message: "会社住所情報がありません。",
       });
     }
-    if (!influencer.sns) {
+    if (!company.business) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "インフルエンサーSNS情報がありません。",
+        message: "会社ビジネス情報がありません。",
       });
     }
-    if (!influencer.work) {
+    if (!company.payment) {
       throw new TRPCError({
         code: "BAD_REQUEST",
-        message: "インフルエンサー職務情報がありません。",
+        message: "会社支払い情報がありません。",
       });
     }
 
@@ -59,12 +55,12 @@ export const approve = adminProcedure
     const supabase = await createSupabaseAdminClient();
     const route: Route = "/set-session";
     const { error: authError } = await supabase.auth.admin.inviteUserByEmail(
-      influencer.information.email,
+      company.business.email,
       {
         redirectTo: `${env.NEXT_PUBLIC_APP_URL}${route}`,
         data: {
-          role: "influencer",
-          displayName: influencer.information.displayName,
+          role: "company",
+          displayName: company.information.companyName,
         },
       },
     );
@@ -76,11 +72,11 @@ export const approve = adminProcedure
       });
     }
 
-    // インフルエンサーを承認
-    const updatedInfluencer = await ctx.db.influencer.update({
-      where: { id: input.influencerId },
+    // 会社を承認
+    const updatedCompany = await ctx.db.company.update({
+      where: { id: input.companyId },
       data: { isApproved: true },
     });
 
-    return updatedInfluencer;
+    return updatedCompany;
   });

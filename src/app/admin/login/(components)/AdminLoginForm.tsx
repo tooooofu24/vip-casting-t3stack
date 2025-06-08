@@ -1,7 +1,7 @@
 "use client";
 
-import type { AdminLoginRequest } from "@/validations/admin/auth";
-import { adminLoginSchema } from "@/validations/admin/auth";
+import type { AdminLoginRequest } from "@/server/api/routers/admin/features/auth";
+import { adminLoginSchema } from "@/server/api/routers/admin/features/auth";
 import {
   Alert,
   Button,

@@ -1,6 +1,6 @@
 import { createSupabaseAdminClient } from "@/lib/supabase/serverClient";
+import { adminSignUpSchema } from "@/server/api/routers/admin/features/auth/signUp/validation";
 import { adminProcedure } from "@/server/api/trpc";
-import { adminSignUpSchema } from "@/validations/admin/auth";
 import { TRPCError } from "@trpc/server";
 
 export const signUp = adminProcedure

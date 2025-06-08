@@ -4,7 +4,7 @@ import { AdminLoginForm } from "@/app/admin/login/(components)/AdminLoginForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";
-import type { AdminLoginRequest } from "@/validations/admin/auth";
+import type { AdminLoginRequest } from "@/server/api/routers/admin/features/auth";
 import {
   Button,
   Card,
@@ -79,13 +79,15 @@ export default function AdminLoginPage() {
               </Heading>
             </HStack>
             <AdminLoginForm onSubmit={signIn} />
-            <Button 
-              mt={4} 
-              onClick={() => void signUp({
-                email: "admin@example.com",
-                password: "password123",
-                displayName: "Admin User"
-              })} 
+            <Button
+              mt={4}
+              onClick={() =>
+                void signUp({
+                  email: "admin@example.com",
+                  password: "password123",
+                  displayName: "Admin User",
+                })
+              }
               loading={isSignUpPending}
             >
               サインアップ
