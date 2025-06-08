@@ -18,7 +18,7 @@
     "preview": "next build && next start",
     "start": "next start",
     "cspell": "cspell src",
-    "knip": "knip --production --fix --allow-remove-files"
+    "knip": "knip --production --fix --trace --allow-remove-files --format"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.20.0",
