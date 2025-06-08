@@ -12,8 +12,10 @@ export * from "./work";
 export const influencerRegisterSchema = z.object({
   information: influencerInformationSchema,
   address: influencerAddressSchema,
-  sns: z.array(influencerSnsSchema).min(1),
+  sns: influencerSnsSchema,
   work: influencerWorkSchema,
 });
 
-export type InfluencerRegisterRequest = z.infer<typeof influencerRegisterSchema>;
+export type InfluencerRegisterRequest = z.infer<
+  typeof influencerRegisterSchema
+>;

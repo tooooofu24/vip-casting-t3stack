@@ -8,7 +8,7 @@ export const getCampaignsSchema = z.object({
   page: z.number().int().min(1).default(1),
   limit: z.number().int().min(1).max(100).default(20),
   search: z.string().optional(),
-  offset: z.number().int().min(0).optional(),
+  offset: z.number().int().min(0).optional().default(0),
   genre: z.enum(genreValues).optional(),
   rewardType: z.enum(rewardTypeValues).optional(),
   region: z.enum(regionValues).optional(),

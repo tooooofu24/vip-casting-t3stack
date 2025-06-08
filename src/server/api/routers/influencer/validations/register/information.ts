@@ -1,6 +1,8 @@
 import { genderValues } from "@/const/gender";
 import { prefectureValues } from "@/const/prefecture";
+import { Gender } from "@/lib/prisma/generated";
 import { z } from "@/lib/zod";
+import type { DefaultValues } from "react-hook-form";
 
 export const influencerInformationSchema = z.object({
   displayName: z.string().min(1).max(100),
@@ -20,4 +22,22 @@ export const influencerInformationSchema = z.object({
   bio: z.string().max(500).optional(),
 });
 
-export type InfluencerInformationRequest = z.infer<typeof influencerInformationSchema>;
+export type InfluencerInformationRequest = z.infer<
+  typeof influencerInformationSchema
+>;
+
+export const influencerInformationDefaultValues: DefaultValues<InfluencerInformationRequest> =
+  {
+    displayName: "さくらビューティー",
+    firstName: "さくら",
+    lastName: "山田",
+    firstNameKana: "サクラ",
+    lastNameKana: "ヤマダ",
+    gender: Gender.FEMALE,
+    birthday: "1995-03-15",
+    phone: "09012345678",
+    email: "sakura_beauty@example.com",
+    password: "password1234",
+    prefecture: "TOKYO",
+    bio: "美容・コスメが大好きなインフルエンサー。Instagramで最新トレンドを発信中！",
+  };

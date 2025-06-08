@@ -1,5 +1,7 @@
 import { prefectureValues } from "@/const/prefecture";
+import { Prefecture } from "@/lib/prisma/generated";
 import { z } from "@/lib/zod";
+import type { DefaultValues } from "react-hook-form";
 
 export const influencerAddressSchema = z.object({
   postalCode: z
@@ -15,3 +17,13 @@ export const influencerAddressSchema = z.object({
 });
 
 export type InfluencerAddressRequest = z.infer<typeof influencerAddressSchema>;
+
+export const influencerAddressDefaultValues: DefaultValues<InfluencerAddressRequest> =
+  {
+    postalCode: "1000001",
+    prefecture: Prefecture.TOKYO,
+    city: "東京都",
+    town: "千代田区",
+    street: "永田町1-7-1",
+    building: "",
+  };

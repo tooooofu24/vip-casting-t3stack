@@ -26,11 +26,11 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type DefaultValues } from "react-hook-form";
 import { LuSend } from "react-icons/lu";
 
 export type InfluencerWorkFormProps = {
-  defaultValues?: InfluencerWorkRequest;
+  defaultValues?: DefaultValues<InfluencerWorkRequest>;
   onSubmit?: (data: InfluencerWorkRequest) => void;
   onBack?: () => void;
 };

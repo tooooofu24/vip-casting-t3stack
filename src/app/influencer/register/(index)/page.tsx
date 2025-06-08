@@ -42,12 +42,7 @@ import { useState } from "react";
 const items = ["基本情報", "住所情報", "SNS情報", "案件情報"] as const;
 
 export default function RegisterPage() {
-  const [data, setData] = useState<Partial<InfluencerRegisterRequest>>({
-    information: influencerInformationDefaultValues,
-    address: influencerAddressDefaultValues,
-    sns: influencerSnsDefaultValues,
-    work: influencerWorkDefaultValues,
-  });
+  const [data, setData] = useState<Partial<InfluencerRegisterRequest>>({});
 
   const steps: UseStepsReturn = useSteps({
     defaultStep: 0,
@@ -117,7 +112,7 @@ export default function RegisterPage() {
                   onSubmit={(v: InfluencerInformationRequest) =>
                     onSubmit("information", v)
                   }
-                  defaultValues={data.information}
+                  defaultValues={influencerInformationDefaultValues}
                 />
               </Steps.Content>
               <Steps.Content index={1}>
@@ -126,19 +121,19 @@ export default function RegisterPage() {
                     onSubmit("address", v)
                   }
                   onBack={() => steps.goToPrevStep()}
-                  defaultValues={data.address}
+                  defaultValues={influencerAddressDefaultValues}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
                 <InfluencerSnsForm
                   onSubmit={(v: InfluencerSnsRequest) => onSubmit("sns", v)}
                   onBack={() => steps.goToPrevStep()}
-                  defaultValues={data.sns}
+                  defaultValues={influencerSnsDefaultValues}
                 />
               </Steps.Content>
               <Steps.Content index={3}>
                 <InfluencerWorkForm
-                  defaultValues={data.work}
+                  defaultValues={influencerWorkDefaultValues}
                   onSubmit={onRegister}
                   onBack={() => steps.goToPrevStep()}
                 />
