@@ -1,5 +1,7 @@
+import type { Prisma } from "@/lib/prisma/generated";
 import { influencerRegisterSchema } from "@/server/api/routers/influencer/validations/register";
 import { publicProcedure } from "@/server/api/trpc";
+import type { StrictPropertyCheck } from "@/util";
 
 export const register = publicProcedure
   .input(influencerRegisterSchema)
@@ -9,24 +11,53 @@ export const register = publicProcedure
       const influencer = await prisma.influencer.create({
         data: {},
       });
-      // 2. 各情報をinfluencerIdで紐付けて作成
+      // 2. 基本情報を作成
+      const infoData: StrictPropertyCheck<
+        typeof input.information,
+        Prisma.InfluencerInformationCreateInput
+      > = input.information;
+
       await prisma.influencerInformation.create({
         data: {
-          ...input.information,
-          birthday: new Date(input.information.birthday),
+          ...infoData,
+          birthday: new Date(infoData.birthday),
           influencerId: influencer.id,
         },
       });
+
+      // 3. 住所を作成
+      const addressData: StrictPropertyCheck<
+        typeof input.address,
+        Prisma.InfluencerAddressCreateInput
+      > = input.address;
       await prisma.influencerAddress.create({
-        data: { ...input.address, influencerId: influencer.id },
+        data: {
+          ...addressData,
+          influencerId: influencer.id,
+        },
       });
+
+      // 4. SNSを作成
+      const snsData: StrictPropertyCheck<
+        typeof input.sns,
+        Prisma.InfluencerSnsCreateInput
+      > = input.sns;
       await prisma.influencerSns.create({
-        data: { ...input.sns, influencerId: influencer.id },
+        data: {
+          ...snsData,
+          influencerId: influencer.id,
+        },
       });
+
+      // 5. 案件情報を作成
       const { prResults, ...workRest } = input.work;
+      const workData: StrictPropertyCheck<
+        typeof workRest,
+        Prisma.InfluencerWorkCreateInput
+      > = workRest;
       const work = await prisma.influencerWork.create({
         data: {
-          ...workRest,
+          ...workData,
           influencerId: influencer.id,
         },
       });
