@@ -3,7 +3,7 @@
 import { ResetPasswordForm } from "@/app/influencer/reset-password/(components)/ResetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
-import type { InfluencerResetPasswordRequest } from "@/server/api/routers/influencer/validations/auth/resetPassword";
+import type { InfluencerResetPasswordRequest } from "@/server/api/routers/influencer/features/auth/resetPassword/validation";
 import {
   Card,
   Center,

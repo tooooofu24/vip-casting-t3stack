@@ -1,6 +1,6 @@
 import { CampaignStatus } from "@/lib/prisma/generated";
 import { publicProcedure } from "@/server/api/trpc";
-import { getCampaignsSchema } from "@/server/api/routers/influencer/validations/campaign/getCampaigns";
+import { getCampaignsSchema } from "@/server/api/routers/influencer/features/campaigns/validations/getCampaigns";
 
 export const getCampaigns = publicProcedure
   .input(getCampaignsSchema)

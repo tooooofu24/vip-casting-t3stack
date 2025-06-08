@@ -7,26 +7,36 @@ import { InfluencerSnsForm } from "@/app/influencer/register/(components)/Influe
 import { InfluencerWorkForm } from "@/app/influencer/register/(components)/InfluencerWorkForm";
 import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
-import {
-  influencerRegisterSchema,
-  type InfluencerRegisterRequest,
-} from "@/server/api/routers/influencer/validations/register";
+import { z } from "@/lib/zod";
 import {
   influencerAddressDefaultValues,
+  influencerAddressSchema,
   type InfluencerAddressRequest,
-} from "@/server/api/routers/influencer/validations/register/address";
+} from "@/server/api/routers/influencer/features/register/address";
 import {
   influencerInformationDefaultValues,
+  influencerInformationSchema,
   type InfluencerInformationRequest,
-} from "@/server/api/routers/influencer/validations/register/information";
+} from "@/server/api/routers/influencer/features/register/information";
 import {
   influencerSnsDefaultValues,
+  influencerSnsSchema,
   type InfluencerSnsRequest,
-} from "@/server/api/routers/influencer/validations/register/sns";
+} from "@/server/api/routers/influencer/features/register/sns";
 import {
   influencerWorkDefaultValues,
+  influencerWorkSchema,
   type InfluencerWorkRequest,
-} from "@/server/api/routers/influencer/validations/register/work";
+} from "@/server/api/routers/influencer/features/register/work";
+
+const influencerRegisterSchema = z.object({
+  information: influencerInformationSchema,
+  address: influencerAddressSchema,
+  sns: influencerSnsSchema,
+  work: influencerWorkSchema,
+});
+
+type InfluencerRegisterRequest = z.infer<typeof influencerRegisterSchema>;
 import type { UseStepsReturn } from "@chakra-ui/react";
 import {
   Box,
