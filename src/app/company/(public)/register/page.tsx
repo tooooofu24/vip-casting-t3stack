@@ -11,7 +11,11 @@ import {
   companyRegisterSchema,
   type CompanyRegisterRequest,
 } from "@/server/api/routers/company/features/auth/register/validation";
+import { companyAddressDefaultValues } from "@/server/api/routers/company/features/auth/register/validations/address";
+import { companyBusinessDefaultValues } from "@/server/api/routers/company/features/auth/register/validations/business";
+import { companyInformationDefaultValues } from "@/server/api/routers/company/features/auth/register/validations/information";
 import type { CompanyPaymentRequest } from "@/server/api/routers/company/features/auth/register/validations/payment";
+import { companyPaymentDefaultValues } from "@/server/api/routers/company/features/auth/register/validations/payment";
 
 import {
   Box,
@@ -96,27 +100,27 @@ export default function CompanyRegisterPage() {
               </Steps.List>
               <Steps.Content index={0}>
                 <CompanyInformationForm
-                  defaultValues={data.information}
+                  defaultValues={companyInformationDefaultValues}
                   onSubmit={(v) => onSubmit("information", v)}
                 />
               </Steps.Content>
               <Steps.Content index={1}>
                 <CompanyAddressForm
-                  defaultValues={data.address}
+                  defaultValues={companyAddressDefaultValues}
                   onSubmit={(v) => onSubmit("address", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={2}>
                 <CompanyBusinessForm
-                  defaultValues={data.business}
+                  defaultValues={companyBusinessDefaultValues}
                   onSubmit={(v) => onSubmit("business", v)}
                   onBack={() => steps.goToPrevStep()}
                 />
               </Steps.Content>
               <Steps.Content index={3}>
                 <CompanyPaymentForm
-                  defaultValues={data.payment}
+                  defaultValues={companyPaymentDefaultValues}
                   onSubmit={onRegister}
                   onBack={() => steps.goToPrevStep()}
                 />

@@ -59,7 +59,7 @@ export default function AboutPage() {
                 >
                   会社名
                 </Table.ColumnHeader>
-                <Table.Cell py="4">株式会社カイエン</Table.Cell>
+                <Table.Cell py="4">Hibi Holdings株式会社</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.ColumnHeader py="4" textAlign="left" color="gray.600">

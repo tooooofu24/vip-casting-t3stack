@@ -1,5 +1,6 @@
 "use client";
 
+import { accountTypes } from "@/const/accountType";
 import { prefectures } from "@/const/prefecture";
 import {
   companyPaymentSchema,
@@ -94,8 +95,11 @@ export function CompanyPaymentForm({ defaultValues, onSubmit, onBack }: Props) {
                     required={false}
                     {...register("accountType")}
                   >
-                    <option value="ordinary">普通</option>
-                    <option value="current">当座</option>
+                    {accountTypes.map((accountType) => (
+                      <option key={accountType.value} value={accountType.value}>
+                        {accountType.label}
+                      </option>
+                    ))}
                   </NativeSelect.Field>
                   <NativeSelect.Indicator />
                 </NativeSelect.Root>
