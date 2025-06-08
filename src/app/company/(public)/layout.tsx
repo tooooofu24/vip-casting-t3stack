@@ -1,6 +1,6 @@
 import { HEADER_HEIGHT } from "@/app/(components)/constants";
 import { Footer } from "@/app/(components)/Footer/Footer";
-import { CompanyNavbar } from "@/app/company/(components)/CompanyNavbar";
+import { CompanyNavbar } from "@/app/influencer/(public)/CompanyNavbar";
 import { Box } from "@chakra-ui/react";
 
 export default function CompanyLayout({

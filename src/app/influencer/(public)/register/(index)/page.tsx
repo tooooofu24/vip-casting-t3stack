@@ -1,10 +1,10 @@
 "use client";
 
-import { InfluencerAddressForm } from "@/app/influencer/register/(components)/InfluencerAddressForm";
-import { InfluencerCompletedCard } from "@/app/influencer/register/(components)/InfluencerCompletedCard";
-import { InfluencerInformationForm } from "@/app/influencer/register/(components)/InfluencerInformationForm";
-import { InfluencerSnsForm } from "@/app/influencer/register/(components)/InfluencerSnsForm";
-import { InfluencerWorkForm } from "@/app/influencer/register/(components)/InfluencerWorkForm";
+import { InfluencerAddressForm } from "@/app/influencer/(public)/register/(components)/InfluencerAddressForm";
+import { InfluencerCompletedCard } from "@/app/influencer/(public)/register/(components)/InfluencerCompletedCard";
+import { InfluencerInformationForm } from "@/app/influencer/(public)/register/(components)/InfluencerInformationForm";
+import { InfluencerSnsForm } from "@/app/influencer/(public)/register/(components)/InfluencerSnsForm";
+import { InfluencerWorkForm } from "@/app/influencer/(public)/register/(components)/InfluencerWorkForm";
 import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {

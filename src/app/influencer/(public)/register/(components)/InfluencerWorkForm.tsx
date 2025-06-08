@@ -1,7 +1,7 @@
 "use client";
 
 import { TagInputField } from "@/app/(components)/fields/TagInputField";
-import { InfluencerPrResultsField } from "@/app/influencer/register/(components)/fields/InfluencerPrResultsField";
+import { InfluencerPrResultsField } from "@/app/influencer/(public)/register/(components)/fields/InfluencerPrResultsField";
 import { regions } from "@/const/region";
 import { workTypes } from "@/const/workType";
 import {

@@ -1,6 +1,6 @@
 "use client";
 
-import { InfluencerLoginForm } from "@/app/influencer/login/(components)/InfluencerLoginForm";
+import { InfluencerLoginForm } from "@/app/influencer/(public)/login/(components)/InfluencerLoginForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";

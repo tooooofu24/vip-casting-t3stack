@@ -1,16 +1,16 @@
 import { HEADER_HEIGHT, SIDEBAR_WIDTH } from "@/app/(components)/constants";
 import { SimpleFooter } from "@/app/(components)/Footer/SimpleFooter";
-import { CompanySidebar } from "@/app/company/(components)/CompanySidebar";
-import { CompanyNavbar } from "@/app/influencer/(public)/CompanyNavbar";
+import { InfluencerNavbar } from "@/app/influencer/(components)/InfluencerNavbar";
+import { InfluencerSidebar } from "@/app/influencer/(components)/InfluencerSidebar";
 import { Box, Container } from "@chakra-ui/react";
 
-export default function CompanyLayout({
+export default function InfluencerDashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <CompanyNavbar />
-      <CompanySidebar />
+      <InfluencerNavbar />
+      <InfluencerSidebar />
       <Box pt={HEADER_HEIGHT} pl={SIDEBAR_WIDTH} bg="gray.50">
         <Container
           as="main"

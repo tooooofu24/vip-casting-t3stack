@@ -64,7 +64,7 @@ export default function DashboardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Box py={6} px={6}>
+    <Box>
       <Heading as="h1" fontSize="2xl" fontWeight="bold" mb={6}>
         ダッシュボード
       </Heading>

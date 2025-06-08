@@ -1,6 +1,6 @@
 "use client";
 
-import { ForgetPasswordForm } from "@/app/influencer/forget-password/(components)/ForgetPasswordForm";
+import { ForgetPasswordForm } from "@/app/influencer/(public)/forget-password/(components)/ForgetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import {

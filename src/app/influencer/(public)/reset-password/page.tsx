@@ -1,6 +1,6 @@
 "use client";
 
-import { ResetPasswordForm } from "@/app/influencer/reset-password/(components)/ResetPasswordForm";
+import { ResetPasswordForm } from "@/app/influencer/(public)/reset-password/(components)/ResetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import type { InfluencerResetPasswordRequest } from "@/server/api/routers/influencer/features/password/reset/validation";
