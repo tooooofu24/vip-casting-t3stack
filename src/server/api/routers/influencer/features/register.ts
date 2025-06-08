@@ -15,7 +15,7 @@ export const register = publicProcedure
       await prisma.influencerInformation.create({
         data: {
           ...input.information,
-          birthday: new Date(input.information.birthdate),
+          birthday: new Date(input.information.birthday),
           influencerId: influencer.id,
         },
       });
