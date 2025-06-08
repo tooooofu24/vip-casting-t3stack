@@ -64,7 +64,7 @@ export const myFeature = companyProcedure
 ### 1. API追加（tRPCルーター）
 
 ```typescript
-// /src/server/api/routers/[role]/features/myFeature.ts
+// /src/server/api/routers/[role]/features/[feature]/[action]/api.ts
 export const myFeature = companyProcedure
   .input(myFeatureSchema)
   .mutation(async ({ ctx, input }) => {
@@ -72,14 +72,33 @@ export const myFeature = companyProcedure
   });
 ```
 
-### 2. バリデーションスキーマ（フロント・バックエンド共通）
+### 2. バリデーションスキーマ
 
 ```typescript
-// /src/validations/[role]/myFeature.ts
+// /src/server/api/routers/[role]/features/[feature]/[action]/validation.ts
 export const myFeatureSchema = z.object({
-  // Zodスキーマ定義（フロントとAPIで共通使用）
+  // Zodスキーマ定義
 });
 ```
+
+### APIディレクトリ構成
+
+```
+/src/server/api/routers/
+├── [role]/               # admin, company, influencer
+│   └── features/
+│       └── [feature]/    # auth, campaigns, etc.
+│           ├── router.ts # 機能ルーター
+│           └── [action]/ # get, create, update, delete, etc.
+│               ├── api.ts        # tRPCプロシージャ
+│               └── validation.ts # Zodスキーマ
+```
+
+例:
+
+- `/company/features/auth/register/` → 企業登録機能
+- `/company/features/campaigns/create/` → キャンペーン作成機能
+- `/influencer/features/campaigns/get/` → キャンペーン取得機能
 
 ### 3. フロントエンド実装
 
