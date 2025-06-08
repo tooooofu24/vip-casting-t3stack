@@ -8,7 +8,7 @@ import {
   influencerWorkDefaultValues,
   influencerWorkSchema,
   type InfluencerWorkRequest,
-} from "@/server/api/routers/influencer/features/register/validations/work";
+} from "@/server/api/routers/influencer/features/auth/register/validations/work";
 import {
   Box,
   Button,

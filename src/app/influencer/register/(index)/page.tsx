@@ -10,23 +10,23 @@ import { api } from "@/lib/trpc/react";
 import {
   influencerRegisterSchema,
   type InfluencerRegisterRequest,
-} from "@/server/api/routers/influencer/features/register/validations";
+} from "@/server/api/routers/influencer/features/auth/register/validations";
 import {
   influencerAddressDefaultValues,
   type InfluencerAddressRequest,
-} from "@/server/api/routers/influencer/features/register/validations/address";
+} from "@/server/api/routers/influencer/features/auth/register/validations/address";
 import {
   influencerInformationDefaultValues,
   type InfluencerInformationRequest,
-} from "@/server/api/routers/influencer/features/register/validations/information";
+} from "@/server/api/routers/influencer/features/auth/register/validations/information";
 import {
   influencerSnsDefaultValues,
   type InfluencerSnsRequest,
-} from "@/server/api/routers/influencer/features/register/validations/sns";
+} from "@/server/api/routers/influencer/features/auth/register/validations/sns";
 import {
   influencerWorkDefaultValues,
   type InfluencerWorkRequest,
-} from "@/server/api/routers/influencer/features/register/validations/work";
+} from "@/server/api/routers/influencer/features/auth/register/validations/work";
 import type { UseStepsReturn } from "@chakra-ui/react";
 import {
   Box,
@@ -61,7 +61,7 @@ export default function RegisterPage() {
     steps.goToNextStep();
   };
 
-  const register = api.influencer.register.useMutation({
+  const register = api.influencer.auth.register.useMutation({
     onSuccess: async () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
       steps.goToNextStep();

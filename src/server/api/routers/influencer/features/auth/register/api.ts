@@ -1,5 +1,5 @@
 import type { Prisma } from "@/lib/prisma/generated";
-import { influencerRegisterSchema } from "@/server/api/routers/influencer/features/register/validations";
+import { influencerRegisterSchema } from "@/server/api/routers/influencer/features/auth/register/validations";
 import { publicProcedure } from "@/server/api/trpc";
 import type { StrictPropertyCheck } from "@/util/StrictPropertyCheck";
 
