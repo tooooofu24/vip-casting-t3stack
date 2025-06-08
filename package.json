@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "next build",
-    "check": "next lint --fix && eslint prisma --fix && npm run format && npm run build",
+    "check": "next lint --fix && eslint prisma --fix && npm run format && npx tsc --noEmit && npm run build",
     "db:generate": "prisma migrate dev",
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
