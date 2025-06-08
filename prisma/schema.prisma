@@ -158,6 +158,14 @@ enum AccountType {
     CURRENT
 }
 
+enum ApplicationStatus {
+    PENDING
+    APPROVED
+    REJECTED
+    COMPLETED
+    CANCELLED
+}
+
 model Admin {
     id         String   @id @default(uuid()) @db.Uuid
     supabaseId String   @unique @db.Uuid
@@ -327,10 +335,11 @@ model Influencer {
     updatedAt  DateTime @updatedAt @db.Timestamptz(6)
     isApproved Boolean  @default(false)
 
-    information InfluencerInformation?
-    address     InfluencerAddress?
-    sns         InfluencerSns?
-    work        InfluencerWork?
+    information  InfluencerInformation?
+    address      InfluencerAddress?
+    sns          InfluencerSns?
+    work         InfluencerWork?
+    applications Application[]
 }
 
 model InfluencerInformation {
@@ -435,7 +444,30 @@ model Campaign {
     updatedAt      DateTime       @updatedAt @db.Timestamptz(6)
 
     // --- リレーション ---
-    company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    company      Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    applications Application[]
 
     @@index([companyId])
+}
+
+model Application {
+    id           String            @id @default(uuid()) @db.Uuid
+    campaignId   String            @db.Uuid
+    influencerId String            @db.Uuid
+    status       ApplicationStatus @default(PENDING)
+    message      String?           @db.Text
+    rejectedAt   DateTime?         @db.Timestamptz(6)
+    approvedAt   DateTime?         @db.Timestamptz(6)
+    completedAt  DateTime?         @db.Timestamptz(6)
+    cancelledAt  DateTime?         @db.Timestamptz(6)
+    createdAt    DateTime          @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime          @updatedAt @db.Timestamptz(6)
+
+    // --- リレーション ---
+    campaign   Campaign   @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+
+    @@unique([campaignId, influencerId])
+    @@index([campaignId])
+    @@index([influencerId])
 }

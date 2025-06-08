@@ -34,6 +34,9 @@ CREATE TYPE "CampaignStatus" AS ENUM ('DRAFT', 'RECRUITING', 'IN_PROGRESS', 'COM
 -- CreateEnum
 CREATE TYPE "AccountType" AS ENUM ('NORMAL', 'CURRENT');
 
+-- CreateEnum
+CREATE TYPE "ApplicationStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'COMPLETED', 'CANCELLED');
+
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" UUID NOT NULL,
@@ -305,6 +308,23 @@ CREATE TABLE "Campaign" (
     CONSTRAINT "Campaign_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Application" (
+    "id" UUID NOT NULL,
+    "campaignId" UUID NOT NULL,
+    "influencerId" UUID NOT NULL,
+    "status" "ApplicationStatus" NOT NULL DEFAULT 'PENDING',
+    "message" TEXT,
+    "rejectedAt" TIMESTAMPTZ(6),
+    "approvedAt" TIMESTAMPTZ(6),
+    "completedAt" TIMESTAMPTZ(6),
+    "cancelledAt" TIMESTAMPTZ(6),
+    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(6) NOT NULL,
+
+    CONSTRAINT "Application_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_supabaseId_key" ON "Admin"("supabaseId");
 
@@ -368,6 +388,15 @@ CREATE INDEX "InfluencerPrResult_influencerWorkId_idx" ON "InfluencerPrResult"("
 -- CreateIndex
 CREATE INDEX "Campaign_companyId_idx" ON "Campaign"("companyId");
 
+-- CreateIndex
+CREATE INDEX "Application_campaignId_idx" ON "Application"("campaignId");
+
+-- CreateIndex
+CREATE INDEX "Application_influencerId_idx" ON "Application"("influencerId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Application_campaignId_influencerId_key" ON "Application"("campaignId", "influencerId");
+
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -412,3 +441,9 @@ ALTER TABLE "InfluencerPrResult" ADD CONSTRAINT "InfluencerPrResult_influencerWo
 
 -- AddForeignKey
 ALTER TABLE "Campaign" ADD CONSTRAINT "Campaign_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Application" ADD CONSTRAINT "Application_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaign"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Application" ADD CONSTRAINT "Application_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "Influencer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
