@@ -3,7 +3,7 @@
 import {
   companyResetPasswordSchema,
   type CompanyResetPasswordRequest,
-} from "@/server/api/routers/company/features/auth/resetPassword/validation";
+} from "@/server/api/routers/company/features/auth/password/reset/validation";
 import {
   Alert,
   Button,

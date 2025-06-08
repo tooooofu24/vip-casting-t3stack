@@ -39,7 +39,9 @@ export default function AdminDashboard() {
     isLoading: isLoadingInfluencers,
     refetch: refetchInfluencers,
     error: errorInfluencers,
-  } = api.admin.influencers.getUnapproved.useQuery();
+  } = api.admin.influencers.get.useQuery({
+    isApproved: false,
+  });
 
   const { mutate: approveInfluencer, isPending: isPendingInfluencer } =
     api.admin.influencers.approve.useMutation({
