@@ -1,9 +1,8 @@
 "use client";
 
 import { ResetPasswordForm } from "@/app/company/(public)/reset-password/(components)/ResetPasswordForm";
-import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
-import type { CompanyResetPasswordRequest } from "@/server/api/routers/company/features/password/reset/validation";
+import { toaster } from "@/lib/chakra-ui/toaster";
+import { api } from "@/lib/trpc/react";
 import {
   Card,
   Center,
@@ -18,18 +17,22 @@ import NextLink from "next/link";
 import { LuLock } from "react-icons/lu";
 
 export default function ResetPasswordPage() {
-  const onSubmit = async ({ newPassword }: CompanyResetPasswordRequest) => {
-    const supabase = createSupabaseBrowserClient();
-    const { error } = await supabase.auth.updateUser({ password: newPassword });
-    if (error) {
-      showErrorToast(error.message);
-      return;
-    }
-    toaster.create({
-      type: "success",
-      title: "パスワードを設定しました",
-    });
-  };
+  const { mutateAsync } = api.company.password.reset.useMutation({
+    onSuccess: () => {
+      toaster.create({
+        type: "success",
+        title: "パスワードを設定しました",
+      });
+    },
+    onError: (error) => {
+      toaster.create({
+        type: "error",
+        title: "設定エラー",
+        description: error.message,
+      });
+    },
+  });
+
   return (
     <Center>
       <Container maxW="xl" py={32}>
@@ -48,9 +51,9 @@ export default function ResetPasswordPage() {
           {/* Set Password Form */}
           <Card.Root w="full">
             <Card.Body>
-              <ResetPasswordForm onSubmit={onSubmit} />
+              <ResetPasswordForm onSubmit={mutateAsync} />
               <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>
-                <NextLink href="/influencer/login">ログイン画面に戻る</NextLink>
+                <NextLink href="/company/login">ログイン画面に戻る</NextLink>
               </ChakraLink>
             </Card.Body>
           </Card.Root>

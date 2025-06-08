@@ -19,6 +19,7 @@ VIPキャスティングは、インフルエンサーと企業のマッチン�
 npm run dev
 
 # コード品質（コミット前に必ず実行）
+# ⚠️ 重要: 新機能実装・修正後は必ず実行すること！
 npm run check
 
 # DBスキーマ変更時
@@ -60,6 +61,17 @@ export const myFeature = companyProcedure
 - `SUPABASE_SERVICE_ROLE_KEY`
 
 ## 新機能追加の手順
+
+### ⚠️ 必須: 実装完了後の品質チェック
+
+**すべての実装が完了したら、必ず `npm run check` を実行してください。**
+このコマンドは以下をチェックします：
+- ESLintエラー
+- TypeScript型エラー
+- Prettierフォーマット
+- ビルドエラー
+
+エラーが出た場合は必ず修正してください。
 
 ### 1. API追加（tRPCルーター）
 
