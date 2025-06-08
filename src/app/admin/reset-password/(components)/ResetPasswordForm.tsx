@@ -3,7 +3,7 @@
 import {
   adminResetPasswordSchema,
   type AdminResetPasswordRequest,
-} from "@/server/api/routers/admin/features/auth";
+} from "@/server/api/routers/admin/features/auth/resetPassword/validation";
 import {
   Alert,
   Button,

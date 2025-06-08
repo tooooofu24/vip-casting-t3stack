@@ -4,7 +4,7 @@ import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
 import { CampaignForm } from "@/app/company/dashboard/campaigns/(components)/CampaignForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
-import { updateCampaignSchema } from "@/server/api/routers/company/validations/campaign";
+import { updateCampaignSchema } from "@/server/api/routers/company/validations/campaign/updateCampaign";
 import { Card, Spinner, Text, VStack } from "@chakra-ui/react";
 import { useParams, useRouter } from "next/navigation";
 

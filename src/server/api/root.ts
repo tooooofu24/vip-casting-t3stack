@@ -1,6 +1,6 @@
-import { adminRouter } from "@/server/api/routers/admin";
-import { companyRouter } from "@/server/api/routers/company";
-import { influencerRouter } from "@/server/api/routers/influencer";
+import { adminRouter } from "@/server/api/routers/admin/router";
+import { companyRouter } from "@/server/api/routers/company/router";
+import { influencerRouter } from "@/server/api/routers/influencer/router";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
 /**

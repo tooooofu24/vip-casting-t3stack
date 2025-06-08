@@ -4,7 +4,7 @@ import { AdminLoginForm } from "@/app/admin/login/(components)/AdminLoginForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";
-import type { AdminLoginRequest } from "@/server/api/routers/admin/features/auth";
+import type { AdminLoginRequest } from "@/server/api/routers/admin/features/auth/login/validation";
 import {
   Button,
   Card,

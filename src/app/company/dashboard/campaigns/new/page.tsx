@@ -7,7 +7,7 @@ import { api } from "@/lib/trpc/react";
 import {
   createCampaignDefaultValues,
   createCampaignSchema,
-} from "@/server/api/routers/company/validations/campaign";
+} from "@/server/api/routers/company/validations/campaign/createCampaign";
 import { VStack } from "@chakra-ui/react";
 
 export default function PostCampaignPage() {

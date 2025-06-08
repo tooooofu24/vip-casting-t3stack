@@ -1,7 +1,7 @@
 "use client";
 
-import type { AdminForgetPasswordRequest } from "@/server/api/routers/admin/features/auth";
-import { adminForgetPasswordSchema } from "@/server/api/routers/admin/features/auth";
+import type { AdminForgetPasswordRequest } from "@/server/api/routers/admin/features/auth/forgetPassword/validation";
+import { adminForgetPasswordSchema } from "@/server/api/routers/admin/features/auth/forgetPassword/validation";
 import {
   Alert,
   Button,

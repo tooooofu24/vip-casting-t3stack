@@ -3,7 +3,7 @@
 import { ResetPasswordForm } from "@/app/company/(public)/reset-password/(components)/ResetPasswordForm";
 import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
-import type { CompanyResetPasswordRequest } from "@/server/api/routers/company/validations/auth";
+import type { CompanyResetPasswordRequest } from "@/server/api/routers/company/validations/auth/resetPassword";
 import {
   Card,
   Center,

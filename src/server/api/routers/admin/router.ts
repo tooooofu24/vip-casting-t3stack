@@ -1,6 +1,6 @@
-import { authRouter } from "@/server/api/routers/admin/features/auth";
-import { companiesRouter } from "@/server/api/routers/admin/features/companies";
-import { influencersRouter } from "@/server/api/routers/admin/features/influencers";
+import { authRouter } from "@/server/api/routers/admin/features/auth/router";
+import { companiesRouter } from "@/server/api/routers/admin/features/companies/router";
+import { influencersRouter } from "@/server/api/routers/admin/features/influencers/router";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 export const adminRouter = createTRPCRouter({
