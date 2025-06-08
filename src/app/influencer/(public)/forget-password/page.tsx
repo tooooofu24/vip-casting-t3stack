@@ -1,8 +1,8 @@
 "use client";
 
 import { ForgetPasswordForm } from "@/app/influencer/(public)/forget-password/(components)/ForgetPasswordForm";
-import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
-import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
+import { toaster } from "@/lib/chakra-ui/toaster";
+import { api } from "@/lib/trpc/react";
 import {
   Card,
   Center,
@@ -13,7 +13,6 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import type { Route } from "next";
 import NextLink from "next/link";
 import { useSearchParams } from "next/navigation";
 import { LuMail } from "react-icons/lu";
@@ -22,22 +21,21 @@ export default function ForgetPasswordPage() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") ?? undefined;
 
-  // パスワードリセット申請
-  const onSubmit = async ({ email }: { email: string }) => {
-    const route: Route = "/influencer/reset-password";
-    const supabase = createSupabaseBrowserClient();
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}${route}`,
-    });
-    if (error) {
-      showErrorToast(error.message);
-      return;
-    }
-    toaster.create({
-      type: "success",
-      title: "パスワードリセットメールを送信しました",
-    });
-  };
+  const { mutateAsync } = api.influencer.password.forget.useMutation({
+    onSuccess: () => {
+      toaster.create({
+        type: "success",
+        title: "パスワードリセットメールを送信しました",
+      });
+    },
+    onError: (error) => {
+      toaster.create({
+        type: "error",
+        title: "送信エラー",
+        description: error.message,
+      });
+    },
+  });
 
   return (
     <Center>
@@ -58,7 +56,7 @@ export default function ForgetPasswordPage() {
           <Card.Root w="full">
             <Card.Body>
               <ForgetPasswordForm
-                onSubmit={onSubmit}
+                onSubmit={mutateAsync}
                 defaultValues={{ email }}
               />
               <ChakraLink asChild fontSize="sm" ml="auto" mt={4}>

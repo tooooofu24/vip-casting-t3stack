@@ -17,7 +17,7 @@ import {
 import NextLink from "next/link";
 import { LuLock } from "react-icons/lu";
 
-export default function ForgetPasswordPage() {
+export default function ResetPasswordPage() {
   const onSubmit = async ({ newPassword }: CompanyResetPasswordRequest) => {
     const supabase = createSupabaseBrowserClient();
     const { error } = await supabase.auth.updateUser({ password: newPassword });
