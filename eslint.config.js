@@ -74,12 +74,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ["**/index.ts"],
-    rules: {
-      "no-restricted-imports": "off",
-    },
-  },
-  {
     linterOptions: {
       reportUnusedDisableDirectives: true,
     },

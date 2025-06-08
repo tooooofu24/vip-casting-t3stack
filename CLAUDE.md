@@ -32,6 +32,8 @@ npm run db:push && npm run db:generate
 - Zod: `import { z } from "@/lib/zod"`（直接インポート禁止）
 - Prisma Enum: `import type { Platform } from "@/lib/prisma/generated"`
 - Enumラベル: `/src/const/` 配下の定数ファイルを使用
+- **バレルエクスポート禁止**: `index.ts`によるre-exportは使用しない（サーバー/クライアント境界問題を避けるため）
+- 必要なものは直接的なパスから個別にインポートする
 
 ### tRPCプロシージャ
 
