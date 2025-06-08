@@ -1,24 +1,8 @@
-import { z } from "@/lib/zod";
 import { companyProcedure } from "@/server/api/trpc";
+import { getCampaignsSchema } from "@/server/api/routers/company/features/campaigns/get/validation";
 
 export const getCampaigns = companyProcedure
-  .input(
-    z
-      .object({
-        status: z
-          .enum([
-            "DRAFT",
-            "RECRUITING",
-            "IN_PROGRESS",
-            "COMPLETED",
-            "CANCELLED",
-          ])
-          .optional(),
-        page: z.number().min(1).default(1),
-        perPage: z.number().min(1).max(100).default(20),
-      })
-      .optional(),
-  )
+  .input(getCampaignsSchema)
   .query(async ({ ctx, input }) => {
     const { status, page = 1, perPage = 20 } = input ?? {};
 

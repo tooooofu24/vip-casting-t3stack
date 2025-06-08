@@ -4,9 +4,13 @@ import { TagInputField } from "@/app/(components)/fields/TagInputField";
 import { platforms } from "@/const/platform";
 import { rewardTypes } from "@/const/rewardType";
 import type {
-  CampaignFormData,
-  CampaignFormSchema,
-} from "@/server/api/routers/company/features/campaigns/validations/";
+  CreateCampaignRequest,
+  createCampaignSchema,
+} from "@/server/api/routers/company/features/campaigns/create/validation";
+import type {
+  UpdateCampaignRequest,
+  updateCampaignSchema,
+} from "@/server/api/routers/company/features/campaigns/update/validation";
 import {
   Button,
   Card,
@@ -25,6 +29,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { DefaultValues } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { LuSave } from "react-icons/lu";
+
+type CampaignFormData = CreateCampaignRequest | UpdateCampaignRequest;
+
+type CampaignFormSchema =
+  | typeof createCampaignSchema
+  | typeof updateCampaignSchema;
 
 type Props = {
   onSubmit: (data: CampaignFormData) => void;
