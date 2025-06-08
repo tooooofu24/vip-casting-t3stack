@@ -8,17 +8,14 @@ import { CompanyPaymentForm } from "@/app/company/(public)/register/(components)
 import { showErrorToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
-  companyAddressDefaultValues,
-  companyBusinessDefaultValues,
-  companyInformationDefaultValues,
-  companyPaymentDefaultValues,
   companyRegisterSchema,
   type CompanyAddressRequest,
   type CompanyBusinessRequest,
   type CompanyInformationRequest,
   type CompanyPaymentRequest,
-  type CompanyRegisterRequest,
 } from "@/server/api/routers/company/features/auth/register/validation";
+import type { CompanyRegisterRequest } from "@/server/api/routers/company/features/auth/register/validations";
+
 import {
   Box,
   Container,
@@ -33,12 +30,7 @@ import { useState } from "react";
 const items = ["基本情報", "所在地情報", "ビジネス情報", "支払い情報"] as const;
 
 export default function CompanyRegisterPage() {
-  const [data, setData] = useState<Partial<CompanyRegisterRequest>>({
-    information: companyInformationDefaultValues,
-    address: companyAddressDefaultValues,
-    business: companyBusinessDefaultValues,
-    payment: companyPaymentDefaultValues,
-  });
+  const [data, setData] = useState<Partial<CompanyRegisterRequest>>({});
 
   const steps = useSteps({
     defaultStep: 0,
