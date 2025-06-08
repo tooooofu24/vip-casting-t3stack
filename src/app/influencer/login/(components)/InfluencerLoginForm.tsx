@@ -9,12 +9,10 @@ import {
   Link as ChakraLink,
   Checkbox,
   Field,
-  HStack,
   Icon,
   Input,
   InputGroup,
   Stack,
-  Text,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import NextLink from "next/link";
@@ -105,12 +103,10 @@ export const InfluencerLoginForm = ({ onSubmit, defaultValues }: Props) => {
         type="submit"
         loading={isSubmitting}
       >
-        <HStack>
-          <Text>ログイン</Text>
-          <Icon>
-            <LuArrowRight />
-          </Icon>
-        </HStack>
+        ログイン
+        <Icon>
+          <LuArrowRight />
+        </Icon>
       </Button>
     </Stack>
   );

@@ -3,6 +3,7 @@
 import { InfluencerLoginForm } from "@/app/influencer/login/(components)/InfluencerLoginForm";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
+import { api } from "@/lib/trpc/react";
 import {
   Box,
   Button,
@@ -30,40 +31,23 @@ export default function LoginPage() {
   const router = useRouter();
   const supabase = createSupabaseBrowserClient();
 
-  const signIn = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (data.user?.user_metadata.role === "influencer") {
+  const { mutateAsync } = api.influencer.auth.login.useMutation({
+    onSuccess: async ({ session: { access_token, refresh_token } }) => {
+      await supabase.auth.setSession({ access_token, refresh_token });
       toaster.create({
+        title: "ログインしました",
         type: "success",
-        title: "ログインに成功しました",
       });
       router.push("/influencer/dashboard");
-      return;
-    }
-    if (error) {
+    },
+    onError: (error) => {
       toaster.create({
-        type: "error",
-        title: "ログインに失敗しました",
+        title: "ログインエラー",
         description: error.message,
-      });
-    } else {
-      toaster.create({
         type: "error",
-        title: "ログインに失敗しました",
-        description: "インフルエンサーアカウントとしてログインできません",
       });
-      await supabase.auth.signOut();
-    }
-  };
+    },
+  });
 
   return (
     <Center px={{ base: 4, sm: 0 }}>
@@ -83,7 +67,7 @@ export default function LoginPage() {
           <Card.Root w="full">
             <Card.Body p={{ base: 4, sm: 6, md: 8 }}>
               <Stack gap={{ base: 4, sm: 6 }}>
-                <InfluencerLoginForm onSubmit={signIn} />
+                <InfluencerLoginForm onSubmit={mutateAsync} />
 
                 {/* Separator */}
                 <HStack>
