@@ -1,12 +1,10 @@
 "use client";
 
 import { AdminLoginForm } from "@/app/admin/login/(components)/AdminLoginForm";
-import { showErrorToast, toaster } from "@/lib/chakra-ui/toaster";
+import { toaster } from "@/lib/chakra-ui/toaster";
 import { createSupabaseBrowserClient } from "@/lib/supabase/browserClient";
 import { api } from "@/lib/trpc/react";
-import type { AdminLoginRequest } from "@/server/api/routers/admin/features/auth/login/validation";
 import {
-  Button,
   Card,
   Center,
   Container,
@@ -19,47 +17,25 @@ import { LuShieldCheck } from "react-icons/lu";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const supabase = createSupabaseBrowserClient();
-  const { mutateAsync: signUp, isPending: isSignUpPending } =
-    api.admin.auth.signUp.useMutation({
-      onSuccess: () => {
-        toaster.create({
-          type: "success",
-          title: "サインアップしました！",
-        });
-      },
-      onError: (error) => {
-        showErrorToast(error.data?.code);
-      },
-    });
 
-  const signIn = async ({ email, password }: AdminLoginRequest) => {
-    const supabase = createSupabaseBrowserClient();
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (data.user?.user_metadata.role === "admin") {
+  const { mutateAsync } = api.admin.auth.login.useMutation({
+    onSuccess: async ({ session: { access_token, refresh_token } }) => {
+      const supabase = createSupabaseBrowserClient();
+      await supabase.auth.setSession({ access_token, refresh_token });
       toaster.create({
+        title: "ログインしました",
         type: "success",
-        title: "ログインに成功しました",
       });
       router.push("/admin/dashboard");
-      return;
-    }
-    if (error) {
+    },
+    onError: (error) => {
       toaster.create({
+        title: "ログインエラー",
+        description: error.message,
         type: "error",
-        title: error.message,
       });
-    } else {
-      toaster.create({
-        type: "error",
-        title: "ログインに失敗しました",
-      });
-      await supabase.auth.signOut();
-    }
-  };
+    },
+  });
 
   return (
     <Center h="full">
@@ -78,23 +54,7 @@ export default function AdminLoginPage() {
                 管理者ログイン
               </Heading>
             </HStack>
-            <AdminLoginForm onSubmit={signIn} />
-            <Button
-              mt={4}
-              onClick={() =>
-                void signUp({
-                  email: "admin@example.com",
-                  password: "password123",
-                  displayName: "Admin User",
-                })
-              }
-              loading={isSignUpPending}
-            >
-              サインアップ
-            </Button>
-            <Button mt={4} onClick={() => supabase.auth.signOut()}>
-              ログアウト
-            </Button>
+            <AdminLoginForm onSubmit={mutateAsync} />
           </Card.Body>
         </Card.Root>
       </Container>
