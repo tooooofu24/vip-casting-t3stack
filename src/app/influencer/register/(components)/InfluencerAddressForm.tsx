@@ -4,7 +4,7 @@ import { prefectures } from "@/const/prefecture";
 import {
   influencerAddressSchema,
   type InfluencerAddressRequest,
-} from "@/validations/influencer/register/address";
+} from "@/server/api/routers/influencer/validations/register/address";
 import {
   Button,
   ButtonGroup,

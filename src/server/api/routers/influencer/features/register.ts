@@ -1,5 +1,5 @@
 import { publicProcedure } from "@/server/api/trpc";
-import { influencerRegisterSchema } from "@/validations/influencer/register";
+import { influencerRegisterSchema } from "@/server/api/routers/influencer/validations/register";
 
 export const register = publicProcedure
   .input(influencerRegisterSchema)
@@ -15,24 +15,32 @@ export const register = publicProcedure
       await prisma.influencerInformation.create({
         data: {
           ...input.information,
-          birthday: new Date(input.information.birthday),
+          birthday: new Date(input.information.birthdate),
           influencerId: influencer.id,
         },
       });
       await prisma.influencerAddress.create({
         data: { ...input.address, influencerId: influencer.id },
       });
-      await prisma.influencerSns.create({
-        data: { ...input.sns, influencerId: influencer.id },
+      await prisma.influencerSns.createMany({
+        data: input.sns.map(sns => ({ ...sns, influencerId: influencer.id })),
       });
       const { prResults, ...workRest } = input.work;
-      await prisma.influencerWork.create({
+      const work = await prisma.influencerWork.create({
         data: {
           ...workRest,
           influencerId: influencer.id,
-          prResults: prResults ? { create: prResults } : undefined,
         },
       });
+      if (prResults && prResults.length > 0) {
+        await prisma.influencerPrResult.createMany({
+          data: prResults.map(pr => ({ 
+            ...pr, 
+            workId: work.id,
+            completedAt: new Date(pr.completedAt)
+          })),
+        });
+      }
       return null;
     });
   });

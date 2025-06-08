@@ -1,5 +1,5 @@
 import { companyProcedure } from "@/server/api/trpc";
-import { updateCampaignSchema } from "@/validations/company/campaign/updateCampaign";
+import { updateCampaignSchema } from "@/server/api/routers/company/validations/campaign/updateCampaign";
 import { TRPCError } from "@trpc/server";
 
 export const updateCampaign = companyProcedure

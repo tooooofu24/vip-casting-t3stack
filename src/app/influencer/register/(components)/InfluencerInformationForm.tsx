@@ -4,7 +4,7 @@ import { genders } from "@/const/gender";
 import {
   influencerInformationSchema,
   type InfluencerInformationRequest,
-} from "@/validations/influencer/register/information";
+} from "@/server/api/routers/influencer/validations/register/information";
 import {
   Box,
   Button,

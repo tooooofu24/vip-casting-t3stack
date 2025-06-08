@@ -4,7 +4,7 @@ import { prefectures } from "@/const/prefecture";
 import {
   companyPaymentSchema,
   type CompanyPaymentRequest,
-} from "@/validations/company/register";
+} from "@/server/api/routers/company/validations/register";
 import {
   Box,
   Button,

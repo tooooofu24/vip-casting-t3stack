@@ -3,7 +3,7 @@
 import {
   influencerLoginSchema,
   type InfluencerLoginRequest,
-} from "@/validations/influencer/auth";
+} from "@/server/api/routers/influencer/validations/auth/login";
 import {
   Button,
   Link as ChakraLink,

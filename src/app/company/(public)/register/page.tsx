@@ -18,7 +18,7 @@ import {
   type CompanyInformationRequest,
   type CompanyPaymentRequest,
   type CompanyRegisterRequest,
-} from "@/validations/company/register";
+} from "@/server/api/routers/company/validations/register";
 import {
   Box,
   Container,

@@ -1,5 +1,5 @@
 import { publicProcedure } from "@/server/api/trpc";
-import { companyRegisterSchema } from "@/validations/company/register";
+import { companyRegisterSchema } from "@/server/api/routers/company/validations/register";
 
 export const register = publicProcedure
   .input(companyRegisterSchema)

@@ -10,23 +10,23 @@ import { api } from "@/lib/trpc/react";
 import {
   influencerRegisterSchema,
   type InfluencerRegisterRequest,
-} from "@/validations/influencer/register";
+} from "@/server/api/routers/influencer/validations/register";
 import {
   influencerAddressDefaultValues,
   type InfluencerAddressRequest,
-} from "@/validations/influencer/register/address";
+} from "@/server/api/routers/influencer/validations/register/address";
 import {
   influencerInformationDefaultValues,
   type InfluencerInformationRequest,
-} from "@/validations/influencer/register/information";
+} from "@/server/api/routers/influencer/validations/register/information";
 import {
   influencerSnsDefaultValues,
   type InfluencerSnsRequest,
-} from "@/validations/influencer/register/sns";
+} from "@/server/api/routers/influencer/validations/register/sns";
 import {
   influencerWorkDefaultValues,
   type InfluencerWorkRequest,
-} from "@/validations/influencer/register/work";
+} from "@/server/api/routers/influencer/validations/register/work";
 import type { UseStepsReturn } from "@chakra-ui/react";
 import {
   Box,

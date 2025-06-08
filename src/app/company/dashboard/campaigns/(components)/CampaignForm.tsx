@@ -6,7 +6,7 @@ import { rewardTypes } from "@/const/rewardType";
 import type {
   CampaignFormData,
   CampaignFormSchema,
-} from "@/validations/company/campaign";
+} from "@/server/api/routers/company/validations/campaign";
 import {
   Button,
   Card,

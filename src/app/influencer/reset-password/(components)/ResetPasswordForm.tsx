@@ -3,7 +3,7 @@
 import {
   influencerResetPasswordSchema,
   type InfluencerResetPasswordRequest,
-} from "@/validations/influencer/auth";
+} from "@/server/api/routers/influencer/validations/auth/resetPassword";
 import {
   Alert,
   Button,

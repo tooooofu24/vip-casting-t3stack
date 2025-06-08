@@ -3,7 +3,7 @@
 import {
   companyLoginSchema,
   type CompanyLoginRequest,
-} from "@/validations/company/auth";
+} from "@/server/api/routers/company/validations/auth/login";
 import {
   Button,
   Link as ChakraLink,
