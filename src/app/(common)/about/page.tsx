@@ -3,8 +3,10 @@
 import {
   Box,
   Container,
+  EmptyState,
   Heading,
   Icon,
+  Link,
   Stack,
   Table,
   Text,
@@ -19,24 +21,6 @@ import {
   LuPhone,
   LuUsers,
 } from "react-icons/lu";
-
-const certifications = [
-  {
-    year: "2023",
-    title: "プライバシーマーク取得",
-    description: "個人情報保護の取り組みが認められ、プライバシーマークを取得",
-  },
-  {
-    year: "2022",
-    title: "Forbes JAPAN スタートアップ・オブ・ザ・イヤー選出",
-    description: "インフルエンサーマーケティング分野での革新的なサービスが評価",
-  },
-  {
-    year: "2021",
-    title: "経済産業省「J-Startup」選定企業",
-    description: "高い成長性と革新性を持つスタートアップとして選定",
-  },
-];
 
 export default function AboutPage() {
   return (
@@ -69,11 +53,9 @@ export default function AboutPage() {
                   <Stack direction="row" align="flex-start">
                     <Icon as={LuMapPin} color="purple.600" mt="0.5" />
                     <Box>
-                      〒106-6290
+                      〒106-0041
                       <br />
-                      東京都港区麻布台1-2-1
-                      <br />
-                      麻布台ヒルズ
+                      東京都港区麻布台3-4-4コンフォリア麻布台303
                     </Box>
                   </Stack>
                 </Table.Cell>
@@ -85,7 +67,7 @@ export default function AboutPage() {
                 <Table.Cell py="4">
                   <Stack direction="row" align="center">
                     <Icon as={LuCalendar} color="purple.600" />
-                    <Text>2020年4月1日</Text>
+                    <Text>2025年4月</Text>
                   </Stack>
                 </Table.Cell>
               </Table.Row>
@@ -96,7 +78,7 @@ export default function AboutPage() {
                 <Table.Cell py="4">
                   <Stack direction="row" align="center">
                     <Icon as={LuUsers} color="purple.600" />
-                    <Text>代表取締役社長 佐藤 翔一</Text>
+                    <Text>代表取締役 日比亜希子</Text>
                   </Stack>
                 </Table.Cell>
               </Table.Row>
@@ -104,7 +86,7 @@ export default function AboutPage() {
                 <Table.ColumnHeader py="4" textAlign="left" color="gray.600">
                   資本金
                 </Table.ColumnHeader>
-                <Table.Cell py="4">1億円</Table.Cell>
+                <Table.Cell py="4">500万円</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.ColumnHeader py="4" textAlign="left" color="gray.600">
@@ -129,15 +111,20 @@ export default function AboutPage() {
                   <VStack align="flex-start" gap="2">
                     <Stack direction="row" align="center">
                       <Icon as={LuPhone} color="purple.600" />
-                      <Text>03-1234-5678</Text>
+                      <Text>080-6329-8148</Text>
                     </Stack>
                     <Stack direction="row" align="center">
                       <Icon as={LuMail} color="purple.600" />
-                      <Text>info@cayenne.co.jp</Text>
+                      <Text>info@hibiholdings.com</Text>
                     </Stack>
                     <Stack direction="row" align="center">
                       <Icon as={LuGlobe} color="purple.600" />
-                      <Text>https://www.cayenne.co.jp</Text>
+                      <Link
+                        href="https://www.hibiholdings.co.jp"
+                        target="_blank"
+                      >
+                        https://www.hibiholdings.co.jp
+                      </Link>
                     </Stack>
                   </VStack>
                 </Table.Cell>
@@ -169,27 +156,21 @@ export default function AboutPage() {
           <Heading as="h2" fontSize="xl" fontWeight="bold" mb="4">
             認証・受賞歴
           </Heading>
-          <VStack align="flex-start" gap="4">
-            {certifications.map((item, index) => (
-              <Stack key={index} direction="row" gap="4">
-                <Icon
-                  as={LuAward}
-                  color="purple.600"
-                  boxSize="6"
-                  flexShrink={0}
-                />
-                <Box>
-                  <Text fontSize="sm" color="gray.500">
-                    {item.year}
-                  </Text>
-                  <Text fontWeight="medium">{item.title}</Text>
-                  <Text fontSize="sm" color="gray.600">
-                    {item.description}
-                  </Text>
-                </Box>
-              </Stack>
-            ))}
-          </VStack>
+          <EmptyState.Root>
+            <EmptyState.Content>
+              <EmptyState.Indicator>
+                <LuAward />
+              </EmptyState.Indicator>
+              <VStack textAlign="center">
+                <EmptyState.Title>
+                  認証・受賞歴はまだありません
+                </EmptyState.Title>
+                <EmptyState.Description>
+                  認証・受賞歴はまだありません。
+                </EmptyState.Description>
+              </VStack>
+            </EmptyState.Content>
+          </EmptyState.Root>
         </Box>
       </Container>
     </Box>
