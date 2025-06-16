@@ -142,6 +142,25 @@ export const myEnums = myEnumValues.map((value) => ({
 }));
 ```
 
+### 5. **Chakra UI v3のcolorPaletteプロパティ**: Chakra UI v3では、コンポーネントの色指定に`colorPalette`プロパティを使用すること
+
+   ```tsx
+   import { Badge, Button } from "@chakra-ui/react";
+
+   // Badgeの色指定
+   <Badge colorPalette="green">実施中</Badge>
+   <Badge colorPalette="blue">作成中</Badge>
+   <Badge colorPalette="gray">終了</Badge>
+
+   // Buttonの色指定
+   <Button colorPalette="blue">保存</Button>
+   <Button colorPalette="red">削除</Button>
+   ```
+
+- `colorScheme`プロパティは廃止され、`colorPalette`に変更された
+- 利用可能な色: `gray`, `red`, `orange`, `yellow`, `green`, `teal`, `blue`, `cyan`, `purple`, `pink`
+- コンポーネントによって使用可能な色パレットが異なる場合があるため、ドキュメントを確認すること
+
 ## Git情報
 
 **リモートリポジトリ**: `git@github.com:tooooofu24/vip-casting-t3stack.git`

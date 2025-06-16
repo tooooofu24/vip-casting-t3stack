@@ -1,66 +1,63 @@
 "use client";
 
-import type { Campaign } from "@/app/company/dashboard/campaigns/mock";
-import { Box, Card, HStack, Link, Stack, Text } from "@chakra-ui/react";
+import { platformIcons, platformLabels } from "@/const/platform";
+import { rewardTypeLabels } from "@/const/rewardType";
+import type { RouterOutputs } from "@/lib/trpc/react";
+import {
+  Box,
+  Card,
+  Icon,
+  Image,
+  LinkBox,
+  LinkOverlay,
+  Stack,
+  Tag,
+  Text,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 
-interface Props {
-  campaign: Campaign;
-  hideApplyButton?: boolean;
-}
+type Campaign =
+  RouterOutputs["influencer"]["campaigns"]["getCampaigns"]["campaigns"][number];
 
-export function CampaignCard({ campaign, hideApplyButton = false }: Props) {
+export type CampaignCardProps = {
+  campaign: Campaign;
+};
+
+export function CampaignCard({ campaign }: CampaignCardProps) {
   return (
-    <Card.Root
-      bg="white"
-      rounded="lg"
-      shadow="sm"
-      overflow="hidden"
-      _hover={{ shadow: "md" }}
-      transition="all 0.2s"
-      role="group"
-    >
-      <Box p="6">
-        <Text fontSize="sm" color="gray.500" mb="2">
-          {campaign.platform}
-        </Text>
-        <Text
-          fontSize="lg"
-          fontWeight="semibold"
-          mb="3"
-          _groupHover={{ color: "purple.600" }}
-          transition="colors 0.2s"
-        >
-          {campaign.title}
-        </Text>
-        <Stack gap="2" mb="4">
-          <Text>開始日: {campaign.startDate}</Text>
-          <Text>終了日: {campaign.endDate}</Text>
-          <Text>下書き提出期限: {campaign.draftDeadline}</Text>
-          <Text>投稿日: {campaign.postDate}</Text>
-        </Stack>
-        <HStack justify="space-between">
-          <Text color="purple.600" fontWeight="semibold">
-            {campaign.budget}
-          </Text>
-          {!hideApplyButton && (
-            <Link
-              as={NextLink}
-              href={`/campaigns/${campaign.id}`}
-              bg="purple.600"
-              color="white"
-              px="4"
-              py="2"
-              rounded="lg"
-              fontSize="sm"
-              _hover={{ bg: "purple.500" }}
-              transition="background 0.2s"
-            >
-              詳細を見る
-            </Link>
-          )}
-        </HStack>
-      </Box>
-    </Card.Root>
+    <LinkBox>
+      <Card.Root maxW="sm" overflow="hidden">
+        <Box position="relative">
+          <Image
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            alt={campaign.title}
+          />
+          <Tag.Root position="absolute" bottom="2" left="2">
+            <Icon as={platformIcons[campaign.platform]} />
+            <Tag.Label>{platformLabels[campaign.platform]}</Tag.Label>
+          </Tag.Root>
+        </Box>
+        <Card.Body gap="2">
+          <Card.Title>
+            <LinkOverlay asChild>
+              <NextLink href={`/influencer/dashboard/campaigns/${campaign.id}`}>
+                {campaign.title}
+              </NextLink>
+            </LinkOverlay>
+          </Card.Title>
+          <Card.Description lineClamp={2}>
+            {campaign.description}
+          </Card.Description>
+          <Stack direction="row" gap="2" align="end">
+            <Text textStyle="2xl">
+              ¥{campaign.rewardAmount.toLocaleString()}
+            </Text>
+            <Text textStyle="lg" color="fg.muted" fontSize="sm">
+              {rewardTypeLabels[campaign.rewardType]}
+            </Text>
+          </Stack>
+        </Card.Body>
+      </Card.Root>
+    </LinkBox>
   );
 }

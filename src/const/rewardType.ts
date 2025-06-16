@@ -5,7 +5,7 @@ export const rewardTypeValues = [
   RewardType.FOLLOWER,
 ] as const;
 
-const rewardTypeLabels = {
+export const rewardTypeLabels = {
   [RewardType.FIXED]: "固定報酬",
   [RewardType.FOLLOWER]: "フォロワー単価",
 } satisfies Record<RewardType, string>;
