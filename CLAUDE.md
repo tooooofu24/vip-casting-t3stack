@@ -28,6 +28,21 @@ npm run db:push && npm run db:generate
 
 ## コーディング規約
 
+### ⚠️ 最重要: データベーススキーマの確認
+
+**API実装・修正時は必ず以下を実行すること:**
+
+1. `prisma/schema.prisma` を確認してDBモデル構造を把握
+2. モデル間のリレーション定義を理解
+3. フィールド名・型定義を正確に把握
+4. 中間テーブル（例: `CompanyBusinessGenre`）の存在を確認
+
+**よくある間違い:**
+
+- 存在しないフィールドの参照（例: `company.name` → 正しくは `company.information.displayName`）
+- リレーション構造の誤解（例: `company.genres` → 正しくは `company.business.genres[].genre`）
+- 中間テーブルの見落とし
+
 ### インポート規則
 
 - Zod: `import { z } from "@/lib/zod"`（直接インポート禁止）
@@ -76,12 +91,27 @@ export const myFeature = companyProcedure
 
 ### 1. API追加（tRPCルーター）
 
+⚠️ **重要**: API実装前に必ず `prisma/schema.prisma` を確認してDBスキーマ構造を把握すること
+
 ```typescript
 // /src/server/api/routers/[role]/features/[feature]/[action]/api.ts
 export const myFeature = companyProcedure
   .input(myFeatureSchema)
   .mutation(async ({ ctx, input }) => {
     // ビジネスロジック
+    // Prismaクエリ時は正しいリレーション構造を使用する
+    const result = await ctx.db.model.findUnique({
+      where: { id: input.id },
+      include: {
+        // schema.prismaのリレーション定義に従う
+        relatedModel: {
+          select: {
+            field1: true,
+            field2: true,
+          },
+        },
+      },
+    });
   });
 ```
 
@@ -115,8 +145,33 @@ export const myFeatureSchema = z.object({
 
 ### 3. フロントエンド実装
 
-```typescript
+#### ページレイアウトの基本構造
+
+```tsx
 // /src/app/[role]/dashboard/my-feature/page.tsx
+import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
+import { VStack } from "@chakra-ui/react";
+
+export default function MyFeaturePage() {
+  return (
+    <VStack gap={6} align="stretch">
+      {/* Breadcrumb Section */}
+      <BreadcrumbSection
+        items={[{ label: "プロフィール" }]}
+        title="プロフィール"
+        description="プロフィールを編集して、ブランドとのマッチングをサポートしましょう。"
+      />
+      
+      {/* メインコンテンツ */}
+      {/* ... */}
+    </VStack>
+  );
+}
+```
+
+#### API呼び出しの例
+
+```typescript
 const { mutateAsync } = api.company.myFeature.useMutation();
 ```
 
@@ -142,24 +197,64 @@ export const myEnums = myEnumValues.map((value) => ({
 }));
 ```
 
-### 5. **Chakra UI v3のcolorPaletteプロパティ**: Chakra UI v3では、コンポーネントの色指定に`colorPalette`プロパティを使用すること
+### 5. **Chakra UI v3 コンポーネント使用方針**
+
+#### ⚠️ 最重要: デフォルトコンポーネントの活用
+
+**Chakra UIのデフォルトコンポーネントを積極的に使用し、不要なpropsは極力与えないこと:**
+
+1. **実装前に必ずChakra UIドキュメントを確認**
+   - 適切なコンポーネントが既に存在しないか探す
+   - デフォルトのスタイリングで十分か確認
+   - 本当に必要な場合のみpropsを追加
+
+2. **推奨される使い方**
 
    ```tsx
-   import { Badge, Button } from "@chakra-ui/react";
+   // ❌ 避けるべき: 不要なpropsを多数指定
+   <Box bg="white" rounded="lg" shadow="sm" p="6">
+     <Text fontSize="xl" fontWeight="bold" mb="4">タイトル</Text>
+   </Box>
 
-   // Badgeの色指定
-   <Badge colorPalette="green">実施中</Badge>
-   <Badge colorPalette="blue">作成中</Badge>
-   <Badge colorPalette="gray">終了</Badge>
+   // ✅ 推奨: デフォルトコンポーネントを活用
+   <Card.Root>
+     <Card.Body>
+       <Card.Title>タイトル</Card.Title>
+     </Card.Body>
+   </Card.Root>
 
-   // Buttonの色指定
-   <Button colorPalette="blue">保存</Button>
-   <Button colorPalette="red">削除</Button>
+   // ❌ 避けるべき: カスタムスタイルの過剰使用
+   <HStack gap="2" align="center" justify="space-between">
+
+   // ✅ 推奨: デフォルトで十分な場合
+   <HStack>
    ```
 
-- `colorScheme`プロパティは廃止され、`colorPalette`に変更された
+3. **よく使うコンポーネントパターン**
+   - `Card.Root`, `Card.Body`, `Card.Title` - カード型UI
+   - `Stack`, `HStack`, `VStack` - レイアウト（デフォルトgapで十分な場合が多い）
+   - `Badge` - ラベル表示（colorPaletteのみ指定）
+   - `Button` - ボタン（variant, colorPaletteのみ必要に応じて）
+   - `SimpleGrid` - グリッドレイアウト
+   - `List.Root`, `List.Item` - リスト表示
+
+#### colorPaletteプロパティ
+
+Chakra UI v3では、コンポーネントの色指定に`colorPalette`プロパティを使用：
+
+```tsx
+// シンプルに使う
+<Badge>デフォルト</Badge>
+<Badge colorPalette="green">実施中</Badge>
+<Badge colorPalette="blue">作成中</Badge>
+
+<Button>デフォルトボタン</Button>
+<Button colorPalette="blue">保存</Button>
+<Button variant="ghost">キャンセル</Button>
+```
+
 - 利用可能な色: `gray`, `red`, `orange`, `yellow`, `green`, `teal`, `blue`, `cyan`, `purple`, `pink`
-- コンポーネントによって使用可能な色パレットが異なる場合があるため、ドキュメントを確認すること
+- デフォルトで十分な見た目の場合は指定しない
 
 ## Git情報
 
