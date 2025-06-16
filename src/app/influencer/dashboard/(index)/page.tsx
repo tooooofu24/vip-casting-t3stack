@@ -7,10 +7,12 @@ import {
   Box,
   Card,
   Heading,
+  HStack,
   Icon,
   SimpleGrid,
   Spinner,
   Stack,
+  Stat,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -61,80 +63,57 @@ export default function DashboardPage() {
       </Heading>
 
       <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mb={8}>
-        {/* Active Campaigns Card */}
+        {/* Active Campaigns Stat */}
         <Card.Root>
-          <Card.Body p={6}>
-            <Stack
-              direction="row"
-              justify="space-between"
-              align="center"
-              mb={4}
-            >
-              <Heading size="sm" fontWeight="semibold">
-                対応中の案件
-              </Heading>
-              <Icon as={LuTrendingUp} color="purple.600" />
-            </Stack>
-            <Text fontSize="3xl" fontWeight="bold" color="purple.600" mb={2}>
-              {isLoading ? (
-                <Spinner size="sm" />
-              ) : (
-                (campaignsData?.campaigns.length ?? 0)
-              )}
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              件の案件を実施中
-            </Text>
+          <Card.Body>
+            <Stat.Root>
+              <HStack justify="space-between" mb={2}>
+                <Stat.Label>対応中の案件</Stat.Label>
+                <Icon as={LuTrendingUp} boxSize={5} color="purple.600" />
+              </HStack>
+              <Stat.ValueText color="purple.600">
+                {isLoading ? (
+                  <Spinner size="sm" />
+                ) : (
+                  (campaignsData?.campaigns.length ?? 0)
+                )}
+              </Stat.ValueText>
+              <Stat.HelpText>件の案件を実施中</Stat.HelpText>
+            </Stat.Root>
           </Card.Body>
         </Card.Root>
 
-        {/* Applied Campaigns Card */}
+        {/* Applied Campaigns Stat */}
         <Card.Root>
-          <Card.Body p={6}>
-            <Stack
-              direction="row"
-              justify="space-between"
-              align="center"
-              mb={4}
-            >
-              <Heading size="sm" fontWeight="semibold">
-                応募中の案件
-              </Heading>
-              <Icon as={LuCalendar} color="purple.600" />
-            </Stack>
-            <Text fontSize="3xl" fontWeight="bold" color="purple.600" mb={2}>
-              {isLoading ? (
-                <Spinner size="sm" />
-              ) : (
-                (campaignsData?.campaigns.length ?? 0)
-              )}
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              件の案件に応募中
-            </Text>
+          <Card.Body>
+            <Stat.Root>
+              <HStack justify="space-between" mb={2}>
+                <Stat.Label>応募中の案件</Stat.Label>
+                <Icon as={LuCalendar} boxSize={5} color="blue.600" />
+              </HStack>
+              <Stat.ValueText color="blue.600">
+                {isLoading ? (
+                  <Spinner size="sm" />
+                ) : (
+                  (campaignsData?.campaigns.length ?? 0)
+                )}
+              </Stat.ValueText>
+              <Stat.HelpText>件の案件に応募中</Stat.HelpText>
+            </Stat.Root>
           </Card.Body>
         </Card.Root>
 
-        {/* Average Rating Card */}
+        {/* Average Rating Stat */}
         <Card.Root>
-          <Card.Body p={6}>
-            <Stack
-              direction="row"
-              justify="space-between"
-              align="center"
-              mb={4}
-            >
-              <Heading size="sm" fontWeight="semibold">
-                平均評価
-              </Heading>
-              <Icon as={LuStar} color="yellow.400" />
-            </Stack>
-            <Text fontSize="3xl" fontWeight="bold" color="yellow.400" mb={2}>
-              4.8
-            </Text>
-            <Text fontSize="sm" color="gray.600">
-              過去30日間の評価
-            </Text>
+          <Card.Body>
+            <Stat.Root>
+              <HStack justify="space-between" mb={2}>
+                <Stat.Label>平均評価</Stat.Label>
+                <Icon as={LuStar} boxSize={5} color="yellow.500" />
+              </HStack>
+              <Stat.ValueText color="yellow.500">4.8</Stat.ValueText>
+              <Stat.HelpText>過去30日間の評価</Stat.HelpText>
+            </Stat.Root>
           </Card.Body>
         </Card.Root>
       </SimpleGrid>
@@ -238,7 +217,7 @@ export default function DashboardPage() {
         onClose={(e: { open: boolean }) => setIsModalOpen(e.open)}
         campaign={
           // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
-          campaignsData?.campaigns[0] as any ?? null
+          (campaignsData?.campaigns[0] as any) ?? null
         }
       />
     </Box>

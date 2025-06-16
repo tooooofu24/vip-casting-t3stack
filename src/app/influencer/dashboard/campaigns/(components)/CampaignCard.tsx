@@ -4,14 +4,14 @@ import { platformIcons, platformLabels } from "@/const/platform";
 import { rewardTypeLabels } from "@/const/rewardType";
 import type { RouterOutputs } from "@/lib/trpc/react";
 import {
+  Badge,
   Box,
   Card,
+  HStack,
   Icon,
   Image,
   LinkBox,
   LinkOverlay,
-  Stack,
-  Tag,
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
@@ -32,10 +32,20 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
             src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
             alt={campaign.title}
           />
-          <Tag.Root position="absolute" bottom="2" left="2">
-            <Icon as={platformIcons[campaign.platform]} />
-            <Tag.Label>{platformLabels[campaign.platform]}</Tag.Label>
-          </Tag.Root>
+          <Badge
+            position="absolute"
+            bottom="3"
+            left="3"
+            size="sm"
+            variant="solid"
+            colorPalette="blue"
+            display="flex"
+            alignItems="center"
+            gap="1"
+          >
+            <Icon as={platformIcons[campaign.platform]} boxSize={3} />
+            {platformLabels[campaign.platform]}
+          </Badge>
         </Box>
         <Card.Body gap="2">
           <Card.Title>
@@ -48,14 +58,19 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
           <Card.Description lineClamp={2}>
             {campaign.description}
           </Card.Description>
-          <Stack direction="row" gap="2" align="end">
-            <Text textStyle="2xl">
-              ¥{campaign.rewardAmount.toLocaleString()}
-            </Text>
-            <Text textStyle="lg" color="fg.muted" fontSize="sm">
-              {rewardTypeLabels[campaign.rewardType]}
-            </Text>
-          </Stack>
+          <HStack justify="space-between" align="end">
+            <Box>
+              <Text fontSize="2xl" fontWeight="bold" color="green.600">
+                ¥{campaign.rewardAmount.toLocaleString()}
+              </Text>
+              <Text fontSize="sm" color="fg.muted">
+                {rewardTypeLabels[campaign.rewardType]}
+              </Text>
+            </Box>
+            <Badge size="sm" colorPalette="green" variant="subtle">
+              募集中
+            </Badge>
+          </HStack>
         </Card.Body>
       </Card.Root>
     </LinkBox>

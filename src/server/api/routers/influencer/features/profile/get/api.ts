@@ -1,4 +1,4 @@
-import { influencerProcedure } from "@/server/api/procedures";
+import { influencerProcedure } from "@/server/api/trpc";
 
 export const getProfile = influencerProcedure.query(async ({ ctx }) => {
   const influencer = await ctx.db.influencer.findUnique({
@@ -40,32 +40,32 @@ export const getProfile = influencerProcedure.query(async ({ ctx }) => {
           city: influencer.address.city,
           town: influencer.address.town,
           street: influencer.address.street,
-          building: influencer.address.building,
+          building: influencer.address.building ?? undefined,
         }
       : null,
     sns: influencer.sns
       ? {
           instagramName: influencer.sns.instagramName,
-          instagramFollowers: influencer.sns.instagramFollowers,
+          instagramFollowers: influencer.sns.instagramFollowers ?? undefined,
           youtubeName: influencer.sns.youtubeName,
-          youtubeFollowers: influencer.sns.youtubeFollowers,
+          youtubeFollowers: influencer.sns.youtubeFollowers ?? undefined,
           tiktokName: influencer.sns.tiktokName,
-          tiktokFollowers: influencer.sns.tiktokFollowers,
+          tiktokFollowers: influencer.sns.tiktokFollowers ?? undefined,
           xName: influencer.sns.xName,
-          xFollowers: influencer.sns.xFollowers,
+          xFollowers: influencer.sns.xFollowers ?? undefined,
         }
       : null,
     work: influencer.work
       ? {
-          postFee: influencer.work.postFee,
-          videoFee: influencer.work.videoFee,
-          liveFee: influencer.work.liveFee,
-          eventFee: influencer.work.eventFee,
+          postFee: influencer.work.postFee ?? undefined,
+          videoFee: influencer.work.videoFee ?? undefined,
+          liveFee: influencer.work.liveFee ?? undefined,
+          eventFee: influencer.work.eventFee ?? undefined,
           workTypes: influencer.work.workTypes,
           regions: influencer.work.regions,
           ngProducts: influencer.work.ngProducts,
           ngCompanies: influencer.work.ngCompanies,
-          ngOther: influencer.work.ngOther,
+          ngOther: influencer.work.ngOther ?? undefined,
           prResults: influencer.work.prResults.map((result) => ({
             company: result.company,
             content: result.content,

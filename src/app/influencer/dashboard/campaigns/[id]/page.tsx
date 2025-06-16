@@ -13,6 +13,7 @@ import {
   Icon,
   Image,
   List,
+  Separator,
   Spinner,
   Stack,
   Text,
@@ -127,11 +128,13 @@ export default function CampaignDetailPage() {
 
             <Card.Description>{campaign.description}</Card.Description>
 
-            <Stack>
-              <HStack>
-                <Icon as={LuCalendar} />
+            <VStack align="stretch" gap={3}>
+              <HStack justify="space-between">
+                <HStack>
+                  <Icon as={LuCalendar} color="blue.500" />
+                  <Text fontWeight="medium">投稿期限</Text>
+                </HStack>
                 <Text>
-                  投稿期限:{" "}
                   {campaign.postDue
                     ? format(new Date(campaign.postDue), "yyyy年MM月dd日", {
                         locale: ja,
@@ -140,19 +143,30 @@ export default function CampaignDetailPage() {
                 </Text>
               </HStack>
 
-              <Text>募集人数: {campaign.recruitment}名</Text>
+              <Separator />
 
-              <Text>
-                応募締切:{" "}
-                {campaign.applicationDue
-                  ? format(
-                      new Date(campaign.applicationDue),
-                      "yyyy年MM月dd日",
-                      { locale: ja },
-                    )
-                  : "未定"}
-              </Text>
-            </Stack>
+              <HStack justify="space-between">
+                <Text fontWeight="medium">募集人数</Text>
+                <Badge colorPalette="blue" variant="subtle">
+                  {campaign.recruitment}名
+                </Badge>
+              </HStack>
+
+              <Separator />
+
+              <HStack justify="space-between">
+                <Text fontWeight="medium">応募締切</Text>
+                <Text>
+                  {campaign.applicationDue
+                    ? format(
+                        new Date(campaign.applicationDue),
+                        "yyyy年MM月dd日",
+                        { locale: ja },
+                      )
+                    : "未定"}
+                </Text>
+              </HStack>
+            </VStack>
 
             {campaign.requirements.length > 0 && (
               <Box>
@@ -168,13 +182,25 @@ export default function CampaignDetailPage() {
               </Box>
             )}
 
-            <HStack justify="space-between">
-              <Text fontSize="2xl" fontWeight="bold" color="purple.600">
-                ¥{campaign.rewardAmount.toLocaleString()} (
-                {rewardTypeLabels[campaign.rewardType]})
-              </Text>
-              <ApplyButton />
-            </HStack>
+            <Box
+              p={4}
+              bg="green.50"
+              borderRadius="lg"
+              border="1px solid"
+              borderColor="green.200"
+            >
+              <HStack justify="space-between" align="center">
+                <VStack align="start" gap={1}>
+                  <Text fontSize="3xl" fontWeight="bold" color="green.600">
+                    ¥{campaign.rewardAmount.toLocaleString()}
+                  </Text>
+                  <Text fontSize="sm" color="green.700">
+                    {rewardTypeLabels[campaign.rewardType]}
+                  </Text>
+                </VStack>
+                <ApplyButton />
+              </HStack>
+            </Box>
           </Stack>
         </Card.Body>
       </Card.Root>

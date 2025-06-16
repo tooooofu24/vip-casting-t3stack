@@ -31,22 +31,26 @@ export default function ProfilePage() {
   const { data: profile, isLoading } = api.influencer.profile.get.useQuery();
 
   const handleInformationUpdate = (data: InfluencerInformationRequest) => {
-    console.log("Information updated:", data);
+    // TODO: API実装時に更新ロジックを追加
+    void data;
     showSuccessToast("基本情報を更新しました");
   };
 
   const handleAddressUpdate = (data: InfluencerAddressRequest) => {
-    console.log("Address updated:", data);
+    // TODO: API実装時に更新ロジックを追加
+    void data;
     showSuccessToast("住所情報を更新しました");
   };
 
   const handleSnsUpdate = (data: InfluencerSnsRequest) => {
-    console.log("SNS updated:", data);
+    // TODO: API実装時に更新ロジックを追加
+    void data;
     showSuccessToast("SNS情報を更新しました");
   };
 
   const handleWorkUpdate = (data: InfluencerWorkRequest) => {
-    console.log("Work updated:", data);
+    // TODO: API実装時に更新ロジックを追加
+    void data;
     showSuccessToast("案件情報を更新しました");
   };
 
@@ -95,65 +99,30 @@ export default function ProfilePage() {
         <Tabs.Content value="information">
           <InfluencerInformationForm
             onSubmit={handleInformationUpdate}
-            defaultValues={{
-              firstName: "",
-              lastName: "",
-              firstNameKana: "",
-              lastNameKana: "",
-              displayName: "",
-              birthday: "",
-              gender: undefined,
-              email: "",
-              phone: "",
-            }}
+            defaultValues={
+              profile?.information ?? influencerInformationDefaultValues
+            }
           />
         </Tabs.Content>
         <Tabs.Content value="address">
           <InfluencerAddressForm
             onSubmit={handleAddressUpdate}
             onBack={() => void 0}
-            defaultValues={{
-              postalCode: "",
-              prefecture: undefined,
-              city: "",
-              town: "",
-              street: "",
-              building: "",
-            }}
+            defaultValues={profile?.address ?? influencerAddressDefaultValues}
           />
         </Tabs.Content>
         <Tabs.Content value="sns">
           <InfluencerSnsForm
             onSubmit={handleSnsUpdate}
             onBack={() => void 0}
-            defaultValues={{
-              instagramName: "",
-              instagramFollowers: undefined,
-              youtubeName: "",
-              youtubeFollowers: undefined,
-              tiktokName: "",
-              tiktokFollowers: undefined,
-              xName: "",
-              xFollowers: undefined,
-            }}
+            defaultValues={profile?.sns ?? influencerSnsDefaultValues}
           />
         </Tabs.Content>
         <Tabs.Content value="work">
           <InfluencerWorkForm
             onSubmit={handleWorkUpdate}
             onBack={() => void 0}
-            defaultValues={{
-              postFee: undefined,
-              videoFee: undefined,
-              liveFee: undefined,
-              eventFee: undefined,
-              workTypes: [],
-              regions: [],
-              ngProducts: [],
-              ngCompanies: [],
-              ngOther: "",
-              prResults: [],
-            }}
+            defaultValues={profile?.work ?? influencerWorkDefaultValues}
           />
         </Tabs.Content>
       </Tabs.Root>
