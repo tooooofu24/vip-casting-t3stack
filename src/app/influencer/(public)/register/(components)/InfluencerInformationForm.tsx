@@ -8,6 +8,7 @@ import {
 import {
   Box,
   Button,
+  ButtonGroup,
   Card,
   Field,
   Grid,
@@ -26,11 +27,17 @@ import { LuPhone } from "react-icons/lu";
 export type InfluencerInformationFormProps = {
   defaultValues?: DefaultValues<InfluencerInformationRequest>;
   onSubmit: (data: InfluencerInformationRequest) => void;
+  submitButtonText?: string;
+  showBackButton?: boolean;
+  onBack?: () => void;
 };
 
 export function InfluencerInformationForm({
   defaultValues,
   onSubmit,
+  submitButtonText = "次へ",
+  showBackButton = false,
+  onBack,
 }: InfluencerInformationFormProps) {
   const {
     register,
@@ -186,9 +193,18 @@ export function InfluencerInformationForm({
           </Field.Root>
 
           <Box pt={4}>
-            <Button w="full" type="submit">
-              次へ
-            </Button>
+            {showBackButton && onBack ? (
+              <ButtonGroup w="full" justifyContent="space-between">
+                <Button variant="outline" onClick={onBack} type="button">
+                  戻る
+                </Button>
+                <Button type="submit">{submitButtonText}</Button>
+              </ButtonGroup>
+            ) : (
+              <Button w="full" type="submit">
+                {submitButtonText}
+              </Button>
+            )}
           </Box>
         </VStack>
       </Card.Body>

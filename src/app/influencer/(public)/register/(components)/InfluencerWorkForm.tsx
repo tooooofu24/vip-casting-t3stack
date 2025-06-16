@@ -28,16 +28,23 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm, type DefaultValues } from "react-hook-form";
 import { LuSend } from "react-icons/lu";
+import type React from "react";
 
 export type InfluencerWorkFormProps = {
   defaultValues?: DefaultValues<InfluencerWorkRequest>;
   onSubmit?: (data: InfluencerWorkRequest) => void;
+  submitButtonText?: string;
+  submitButtonIcon?: React.ReactNode;
+  showBackButton?: boolean;
   onBack?: () => void;
 };
 
 export function InfluencerWorkForm({
   defaultValues = influencerWorkDefaultValues,
   onSubmit = () => undefined,
+  submitButtonText = "登録する",
+  submitButtonIcon = <LuSend />,
+  showBackButton = true,
   onBack,
 }: InfluencerWorkFormProps) {
   const {
@@ -259,17 +266,24 @@ export function InfluencerWorkForm({
             <InfluencerPrResultsField control={control} errors={errors} />
           </Box>
 
-          <ButtonGroup width="full" justifyContent="space-between" mt={4}>
-            <Button variant="outline" type="button" onClick={onBack}>
-              戻る
-            </Button>
-            <Button type="submit">
-              <Icon>
-                <LuSend />
-              </Icon>
-              登録する
-            </Button>
-          </ButtonGroup>
+          <Box mt={4}>
+            {showBackButton && onBack ? (
+              <ButtonGroup w="full" justifyContent="space-between">
+                <Button variant="outline" onClick={onBack} type="button">
+                  戻る
+                </Button>
+                <Button type="submit">
+                  {submitButtonIcon && <Icon>{submitButtonIcon}</Icon>}
+                  {submitButtonText}
+                </Button>
+              </ButtonGroup>
+            ) : (
+              <Button w="full" type="submit">
+                {submitButtonIcon && <Icon>{submitButtonIcon}</Icon>}
+                {submitButtonText}
+              </Button>
+            )}
+          </Box>
         </VStack>
       </Card.Body>
     </Card.Root>

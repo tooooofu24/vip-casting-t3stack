@@ -198,7 +198,7 @@ export default function CampaignDetailPage() {
                     {rewardTypeLabels[campaign.rewardType]}
                   </Text>
                 </VStack>
-                <ApplyButton />
+                <ApplyButton campaignId={campaign.id} />
               </HStack>
             </Box>
           </Stack>

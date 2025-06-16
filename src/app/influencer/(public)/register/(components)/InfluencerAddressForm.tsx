@@ -6,6 +6,7 @@ import {
   type InfluencerAddressRequest,
 } from "@/server/api/routers/influencer/features/auth/register/validations/address";
 import {
+  Box,
   Button,
   ButtonGroup,
   Card,
@@ -24,12 +25,16 @@ import { LuMapPin } from "react-icons/lu";
 export type InfluencerAddressFormProps = {
   defaultValues?: DefaultValues<InfluencerAddressRequest>;
   onSubmit: (data: InfluencerAddressRequest) => void;
-  onBack: () => void;
+  submitButtonText?: string;
+  showBackButton?: boolean;
+  onBack?: () => void;
 };
 
 export function InfluencerAddressForm({
   defaultValues,
   onSubmit,
+  submitButtonText = "次へ",
+  showBackButton = true,
   onBack,
 }: InfluencerAddressFormProps) {
   const {
@@ -132,12 +137,20 @@ export function InfluencerAddressForm({
           </Field.Root>
         </VStack>
         {/* Navigation Buttons */}
-        <ButtonGroup w="full" justifyContent="space-between" mt={8}>
-          <Button variant="outline" onClick={onBack} type="button">
-            戻る
-          </Button>
-          <Button type="submit">次へ</Button>
-        </ButtonGroup>
+        <Box mt={8}>
+          {showBackButton && onBack ? (
+            <ButtonGroup w="full" justifyContent="space-between">
+              <Button variant="outline" onClick={onBack} type="button">
+                戻る
+              </Button>
+              <Button type="submit">{submitButtonText}</Button>
+            </ButtonGroup>
+          ) : (
+            <Button w="full" type="submit">
+              {submitButtonText}
+            </Button>
+          )}
+        </Box>
       </Card.Body>
     </Card.Root>
   );

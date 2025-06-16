@@ -29,12 +29,16 @@ import { LuUser } from "react-icons/lu";
 export type InfluencerSnsFormProps = {
   defaultValues?: DefaultValues<InfluencerSnsRequest>;
   onSubmit: (data: InfluencerSnsRequest) => void;
-  onBack: () => void;
+  submitButtonText?: string;
+  showBackButton?: boolean;
+  onBack?: () => void;
 };
 
 export function InfluencerSnsForm({
   defaultValues = influencerSnsDefaultValues,
   onSubmit,
+  submitButtonText = "次へ",
+  showBackButton = true,
   onBack,
 }: InfluencerSnsFormProps) {
   const {
@@ -242,12 +246,20 @@ export function InfluencerSnsForm({
             </SimpleGrid>
           </Box>
 
-          <ButtonGroup width="full" justifyContent="space-between" mt={4}>
-            <Button variant="outline" onClick={onBack} type="button">
-              戻る
-            </Button>
-            <Button type="submit">次へ</Button>
-          </ButtonGroup>
+          <Box mt={4}>
+            {showBackButton && onBack ? (
+              <ButtonGroup w="full" justifyContent="space-between">
+                <Button variant="outline" onClick={onBack} type="button">
+                  戻る
+                </Button>
+                <Button type="submit">{submitButtonText}</Button>
+              </ButtonGroup>
+            ) : (
+              <Button w="full" type="submit">
+                {submitButtonText}
+              </Button>
+            )}
+          </Box>
 
           {/* Notice */}
           <Alert.Root status="warning">

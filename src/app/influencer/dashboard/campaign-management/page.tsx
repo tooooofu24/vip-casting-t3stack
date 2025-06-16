@@ -26,13 +26,15 @@ export default function CampaignManagementPage() {
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null);
+  const [_selectedCampaign, setSelectedCampaign] = useState<string | null>(
+    null,
+  );
 
   const { data: campaignsData, isLoading } =
     api.influencer.campaigns.getCampaigns.useQuery({ search: searchQuery });
 
-  const handleCampaignClick = (campaignId: string) => {
-    setSelectedCampaign(campaignId);
+  const handleCampaignClick = (_campaignId: string) => {
+    setSelectedCampaign(null); // 現在は詳細表示を無効化
     setIsDialogOpen(true);
   };
 
@@ -186,16 +188,8 @@ export default function CampaignManagementPage() {
         isOpen={isDialogOpen}
         onClose={(e) => {
           setIsDialogOpen(e.open);
-          setSelectedCampaign(null);
         }}
-        campaign={
-          selectedCampaign
-            ? // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-              (campaignsData?.campaigns.find(
-                (c) => c.id === selectedCampaign,
-              ) as any ?? null)
-            : null
-        }
+        campaign={null}
       />
     </Box>
   );

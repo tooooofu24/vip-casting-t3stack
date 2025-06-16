@@ -3,7 +3,11 @@
 import { ApplyModal } from "@/app/influencer/dashboard/campaigns/[id]/components/ApplyModal";
 import { Button, Dialog } from "@chakra-ui/react";
 
-export function ApplyButton() {
+export type ApplyButtonProps = {
+  campaignId: string;
+};
+
+export function ApplyButton({ campaignId }: ApplyButtonProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -18,7 +22,7 @@ export function ApplyButton() {
           この案件に応募する
         </Button>
       </Dialog.Trigger>
-      <ApplyModal />
+      <ApplyModal campaignId={campaignId} />
     </Dialog.Root>
   );
 }
