@@ -236,7 +236,10 @@ export default function DashboardPage() {
       <CampaignDetailsDialog
         isOpen={isModalOpen}
         onClose={(e: { open: boolean }) => setIsModalOpen(e.open)}
-        campaign={campaignsData?.campaigns[0] ?? null}
+        campaign={
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
+          campaignsData?.campaigns[0] as any ?? null
+        }
       />
     </Box>
   );

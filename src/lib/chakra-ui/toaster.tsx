@@ -54,3 +54,12 @@ export const showErrorToast = (message?: string) => {
     },
   });
 };
+
+export const showSuccessToast = (message?: string) => {
+  toaster.create({
+    type: "success",
+    duration: 5 * 1000,
+    title: "成功",
+    description: message,
+  });
+};

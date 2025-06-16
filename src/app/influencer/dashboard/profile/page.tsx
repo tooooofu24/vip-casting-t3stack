@@ -6,30 +6,64 @@ import { InfluencerInformationForm } from "@/app/influencer/(public)/register/(c
 import { InfluencerSnsForm } from "@/app/influencer/(public)/register/(components)/InfluencerSnsForm";
 import { InfluencerWorkForm } from "@/app/influencer/(public)/register/(components)/InfluencerWorkForm";
 import { showSuccessToast } from "@/lib/chakra-ui/toaster";
-import { Tabs, VStack } from "@chakra-ui/react";
+import { api } from "@/lib/trpc/react";
+import {
+  influencerAddressDefaultValues,
+  type InfluencerAddressRequest,
+} from "@/server/api/routers/influencer/features/auth/register/validations/address";
+import {
+  influencerInformationDefaultValues,
+  type InfluencerInformationRequest,
+} from "@/server/api/routers/influencer/features/auth/register/validations/information";
+import {
+  influencerSnsDefaultValues,
+  type InfluencerSnsRequest,
+} from "@/server/api/routers/influencer/features/auth/register/validations/sns";
+import {
+  influencerWorkDefaultValues,
+  type InfluencerWorkRequest,
+} from "@/server/api/routers/influencer/features/auth/register/validations/work";
+import { Spinner, Tabs, VStack } from "@chakra-ui/react";
 import { LuMapPin, LuUser, LuBriefcase } from "react-icons/lu";
 import { FaInstagram } from "react-icons/fa6";
 
 export default function ProfilePage() {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleInformationUpdate = (_data: any) => {
+  const { data: profile, isLoading } = api.influencer.profile.get.useQuery();
+
+  const handleInformationUpdate = (data: InfluencerInformationRequest) => {
+    console.log("Information updated:", data);
     showSuccessToast("基本情報を更新しました");
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleAddressUpdate = (_data: any) => {
+  const handleAddressUpdate = (data: InfluencerAddressRequest) => {
+    console.log("Address updated:", data);
     showSuccessToast("住所情報を更新しました");
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSnsUpdate = (_data: any) => {
+  const handleSnsUpdate = (data: InfluencerSnsRequest) => {
+    console.log("SNS updated:", data);
     showSuccessToast("SNS情報を更新しました");
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleWorkUpdate = (_data: any) => {
+  const handleWorkUpdate = (data: InfluencerWorkRequest) => {
+    console.log("Work updated:", data);
     showSuccessToast("案件情報を更新しました");
   };
+
+  if (isLoading) {
+    return (
+      <VStack gap={6} align="stretch">
+        <BreadcrumbSection
+          items={[{ label: "プロフィール" }]}
+          title="プロフィール"
+          description="プロフィールを編集して、ブランドとのマッチングをサポートしましょう。"
+        />
+        <VStack gap={4}>
+          <Spinner size="lg" />
+        </VStack>
+      </VStack>
+    );
+  }
 
   return (
     <VStack gap={6} align="stretch">

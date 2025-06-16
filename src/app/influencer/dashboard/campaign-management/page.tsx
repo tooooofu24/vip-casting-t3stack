@@ -190,9 +190,10 @@ export default function CampaignManagementPage() {
         }}
         campaign={
           selectedCampaign
-            ? (campaignsData?.campaigns.find(
+            ? // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+              (campaignsData?.campaigns.find(
                 (c) => c.id === selectedCampaign,
-              ) ?? null)
+              ) as any ?? null)
             : null
         }
       />
