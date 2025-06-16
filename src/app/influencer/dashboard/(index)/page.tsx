@@ -1,8 +1,7 @@
 "use client";
 
-import type { CampaignStatus } from "@/app/company/dashboard/campaigns/mock";
 import CampaignDetailsDialog from "@/app/influencer/dashboard/(index)/(components)/CampaignDetailsDialog";
-import { MOCK_CAMPAIGNS } from "@/app/influencer/dashboard/campaigns/mock";
+import { api } from "@/lib/trpc/react";
 import {
   Badge,
   Box,
@@ -10,6 +9,7 @@ import {
   Heading,
   Icon,
   SimpleGrid,
+  Spinner,
   Stack,
   Text,
   VStack,
@@ -49,19 +49,10 @@ const schedule: ScheduleEvent[] = [
   },
 ];
 
-const statusConfig: Record<
-  CampaignStatus,
-  { colorPalette: string; label: string }
-> = {
-  draft: { colorPalette: "gray", label: "下書き" },
-  active: { colorPalette: "green", label: "進行中" },
-  pending: { colorPalette: "yellow", label: "確認待ち" },
-  completed: { colorPalette: "blue", label: "完了" },
-  cancelled: { colorPalette: "red", label: "キャンセル" },
-};
-
 export default function DashboardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { data: campaignsData, isLoading } =
+    api.influencer.campaigns.getCampaigns.useQuery({ limit: 10 });
 
   return (
     <Box>
@@ -85,7 +76,11 @@ export default function DashboardPage() {
               <Icon as={LuTrendingUp} color="purple.600" />
             </Stack>
             <Text fontSize="3xl" fontWeight="bold" color="purple.600" mb={2}>
-              {MOCK_CAMPAIGNS.length}
+              {isLoading ? (
+                <Spinner size="sm" />
+              ) : (
+                (campaignsData?.campaigns.length ?? 0)
+              )}
             </Text>
             <Text fontSize="sm" color="gray.600">
               件の案件を実施中
@@ -108,7 +103,11 @@ export default function DashboardPage() {
               <Icon as={LuCalendar} color="purple.600" />
             </Stack>
             <Text fontSize="3xl" fontWeight="bold" color="purple.600" mb={2}>
-              {MOCK_CAMPAIGNS.length}
+              {isLoading ? (
+                <Spinner size="sm" />
+              ) : (
+                (campaignsData?.campaigns.length ?? 0)
+              )}
             </Text>
             <Text fontSize="sm" color="gray.600">
               件の案件に応募中
@@ -148,48 +147,55 @@ export default function DashboardPage() {
               対応中の案件
             </Heading>
             <VStack gap={4} align="stretch">
-              {MOCK_CAMPAIGNS.map((campaign) => (
-                <Box
-                  key={campaign.id}
-                  borderBottom="1px"
-                  borderColor="gray.200"
-                  _last={{ borderBottom: "none" }}
-                  pb={4}
-                  _hover={{ bg: "gray.50" }}
-                  cursor="pointer"
-                  transition="all 0.2s"
-                  p={4}
-                  rounded="lg"
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  <Stack
-                    direction="row"
-                    justify="space-between"
-                    align="start"
-                    mb={2}
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                campaignsData?.campaigns.slice(0, 5).map((campaign) => (
+                  <Box
+                    key={campaign.id}
+                    borderBottom="1px"
+                    borderColor="gray.200"
+                    _last={{ borderBottom: "none" }}
+                    pb={4}
+                    _hover={{ bg: "gray.50" }}
+                    cursor="pointer"
+                    transition="all 0.2s"
+                    p={4}
+                    rounded="lg"
+                    onClick={() => setIsModalOpen(true)}
                   >
-                    <Box>
-                      <Text fontWeight="medium">{campaign.title}</Text>
-                    </Box>
-                    <Badge
-                      size="sm"
-                      variant="subtle"
-                      colorPalette={statusConfig[campaign.status].colorPalette}
+                    <Stack
+                      direction="row"
+                      justify="space-between"
+                      align="start"
+                      mb={2}
                     >
-                      {statusConfig[campaign.status].label}
-                    </Badge>
-                  </Stack>
-                  <Stack
-                    direction="row"
-                    align="center"
-                    fontSize="sm"
-                    color="gray.600"
-                  >
-                    <Icon as={LuCalendar} />
-                    <Text>締切: {campaign.endDate}</Text>
-                  </Stack>
-                </Box>
-              ))}
+                      <Box>
+                        <Text fontWeight="medium">{campaign.title}</Text>
+                      </Box>
+                      <Badge size="sm" variant="subtle" colorPalette="green">
+                        募集中
+                      </Badge>
+                    </Stack>
+                    <Stack
+                      direction="row"
+                      align="center"
+                      fontSize="sm"
+                      color="gray.600"
+                    >
+                      <Icon as={LuCalendar} />
+                      <Text>
+                        締切:{" "}
+                        {campaign.applicationDue
+                          ? new Date(
+                              campaign.applicationDue,
+                            ).toLocaleDateString("ja-JP")
+                          : "未定"}
+                      </Text>
+                    </Stack>
+                  </Box>
+                ))
+              )}
             </VStack>
           </Card.Body>
         </Card.Root>
@@ -230,7 +236,7 @@ export default function DashboardPage() {
       <CampaignDetailsDialog
         isOpen={isModalOpen}
         onClose={(e: { open: boolean }) => setIsModalOpen(e.open)}
-        campaign={MOCK_CAMPAIGNS[0] ?? null}
+        campaign={campaignsData?.campaigns[0] ?? null}
       />
     </Box>
   );

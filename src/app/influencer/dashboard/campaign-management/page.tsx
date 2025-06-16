@@ -1,8 +1,7 @@
 "use client";
 
-import type { CampaignStatus } from "@/app/company/dashboard/campaigns/mock";
 import CampaignDetailsDialog from "@/app/influencer/dashboard/(index)/(components)/CampaignDetailsDialog";
-import { MOCK_CAMPAIGNS } from "@/app/influencer/dashboard/campaigns/mock";
+import { api } from "@/lib/trpc/react";
 
 import {
   Badge,
@@ -14,6 +13,7 @@ import {
   Icon,
   Input,
   InputGroup,
+  Spinner,
   Stack,
   Table,
   Text,
@@ -22,24 +22,14 @@ import {
 import { useState } from "react";
 import { LuFileText, LuMoveVertical, LuSearch } from "react-icons/lu";
 
-const statusConfig: Record<
-  CampaignStatus,
-  { colorPalette: string; label: string }
-> = {
-  draft: { colorPalette: "gray", label: "下書き" },
-  active: { colorPalette: "green", label: "進行中" },
-  pending: { colorPalette: "yellow", label: "確認待ち" },
-  completed: { colorPalette: "blue", label: "完了" },
-  cancelled: { colorPalette: "red", label: "キャンセル" },
-};
-
 export default function CampaignManagementPage() {
-  const [selectedStatus, setSelectedStatus] = useState<CampaignStatus | "all">(
-    "all",
-  );
+  const [selectedStatus, setSelectedStatus] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState<string | null>(null);
+
+  const { data: campaignsData, isLoading } =
+    api.influencer.campaigns.getCampaigns.useQuery({ search: searchQuery });
 
   const handleCampaignClick = (campaignId: string) => {
     setSelectedCampaign(campaignId);
@@ -47,8 +37,7 @@ export default function CampaignManagementPage() {
   };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    setSelectedStatus(e.target.value as CampaignStatus | "all");
+    setSelectedStatus(e.target.value);
   };
 
   return (
@@ -121,53 +110,71 @@ export default function CampaignManagementPage() {
                   </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {MOCK_CAMPAIGNS.map((campaign) => (
-                    <Table.Row
-                      key={campaign.id}
-                      onClick={() => handleCampaignClick(campaign.id)}
-                      _hover={{ bg: "gray.50" }}
-                      cursor="pointer"
-                    >
-                      <Table.Cell>
-                        <VStack align="start" gap={1}>
-                          <Text fontWeight="medium">{campaign.title}</Text>
-                          <Text fontSize="sm" color="gray.600">
-                            {campaign.platform}
-                          </Text>
-                        </VStack>
-                      </Table.Cell>
-                      <Table.Cell>-</Table.Cell>
-                      <Table.Cell>{campaign.platform}</Table.Cell>
-                      <Table.Cell>
-                        {campaign.draftDeadline ? campaign.draftDeadline : "-"}
-                      </Table.Cell>
-                      <Table.Cell>{campaign.endDate}</Table.Cell>
-                      <Table.Cell>{campaign.budget}</Table.Cell>
-                      <Table.Cell>
-                        <Badge
-                          size="sm"
-                          variant="subtle"
-                          colorPalette={
-                            statusConfig[campaign.status].colorPalette
-                          }
-                        >
-                          {statusConfig[campaign.status].label}
-                        </Badge>
-                      </Table.Cell>
-                      <Table.Cell textAlign="right">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            // TODO: Implement edit functionality
-                          }}
-                        >
-                          <Icon as={LuMoveVertical} />
-                        </Button>
+                  {isLoading ? (
+                    <Table.Row>
+                      <Table.Cell colSpan={7} textAlign="center">
+                        <Spinner />
                       </Table.Cell>
                     </Table.Row>
-                  ))}
+                  ) : (
+                    campaignsData?.campaigns.map((campaign) => (
+                      <Table.Row
+                        key={campaign.id}
+                        onClick={() => handleCampaignClick(campaign.id)}
+                        _hover={{ bg: "gray.50" }}
+                        cursor="pointer"
+                      >
+                        <Table.Cell>
+                          <VStack align="start" gap={1}>
+                            <Text fontWeight="medium">{campaign.title}</Text>
+                            <Text fontSize="sm" color="gray.600">
+                              {campaign.platform}
+                            </Text>
+                          </VStack>
+                        </Table.Cell>
+                        <Table.Cell>-</Table.Cell>
+                        <Table.Cell>{campaign.platform}</Table.Cell>
+                        <Table.Cell>
+                          {campaign.postDue
+                            ? new Date(campaign.postDue).toLocaleDateString(
+                                "ja-JP",
+                              )
+                            : "-"}
+                        </Table.Cell>
+                        <Table.Cell>
+                          {campaign.applicationDue
+                            ? new Date(
+                                campaign.applicationDue,
+                              ).toLocaleDateString("ja-JP")
+                            : "-"}
+                        </Table.Cell>
+                        <Table.Cell>
+                          ¥{campaign.rewardAmount.toLocaleString()}
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Badge
+                            size="sm"
+                            variant="subtle"
+                            colorPalette="green"
+                          >
+                            募集中
+                          </Badge>
+                        </Table.Cell>
+                        <Table.Cell textAlign="right">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              // TODO: Implement edit functionality
+                            }}
+                          >
+                            <Icon as={LuMoveVertical} />
+                          </Button>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))
+                  )}
                 </Table.Body>
               </Table.Root>
             </Box>
@@ -183,7 +190,9 @@ export default function CampaignManagementPage() {
         }}
         campaign={
           selectedCampaign
-            ? (MOCK_CAMPAIGNS.find((c) => c.id === selectedCampaign) ?? null)
+            ? (campaignsData?.campaigns.find(
+                (c) => c.id === selectedCampaign,
+              ) ?? null)
             : null
         }
       />
