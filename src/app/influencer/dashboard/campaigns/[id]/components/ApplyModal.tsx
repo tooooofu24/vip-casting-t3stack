@@ -21,7 +21,7 @@ export type ApplyModalProps = {
 export function ApplyModal({ campaignId }: ApplyModalProps) {
   const [message, setMessage] = useState("");
 
-  const applyMutation = api.influencer.campaigns.apply.useMutation({
+  const applyMutation = api.influencer.campaigns.applyToCampaign.useMutation({
     onSuccess: (data) => {
       showSuccessToast(
         `「${data.application.campaignTitle}」への応募が完了しました`,
