@@ -44,7 +44,7 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
             <DataList.Item>
               <DataList.ItemLabel>
                 <HStack>
-                  <Icon as={LuBuilding2} color="purple.500" />
+                  <Icon as={LuBuilding2} />
                   <Text>企業名</Text>
                 </HStack>
               </DataList.ItemLabel>
@@ -57,7 +57,7 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
               <DataList.Item>
                 <DataList.ItemLabel>
                   <HStack>
-                    <Icon as={LuLink} color="purple.500" />
+                    <Icon as={LuLink} />
                     <Text>ウェブサイト</Text>
                   </HStack>
                 </DataList.ItemLabel>
@@ -78,18 +78,14 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
                 <DataList.Item>
                   <DataList.ItemLabel>
                     <HStack>
-                      <Icon as={LuTag} color="purple.500" />
+                      <Icon as={LuTag} />
                       <Text>業界・ジャンル</Text>
                     </HStack>
                   </DataList.ItemLabel>
                   <DataList.ItemValue>
                     <HStack flexWrap="wrap">
                       {company.business.genres.map((genreItem, index) => (
-                        <Badge
-                          key={index}
-                          colorPalette="gray"
-                          variant="outline"
-                        >
+                        <Badge key={index} variant="outline">
                           {genres.find((g) => g.value === genreItem.genre)
                             ?.label ?? String(genreItem.genre)}
                         </Badge>
@@ -104,18 +100,14 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
                 <DataList.Item>
                   <DataList.ItemLabel>
                     <HStack>
-                      <Icon as={LuMapPin} color="purple.500" />
+                      <Icon as={LuMapPin} />
                       <Text>対応地域</Text>
                     </HStack>
                   </DataList.ItemLabel>
                   <DataList.ItemValue>
                     <HStack flexWrap="wrap">
                       {company.business.regions.map((regionItem, index) => (
-                        <Badge
-                          key={index}
-                          colorPalette="gray"
-                          variant="outline"
-                        >
+                        <Badge key={index} variant="outline">
                           {regions.find((r) => r.value === regionItem.region)
                             ?.label ?? String(regionItem.region)}
                         </Badge>
@@ -129,7 +121,7 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
               <DataList.Item>
                 <DataList.ItemLabel>
                   <HStack>
-                    <Icon as={LuPackage} color="purple.500" />
+                    <Icon as={LuPackage} />
                     <Text>商品・サービス</Text>
                   </HStack>
                 </DataList.ItemLabel>
@@ -143,7 +135,7 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
               <DataList.Item>
                 <DataList.ItemLabel>
                   <HStack>
-                    <Icon as={LuTrendingUp} color="purple.500" />
+                    <Icon as={LuTrendingUp} />
                     <Text>マーケティング実績</Text>
                   </HStack>
                 </DataList.ItemLabel>
