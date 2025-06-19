@@ -9,7 +9,6 @@ export default tseslint.config(
   {
     ignores: [".next", "src/lib/prisma/generated"],
   },
-  // @ts-expect-error
   ...compat.extends("next/core-web-vitals"),
   {
     files: ["**/*.ts", "**/*.tsx"],
