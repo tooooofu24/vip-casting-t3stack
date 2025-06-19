@@ -9,7 +9,7 @@ export const campaignStatusValues = [
   CampaignStatus.CANCELLED,
 ] as const;
 
-const campaignStatusLabels = {
+export const campaignStatusLabels = {
   [CampaignStatus.DRAFT]: "下書き",
   [CampaignStatus.RECRUITING]: "募集中",
   [CampaignStatus.IN_PROGRESS]: "進行中",
