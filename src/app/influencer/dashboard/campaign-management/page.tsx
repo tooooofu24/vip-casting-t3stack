@@ -11,8 +11,6 @@ import {
   Container,
   Heading,
   Icon,
-  Input,
-  InputGroup,
   Spinner,
   Stack,
   Table,
@@ -20,26 +18,20 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { LuFileText, LuMoveVertical, LuSearch } from "react-icons/lu";
+import { LuFileText, LuMoveVertical } from "react-icons/lu";
 
 export default function CampaignManagementPage() {
-  const [selectedStatus, setSelectedStatus] = useState<string>("all");
-  const [searchQuery, setSearchQuery] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [_selectedCampaign, setSelectedCampaign] = useState<string | null>(
     null,
   );
 
   const { data: campaignsData, isLoading } =
-    api.influencer.campaigns.getCampaigns.useQuery({ search: searchQuery });
+    api.influencer.campaigns.getCampaigns.useQuery({});
 
   const handleCampaignClick = (_campaignId: string) => {
     setSelectedCampaign(null); // 現在は詳細表示を無効化
     setIsDialogOpen(true);
-  };
-
-  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedStatus(e.target.value);
   };
 
   return (
@@ -61,39 +53,6 @@ export default function CampaignManagementPage() {
             <Heading as="h2" size="lg" fontWeight="semibold" mb={4}>
               対応中の案件
             </Heading>
-
-            <Stack direction={{ base: "column", md: "row" }} gap={4} mb={6}>
-              <InputGroup
-                flex={1}
-                startElement={<Icon as={LuSearch} color="gray.400" />}
-              >
-                <Input
-                  placeholder="案件を検索"
-                  value={searchQuery}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSearchQuery(e.target.value)
-                  }
-                />
-              </InputGroup>
-
-              <select
-                value={selectedStatus}
-                onChange={handleStatusChange}
-                style={{
-                  padding: "0.5rem",
-                  borderRadius: "0.375rem",
-                  border: "1px solid",
-                  borderColor: "var(--chakra-colors-gray-200)",
-                  width: "auto",
-                }}
-              >
-                <option value="all">すべてのステータス</option>
-                <option value="IN_PROGRESS">進行中</option>
-                <option value="DRAFT">下書き</option>
-                <option value="COMPLETED">完了</option>
-                <option value="CANCELLED">中止</option>
-              </select>
-            </Stack>
 
             <Box overflowX="auto">
               <Table.Root>
