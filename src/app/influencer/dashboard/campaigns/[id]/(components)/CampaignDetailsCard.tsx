@@ -23,7 +23,6 @@ import {
 import { format } from "date-fns";
 import { ja } from "date-fns/locale";
 import {
-  LuActivity,
   LuBadgePercent,
   LuBanknote,
   LuCalendar,
@@ -93,20 +92,6 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                 </DataList.ItemLabel>
                 <DataList.ItemValue flex={2}>
                   {campaign.description}
-                </DataList.ItemValue>
-              </DataList.Item>
-
-              <DataList.Item alignItems="flex-start">
-                <DataList.ItemLabel flex={1}>
-                  <HStack>
-                    <Icon as={LuActivity} />
-                    <Text>ステータス</Text>
-                  </HStack>
-                </DataList.ItemLabel>
-                <DataList.ItemValue flex={2}>
-                  <Badge colorPalette={campaignStatusColors[campaign.status]}>
-                    {campaignStatusLabels[campaign.status]}
-                  </Badge>
                 </DataList.ItemValue>
               </DataList.Item>
 
