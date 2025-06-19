@@ -27,6 +27,7 @@ import {
   LuBadgePercent,
   LuBanknote,
   LuCalendar,
+  LuCircleAlert,
   LuClock,
   LuFileText,
   LuStickyNote,
@@ -50,6 +51,9 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
           objectFit="cover"
         />
         <Stack direction="row" position="absolute" bottom="3" left="3">
+          <Badge colorPalette={campaignStatusColors[campaign.status]}>
+            {campaignStatusLabels[campaign.status]}
+          </Badge>
           <Badge>
             <Icon as={platformIcons[campaign.platform]} />
             {platformLabels[campaign.platform]}
@@ -80,85 +84,92 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
           {/* キャンペーン詳細 */}
           <VStack align="stretch" gap={4}>
             <DataList.Root orientation="horizontal">
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
+                <DataList.ItemLabel flex={1}>
+                  <HStack>
+                    <Icon as={LuFileText} />
+                    <Text>案件詳細</Text>
+                  </HStack>
+                </DataList.ItemLabel>
+                <DataList.ItemValue flex={2}>
+                  {campaign.description}
+                </DataList.ItemValue>
+              </DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuTrendingUp} />
                     <Text>プラットフォーム</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
-                  <Badge colorPalette="blue">
+                <DataList.ItemValue flex={2}>
+                  <Badge variant="outline">
                     <Icon as={platformIcons[campaign.platform]} />
                     {platformLabels[campaign.platform]}
                   </Badge>
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuUsers} />
                     <Text>募集人数</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
-                  <Badge colorPalette="purple" variant="subtle">
-                    {campaign.recruitment}名
-                  </Badge>
+                <DataList.ItemValue flex={2}>
+                  {campaign.recruitment}名
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuActivity} />
                     <Text>ステータス</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
+                <DataList.ItemValue flex={2}>
                   <Badge colorPalette={campaignStatusColors[campaign.status]}>
                     {campaignStatusLabels[campaign.status]}
                   </Badge>
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuBadgePercent} />
                     <Text>報酬タイプ</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
-                  <Badge colorPalette="orange" variant="outline">
-                    {rewardTypeLabels[campaign.rewardType]}
-                  </Badge>
+                <DataList.ItemValue flex={2}>
+                  {rewardTypeLabels[campaign.rewardType]}
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuBanknote} />
                     <Text>報酬金額</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
+                <DataList.ItemValue flex={2}>
                   <Text fontWeight="bold" color="purple.600">
                     ¥{campaign.rewardAmount.toLocaleString()}
                   </Text>
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuClock} />
                     <Text>応募締切</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
+                <DataList.ItemValue flex={2}>
                   {campaign.applicationDue
                     ? format(
                         new Date(campaign.applicationDue),
@@ -169,14 +180,14 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
+              <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
                     <Icon as={LuCalendar} />
                     <Text>投稿期限</Text>
                   </HStack>
                 </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
+                <DataList.ItemValue flex={2}>
                   {campaign.postDue
                     ? format(
                         new Date(campaign.postDue),
@@ -189,49 +200,46 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                 </DataList.ItemValue>
               </DataList.Item>
 
-              <DataList.Item>
-                <DataList.ItemLabel flex={1}>
-                  <HStack>
-                    <Icon as={LuFileText} />
-                    <Text>作成日</Text>
-                  </HStack>
-                </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
-                  {format(new Date(campaign.createdAt), "yyyy年MM月dd日", {
-                    locale: ja,
-                  })}
-                </DataList.ItemValue>
-              </DataList.Item>
-
-              <DataList.Item>
-                <DataList.ItemLabel flex={1}>
-                  <HStack>
-                    <Icon as={LuFileText} />
-                    <Text>更新日</Text>
-                  </HStack>
-                </DataList.ItemLabel>
-                <DataList.ItemValue flex={3}>
-                  {format(new Date(campaign.updatedAt), "yyyy年MM月dd日", {
-                    locale: ja,
-                  })}
-                </DataList.ItemValue>
-              </DataList.Item>
-
               {campaign.note && (
-                <DataList.Item>
+                <DataList.Item alignItems="flex-start">
                   <DataList.ItemLabel flex={1}>
                     <HStack>
                       <Icon as={LuStickyNote} />
                       <Text>備考</Text>
                     </HStack>
                   </DataList.ItemLabel>
-                  <DataList.ItemValue flex={3}>
+                  <DataList.ItemValue flex={2}>
                     {campaign.note}
+                  </DataList.ItemValue>
+                </DataList.Item>
+              )}
+
+              {/* 応募条件・注意事項 */}
+              {campaign.requirements.length > 0 && (
+                <DataList.Item alignItems="flex-start">
+                  <DataList.ItemLabel flex={1}>
+                    <HStack>
+                      <Icon as={LuCircleAlert} />
+                      <Text>応募条件</Text>
+                    </HStack>
+                  </DataList.ItemLabel>
+                  <DataList.ItemValue flex={2}>
+                    <Text whiteSpace="pre-wrap" wordBreak="break-word">
+                      {campaign.requirements.join("\n")}
+                    </Text>
                   </DataList.ItemValue>
                 </DataList.Item>
               )}
             </DataList.Root>
           </VStack>
+          <HStack justify="flex-end">
+            <Text fontSize="xs" color="fg.muted">
+              最終更新日時{"  "}
+              {format(new Date(campaign.updatedAt), "yyyy年MM月dd日 HH:mm", {
+                locale: ja,
+              })}
+            </Text>
+          </HStack>
         </VStack>
       </Card.Body>
     </Card.Root>
