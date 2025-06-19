@@ -15,7 +15,8 @@ export default function InfluencerDashboardLayout({
         <Container
           as="main"
           maxW="container.3xl"
-          py={6}
+          pt={6}
+          pb={12}
           minH="85vh"
           bg="transparent"
         >

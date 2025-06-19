@@ -16,10 +16,13 @@ export const getCampaignById = publicProcedure
               select: {
                 displayName: true,
                 corporateNumber: true,
+                websiteUrl: true,
               },
             },
             business: {
-              include: {
+              select: {
+                pastExperience: true,
+                productDescription: true,
                 genres: {
                   select: {
                     genre: true,

@@ -50,7 +50,7 @@ export function ApplyModal({ campaignId }: ApplyModalProps) {
     <Portal>
       <Dialog.Backdrop />
       <Dialog.Positioner>
-        <Dialog.Content mx="4">
+        <Dialog.Content>
           <Dialog.Header>
             <Dialog.Title>応募メッセージ</Dialog.Title>
           </Dialog.Header>
@@ -64,20 +64,13 @@ export function ApplyModal({ campaignId }: ApplyModalProps) {
                 disabled={applyMutation.isPending}
               />
             </Dialog.Body>
-            <Dialog.Footer gap="4">
+            <Dialog.Footer>
               <Dialog.ActionTrigger asChild>
                 <Button variant="ghost" disabled={applyMutation.isPending}>
                   キャンセル
                 </Button>
               </Dialog.ActionTrigger>
-              <Button
-                type="submit"
-                bg="purple.600"
-                color="white"
-                px="6"
-                _hover={{ bg: "purple.500" }}
-                disabled={applyMutation.isPending}
-              >
+              <Button type="submit" disabled={applyMutation.isPending}>
                 {applyMutation.isPending ? (
                   <Spinner size="sm" />
                 ) : (

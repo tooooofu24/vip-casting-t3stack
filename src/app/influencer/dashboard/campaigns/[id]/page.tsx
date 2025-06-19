@@ -1,7 +1,9 @@
 "use client";
 
 import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
-import { ApplyButton } from "@/app/influencer/dashboard/campaigns/[id]/components/ApplyButton";
+import { ApplyButton } from "@/app/influencer/dashboard/campaigns/[id]/(components)/ApplyButton";
+import { CompanyInfoCard } from "@/app/influencer/dashboard/campaigns/[id]/(components)/CompanyInfoCard";
+import { genres } from "@/const/genre";
 import { platformLabels } from "@/const/platform";
 import { rewardTypeLabels } from "@/const/rewardType";
 import { api } from "@/lib/trpc/react";
@@ -9,6 +11,8 @@ import {
   Badge,
   Box,
   Card,
+  Grid,
+  GridItem,
   HStack,
   Icon,
   Image,
@@ -101,109 +105,124 @@ export default function CampaignDetailPage() {
         description={`${campaign.company?.information?.displayName ?? "企業名不明"}`}
       />
 
-      <Card.Root>
-        <Image
-          src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=500"
-          alt={campaign.title}
-          h="300px"
-          objectFit="cover"
-        />
+      <Grid templateColumns="2fr 1fr" gap={6} alignItems="start">
+        <GridItem>
+          <Card.Root>
+            <Image
+              src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&q=80&w=500"
+              alt={campaign.title}
+              h="300px"
+              objectFit="cover"
+            />
 
-        <Card.Body>
-          <Stack>
-            <HStack>
-              <Badge>{platformLabels[campaign.platform]}</Badge>
-              {campaign.company?.business?.genres &&
-                campaign.company.business.genres.length > 0 && (
-                  <Badge>
-                    {String(campaign.company.business.genres[0]?.genre)}
-                  </Badge>
-                )}
-            </HStack>
-
-            <Card.Title>{campaign.title}</Card.Title>
-            <Text color="fg.muted">
-              {campaign.company?.information?.displayName ?? "企業名不明"}
-            </Text>
-
-            <Card.Description>{campaign.description}</Card.Description>
-
-            <VStack align="stretch" gap={3}>
-              <HStack justify="space-between">
+            <Card.Body>
+              <Stack>
                 <HStack>
-                  <Icon as={LuCalendar} color="blue.500" />
-                  <Text fontWeight="medium">投稿期限</Text>
+                  <Badge>{platformLabels[campaign.platform]}</Badge>
+                  {campaign.company?.business?.genres &&
+                    campaign.company.business.genres.length > 0 && (
+                      <Badge>
+                        {genres.find(
+                          (g) =>
+                            g.value ===
+                            campaign.company?.business?.genres[0]?.genre,
+                        )?.label ??
+                          String(campaign.company?.business?.genres[0]?.genre)}
+                      </Badge>
+                    )}
                 </HStack>
-                <Text>
-                  {campaign.postDue
-                    ? format(new Date(campaign.postDue), "yyyy年MM月dd日", {
-                        locale: ja,
-                      })
-                    : "未定"}
+
+                <Card.Title>{campaign.title}</Card.Title>
+                <Text color="fg.muted">
+                  {campaign.company?.information?.displayName ?? "企業名不明"}
                 </Text>
-              </HStack>
 
-              <Separator />
+                <Card.Description>{campaign.description}</Card.Description>
 
-              <HStack justify="space-between">
-                <Text fontWeight="medium">募集人数</Text>
-                <Badge colorPalette="blue" variant="subtle">
-                  {campaign.recruitment}名
-                </Badge>
-              </HStack>
+                <VStack align="stretch" gap={3}>
+                  <HStack justify="space-between">
+                    <HStack>
+                      <Icon as={LuCalendar} color="blue.500" />
+                      <Text fontWeight="medium">投稿期限</Text>
+                    </HStack>
+                    <Text>
+                      {campaign.postDue
+                        ? format(new Date(campaign.postDue), "yyyy年MM月dd日", {
+                            locale: ja,
+                          })
+                        : "未定"}
+                    </Text>
+                  </HStack>
 
-              <Separator />
+                  <Separator />
 
-              <HStack justify="space-between">
-                <Text fontWeight="medium">応募締切</Text>
-                <Text>
-                  {campaign.applicationDue
-                    ? format(
-                        new Date(campaign.applicationDue),
-                        "yyyy年MM月dd日",
-                        { locale: ja },
-                      )
-                    : "未定"}
-                </Text>
-              </HStack>
-            </VStack>
+                  <HStack justify="space-between">
+                    <Text fontWeight="medium">募集人数</Text>
+                    <Badge colorPalette="blue" variant="subtle">
+                      {campaign.recruitment}名
+                    </Badge>
+                  </HStack>
 
-            {campaign.requirements.length > 0 && (
-              <Box>
-                <Text fontWeight="semibold">応募条件・注意事項</Text>
-                <List.Root>
-                  {campaign.requirements.map((requirement, index) => (
-                    <List.Item key={index}>
-                      <Icon as={LuCircleAlert} />
-                      {requirement}
-                    </List.Item>
-                  ))}
-                </List.Root>
-              </Box>
-            )}
+                  <Separator />
 
-            <Box
-              p={4}
-              bg="green.50"
-              borderRadius="lg"
-              border="1px solid"
-              borderColor="green.200"
-            >
-              <HStack justify="space-between" align="center">
-                <VStack align="start" gap={1}>
-                  <Text fontSize="3xl" fontWeight="bold" color="green.600">
-                    ¥{campaign.rewardAmount.toLocaleString()}
-                  </Text>
-                  <Text fontSize="sm" color="green.700">
-                    {rewardTypeLabels[campaign.rewardType]}
-                  </Text>
+                  <HStack justify="space-between">
+                    <Text fontWeight="medium">応募締切</Text>
+                    <Text>
+                      {campaign.applicationDue
+                        ? format(
+                            new Date(campaign.applicationDue),
+                            "yyyy年MM月dd日",
+                            { locale: ja },
+                          )
+                        : "未定"}
+                    </Text>
+                  </HStack>
                 </VStack>
-                <ApplyButton campaignId={campaign.id} />
-              </HStack>
-            </Box>
-          </Stack>
-        </Card.Body>
-      </Card.Root>
+
+                {campaign.requirements.length > 0 && (
+                  <Box>
+                    <Text fontWeight="semibold">応募条件・注意事項</Text>
+                    <List.Root>
+                      {campaign.requirements.map((requirement, index) => (
+                        <List.Item key={index}>
+                          <Icon as={LuCircleAlert} />
+                          {requirement}
+                        </List.Item>
+                      ))}
+                    </List.Root>
+                  </Box>
+                )}
+
+                <Box
+                  p={4}
+                  bg="green.50"
+                  borderRadius="lg"
+                  border="1px solid"
+                  borderColor="green.200"
+                >
+                  <HStack justify="space-between" align="center">
+                    <VStack align="start" gap={1}>
+                      <Text fontSize="3xl" fontWeight="bold" color="green.600">
+                        ¥{campaign.rewardAmount.toLocaleString()}
+                      </Text>
+                      <Text fontSize="sm" color="green.700">
+                        {rewardTypeLabels[campaign.rewardType]}
+                      </Text>
+                    </VStack>
+                    <ApplyButton campaignId={campaign.id} />
+                  </HStack>
+                </Box>
+              </Stack>
+            </Card.Body>
+          </Card.Root>
+        </GridItem>
+
+        <GridItem alignSelf="start">
+          <Box position="sticky" top="600px">
+            <CompanyInfoCard campaign={campaign} />
+          </Box>
+        </GridItem>
+      </Grid>
     </VStack>
   );
 }

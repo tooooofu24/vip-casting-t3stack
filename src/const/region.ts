@@ -15,15 +15,15 @@ export const regionValues = [
 
 const regionLabels = {
   [Region.ALL]: "全国",
-  [Region.KANTO]: "関東",
-  [Region.KANSAI]: "関西",
-  [Region.TOKAI]: "東海",
-  [Region.HOKKAIDO]: "北海道",
-  [Region.TOHOKU]: "東北",
-  [Region.CHUGOKU]: "中国",
-  [Region.SHIKOKU]: "四国",
-  [Region.KYUSHU]: "九州",
-  [Region.ONLINE]: "オンライン",
+  [Region.KANTO]: "関東地方",
+  [Region.KANSAI]: "関西地方",
+  [Region.TOKAI]: "東海地方",
+  [Region.HOKKAIDO]: "北海道地方",
+  [Region.TOHOKU]: "東北地方",
+  [Region.CHUGOKU]: "中国地方",
+  [Region.SHIKOKU]: "四国地方",
+  [Region.KYUSHU]: "九州地方",
+  [Region.ONLINE]: "オンライン対応",
 } satisfies Record<Region, string>;
 
 export const regions = regionValues.map((value) => ({
