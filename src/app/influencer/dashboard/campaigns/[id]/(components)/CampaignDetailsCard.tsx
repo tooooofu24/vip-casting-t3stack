@@ -95,6 +95,21 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                   {campaign.description}
                 </DataList.ItemValue>
               </DataList.Item>
+
+              <DataList.Item alignItems="flex-start">
+                <DataList.ItemLabel flex={1}>
+                  <HStack>
+                    <Icon as={LuActivity} />
+                    <Text>ステータス</Text>
+                  </HStack>
+                </DataList.ItemLabel>
+                <DataList.ItemValue flex={2}>
+                  <Badge colorPalette={campaignStatusColors[campaign.status]}>
+                    {campaignStatusLabels[campaign.status]}
+                  </Badge>
+                </DataList.ItemValue>
+              </DataList.Item>
+
               <DataList.Item alignItems="flex-start">
                 <DataList.ItemLabel flex={1}>
                   <HStack>
@@ -119,20 +134,6 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                 </DataList.ItemLabel>
                 <DataList.ItemValue flex={2}>
                   {campaign.recruitment}名
-                </DataList.ItemValue>
-              </DataList.Item>
-
-              <DataList.Item alignItems="flex-start">
-                <DataList.ItemLabel flex={1}>
-                  <HStack>
-                    <Icon as={LuActivity} />
-                    <Text>ステータス</Text>
-                  </HStack>
-                </DataList.ItemLabel>
-                <DataList.ItemValue flex={2}>
-                  <Badge colorPalette={campaignStatusColors[campaign.status]}>
-                    {campaignStatusLabels[campaign.status]}
-                  </Badge>
                 </DataList.ItemValue>
               </DataList.Item>
 
@@ -200,20 +201,6 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                 </DataList.ItemValue>
               </DataList.Item>
 
-              {campaign.note && (
-                <DataList.Item alignItems="flex-start">
-                  <DataList.ItemLabel flex={1}>
-                    <HStack>
-                      <Icon as={LuStickyNote} />
-                      <Text>備考</Text>
-                    </HStack>
-                  </DataList.ItemLabel>
-                  <DataList.ItemValue flex={2}>
-                    {campaign.note}
-                  </DataList.ItemValue>
-                </DataList.Item>
-              )}
-
               {/* 応募条件・注意事項 */}
               {campaign.requirements.length > 0 && (
                 <DataList.Item alignItems="flex-start">
@@ -227,6 +214,20 @@ export function CampaignDetailsCard({ campaign }: CampaignDetailsCardProps) {
                     <Text whiteSpace="pre-wrap" wordBreak="break-word">
                       {campaign.requirements.join("\n")}
                     </Text>
+                  </DataList.ItemValue>
+                </DataList.Item>
+              )}
+
+              {campaign.note && (
+                <DataList.Item alignItems="flex-start">
+                  <DataList.ItemLabel flex={1}>
+                    <HStack>
+                      <Icon as={LuStickyNote} />
+                      <Text>備考</Text>
+                    </HStack>
+                  </DataList.ItemLabel>
+                  <DataList.ItemValue flex={2}>
+                    {campaign.note}
                   </DataList.ItemValue>
                 </DataList.Item>
               )}

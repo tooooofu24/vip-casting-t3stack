@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  campaignStatusColors,
+  campaignStatusLabels,
+} from "@/const/campaignStatus";
 import { platformIcons, platformLabels } from "@/const/platform";
 import { rewardTypeLabels } from "@/const/rewardType";
 import type { RouterOutputs } from "@/lib/trpc/react";
@@ -34,12 +38,12 @@ export function CampaignCard({ campaign }: CampaignCardProps) {
             alt={campaign.title}
           />
           <Stack direction="row" position="absolute" bottom="3" left="3">
+            <Badge colorPalette={campaignStatusColors[campaign.status]}>
+              {campaignStatusLabels[campaign.status]}
+            </Badge>
             <Badge>
               <Icon as={platformIcons[campaign.platform]} boxSize={3} />
               {platformLabels[campaign.platform]}
-            </Badge>
-            <Badge size="sm" variant="subtle">
-              募集中
             </Badge>
           </Stack>
         </Box>
