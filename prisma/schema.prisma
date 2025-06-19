@@ -146,11 +146,9 @@ enum RewardType {
 }
 
 enum CampaignStatus {
-    DRAFT
+    PRIVATE
     RECRUITING
-    IN_PROGRESS
-    COMPLETED
-    CANCELLED
+    CLOSED
 }
 
 enum AccountType {
@@ -437,7 +435,7 @@ model Campaign {
     postDue        DateTime
     rewardType     RewardType
     rewardAmount   Int
-    status         CampaignStatus @default(DRAFT)
+    status         CampaignStatus @default(PRIVATE)
     note           String?        @db.Text
     requirements   String[]
     createdAt      DateTime       @default(now()) @db.Timestamptz(6)

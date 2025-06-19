@@ -29,7 +29,7 @@ CREATE TYPE "Platform" AS ENUM ('INSTAGRAM', 'TIKTOK', 'YOUTUBE', 'X', 'FACEBOOK
 CREATE TYPE "RewardType" AS ENUM ('FIXED', 'FOLLOWER');
 
 -- CreateEnum
-CREATE TYPE "CampaignStatus" AS ENUM ('DRAFT', 'RECRUITING', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED');
+CREATE TYPE "CampaignStatus" AS ENUM ('PRIVATE', 'RECRUITING', 'CLOSED');
 
 -- CreateEnum
 CREATE TYPE "AccountType" AS ENUM ('NORMAL', 'CURRENT');
@@ -299,7 +299,7 @@ CREATE TABLE "Campaign" (
     "postDue" TIMESTAMP(3) NOT NULL,
     "rewardType" "RewardType" NOT NULL,
     "rewardAmount" INTEGER NOT NULL,
-    "status" "CampaignStatus" NOT NULL DEFAULT 'DRAFT',
+    "status" "CampaignStatus" NOT NULL DEFAULT 'PRIVATE',
     "note" TEXT,
     "requirements" TEXT[],
     "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,

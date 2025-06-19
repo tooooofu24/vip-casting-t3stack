@@ -23,7 +23,7 @@ npm run dev
 npm run check
 
 # DBスキーマ変更時
-npm run db:push && npm run db:generate
+rm -rf prisma/migrations/ && npm run db:reset
 ```
 
 ## コーディング規約

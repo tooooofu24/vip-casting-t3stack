@@ -2,27 +2,21 @@ import { CampaignStatus } from "@/lib/prisma/generated";
 import type { ColorPalette } from "@chakra-ui/react";
 
 export const campaignStatusValues = [
-  CampaignStatus.DRAFT,
+  CampaignStatus.PRIVATE,
   CampaignStatus.RECRUITING,
-  CampaignStatus.IN_PROGRESS,
-  CampaignStatus.COMPLETED,
-  CampaignStatus.CANCELLED,
+  CampaignStatus.CLOSED,
 ] as const;
 
 export const campaignStatusLabels = {
-  [CampaignStatus.DRAFT]: "下書き",
+  [CampaignStatus.PRIVATE]: "非公開",
   [CampaignStatus.RECRUITING]: "募集中",
-  [CampaignStatus.IN_PROGRESS]: "進行中",
-  [CampaignStatus.COMPLETED]: "完了",
-  [CampaignStatus.CANCELLED]: "キャンセル",
+  [CampaignStatus.CLOSED]: "募集完了",
 } satisfies Record<CampaignStatus, string>;
 
 export const campaignStatusColors = {
-  [CampaignStatus.DRAFT]: "gray",
+  [CampaignStatus.PRIVATE]: "gray",
   [CampaignStatus.RECRUITING]: "green",
-  [CampaignStatus.IN_PROGRESS]: "blue",
-  [CampaignStatus.COMPLETED]: "purple",
-  [CampaignStatus.CANCELLED]: "red",
+  [CampaignStatus.CLOSED]: "blue",
 } satisfies Record<CampaignStatus, ColorPalette>;
 
 export const campaignStatuses = campaignStatusValues.map((value) => ({

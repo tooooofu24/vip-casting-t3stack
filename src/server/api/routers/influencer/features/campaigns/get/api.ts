@@ -7,11 +7,9 @@ export const getCampaigns = publicProcedure
   .query(async ({ ctx, input }) => {
     const { limit, offset } = input;
 
-    // Simple where clause - only show recruiting and in-progress campaigns
+    // Simple where clause - only show recruiting campaigns
     const where = {
-      status: {
-        in: [CampaignStatus.RECRUITING, CampaignStatus.IN_PROGRESS], // Show recruiting and in-progress campaigns to influencers
-      },
+      status: CampaignStatus.RECRUITING, // Show only recruiting campaigns to influencers
     };
 
     // Default order by creation date (newest first)
