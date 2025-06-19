@@ -9,7 +9,9 @@ export const getCampaigns = publicProcedure
 
     // Simple where clause - only show recruiting campaigns
     const where = {
-      status: CampaignStatus.RECRUITING, // Show only recruiting campaigns to influencers
+      status: {
+        in: [CampaignStatus.RECRUITING, CampaignStatus.CLOSED],
+      },
     };
 
     // Default order by creation date (newest first)

@@ -10,13 +10,13 @@ export const campaignStatusValues = [
 export const campaignStatusLabels = {
   [CampaignStatus.PRIVATE]: "非公開",
   [CampaignStatus.RECRUITING]: "募集中",
-  [CampaignStatus.CLOSED]: "募集完了",
+  [CampaignStatus.CLOSED]: "募集終了",
 } satisfies Record<CampaignStatus, string>;
 
 export const campaignStatusColors = {
   [CampaignStatus.PRIVATE]: "gray",
   [CampaignStatus.RECRUITING]: "green",
-  [CampaignStatus.CLOSED]: "blue",
+  [CampaignStatus.CLOSED]: "purple",
 } satisfies Record<CampaignStatus, ColorPalette>;
 
 export const campaignStatuses = campaignStatusValues.map((value) => ({
