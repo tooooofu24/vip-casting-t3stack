@@ -40,6 +40,7 @@ export async function updateSession(request: NextRequest) {
 
   const isAdmin = user?.user_metadata.role === "admin";
   const requireAdmin = request.nextUrl.pathname.startsWith("/admin/dashboard");
+  const isAdminLoginPage = request.nextUrl.pathname === "/admin/login";
 
   if (requireAdmin && !isAdmin) {
     const url = request.nextUrl.clone();
@@ -47,10 +48,18 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (isAdminLoginPage && isAdmin) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/admin/dashboard";
+    return NextResponse.redirect(url);
+  }
+
   const isInfluencer = user?.user_metadata.role === "influencer";
   const requireInfluencer = request.nextUrl.pathname.startsWith(
     "/influencer/dashboard",
   );
+  const isInfluencerLoginPage =
+    request.nextUrl.pathname === "/influencer/login";
 
   if (requireInfluencer && !isInfluencer) {
     const url = request.nextUrl.clone();
@@ -58,12 +67,26 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (isInfluencerLoginPage && isInfluencer) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/influencer/dashboard";
+    return NextResponse.redirect(url);
+  }
+
   const isCompany = user?.user_metadata.role === "company";
   const requireCompany =
     request.nextUrl.pathname.startsWith("/company/dashboard");
+  const isCompanyLoginPage = request.nextUrl.pathname === "/company/login";
+
   if (requireCompany && !isCompany) {
     const url = request.nextUrl.clone();
     url.pathname = "/company/login";
+    return NextResponse.redirect(url);
+  }
+
+  if (isCompanyLoginPage && isCompany) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/company/dashboard";
     return NextResponse.redirect(url);
   }
 
