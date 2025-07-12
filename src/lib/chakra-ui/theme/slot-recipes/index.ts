@@ -30,6 +30,7 @@ import { radioGroupSlotRecipe } from "./radio-group";
 import { ratingGroupSlotRecipe } from "./rating-group";
 import { segmentGroupSlotRecipe } from "./segment-group";
 import { selectSlotRecipe } from "./select";
+import { comboboxSlotRecipe } from "./combobox";
 import { sliderSlotRecipe } from "./slider";
 import { statSlotRecipe } from "./stat";
 import { stepsSlotRecipe } from "./steps";
@@ -43,6 +44,7 @@ import { statusSlotRecipe } from "./status";
 import { timelineSlotRecipe } from "./timeline";
 import { colorPickerSlotRecipe } from "./color-picker";
 import { qrCodeSlotRecipe } from "./qr-code";
+import { treeViewSlotRecipe } from "./tree-view";
 
 export const slotRecipes = {
   accordion: accordionSlotRecipe,
@@ -77,6 +79,7 @@ export const slotRecipes = {
   ratingGroup: ratingGroupSlotRecipe,
   segmentGroup: segmentGroupSlotRecipe,
   select: selectSlotRecipe,
+  combobox: comboboxSlotRecipe,
   slider: sliderSlotRecipe,
   stat: statSlotRecipe,
   steps: stepsSlotRecipe,
@@ -90,4 +93,5 @@ export const slotRecipes = {
   timeline: timelineSlotRecipe,
   colorPicker: colorPickerSlotRecipe,
   qrCode: qrCodeSlotRecipe,
+  treeView: treeViewSlotRecipe,
 };

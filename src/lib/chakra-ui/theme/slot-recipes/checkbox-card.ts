@@ -67,6 +67,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
       borderWidth: "1px",
       borderColor: "transparent",
       borderRadius: "l1",
+      cursor: "checkbox",
       focusVisibleRing: "outside",
       _icon: {
         boxSize: "full",
@@ -77,6 +78,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
       },
       _disabled: {
         opacity: "0.5",
+        cursor: "disabled",
       },
     },
     content: {
@@ -96,7 +98,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
         },
         control: {
           padding: "3",
-          gap: "2",
+          gap: "1.5",
         },
         addon: {
           px: "3",
@@ -159,7 +161,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
           },
         },
         indicator: {
-          borderColor: "border",
+          borderColor: "border.emphasized",
           "&:is([data-state=checked], [data-state=indeterminate])": {
             bg: "colorPalette.solid",
             color: "colorPalette.contrast",
@@ -194,7 +196,7 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
           },
         },
         indicator: {
-          borderColor: "border",
+          borderColor: "border.emphasized",
           "&:is([data-state=checked], [data-state=indeterminate])": {
             bg: "colorPalette.solid",
             color: "colorPalette.contrast",
@@ -277,9 +279,9 @@ export const checkboxCardSlotRecipe = defineSlotRecipe({
     },
   },
   defaultVariants: {
-    size: "sm",
+    size: "md",
     variant: "outline",
-    align: "center",
+    align: "start",
     orientation: "horizontal",
   },
 });

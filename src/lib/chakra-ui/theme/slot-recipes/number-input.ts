@@ -185,6 +185,10 @@ export const numberInputSlotRecipe = defineSlotRecipe({
           _focusVisible: {
             borderColor: "var(--focus-color)",
             boxShadow: "0px 1px 0px 0px var(--focus-color)",
+            _invalid: {
+              borderColor: "var(--error-color)",
+              boxShadow: "0px 1px 0px 0px var(--error-color)",
+            },
           },
         },
       },
