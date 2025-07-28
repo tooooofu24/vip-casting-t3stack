@@ -16,7 +16,7 @@
     "start": "next start",
     "cspell": "cspell src",
     "knip": "knip --production --fix --trace --allow-remove-files --format",
-    "chakra-ui-gen": "chakra eject --outdir src/lib/chakra-ui/theme && npm run format && npm run check"
+    "chakra-ui-gen": "chakra eject --outdir src/lib/chakra-ui/theme/original && npm run format && npm run check"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.23.0",
