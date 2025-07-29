@@ -14,6 +14,7 @@ import {
   Spinner,
   Table,
   Tag,
+  Text,
   VStack,
 } from "@chakra-ui/react";
 
@@ -121,11 +122,16 @@ export default function AdminDashboard() {
                     {company.business?.genres &&
                     company.business.genres.length > 0 ? (
                       <HStack wrap="wrap">
-                        {company.business.genres.map((g) => (
+                        {company.business.genres.slice(0, 3).map((g) => (
                           <Tag.Root key={g.genre} size="sm" colorPalette="gray">
                             <Tag.Label>{genreLabels[g.genre]}</Tag.Label>
                           </Tag.Root>
                         ))}
+                        {company.business.genres.length > 3 && (
+                          <Text color="fg.muted" fontSize="xs">
+                            +{company.business.genres.length - 3}
+                          </Text>
+                        )}
                       </HStack>
                     ) : (
                       "-"
