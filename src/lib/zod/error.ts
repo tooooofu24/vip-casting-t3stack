@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { util, type $ZodIssueTooSmall, type $ZodRawIssue } from "zod/v4/core";
+import {
+  util,
+  type $ZodIssueTooSmall,
+  type $ZodRawIssue,
+  type $ZodStringFormatIssues,
+} from "zod/v4/core";
 
 export const localeError = () => {
   function getSizing(origin: $ZodIssueTooSmall["origin"]): {
@@ -92,7 +97,8 @@ export const localeError = () => {
         return `小さすぎる値: ${issue.origin}は${issue.minimum.toString()}${adj}必要があります`;
       }
       case "invalid_format": {
-        const _issue = issue;
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        const _issue = issue as $ZodStringFormatIssues;
         if (_issue.format === "starts_with")
           return `無効な文字列: "${_issue.prefix}"で始まる必要があります`;
         if (_issue.format === "ends_with")
