@@ -9,7 +9,7 @@ export const objectiveValues = [
   Objective.SERVICE,
 ] as const;
 
-const objectiveLabels = {
+export const objectiveLabels = {
   [Objective.AWARENESS]: "認知拡大",
   [Objective.SALES]: "商品販売促進",
   [Objective.BRAND]: "ブランドイメージ向上",

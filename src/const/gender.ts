@@ -2,7 +2,7 @@ import { Gender } from "@/lib/prisma/generated";
 
 export const genderValues = [Gender.MALE, Gender.FEMALE, Gender.OTHER] as const;
 
-const genderLabels = {
+export const genderLabels = {
   [Gender.MALE]: "男性",
   [Gender.FEMALE]: "女性",
   [Gender.OTHER]: "指定なし",

@@ -8,7 +8,7 @@ export const applicationStatusValues = [
   ApplicationStatus.CANCELLED,
 ] as const;
 
-const applicationStatusLabels = {
+export const applicationStatusLabels = {
   [ApplicationStatus.PENDING]: "審査中",
   [ApplicationStatus.APPROVED]: "承認済み",
   [ApplicationStatus.REJECTED]: "不採用",

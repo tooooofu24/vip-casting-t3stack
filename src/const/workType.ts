@@ -10,7 +10,7 @@ export const workTypeValues = [
   WorkType.REVIEW,
 ] as const;
 
-const workTypeLabels = {
+export const workTypeLabels = {
   [WorkType.POST]: "投稿作成",
   [WorkType.VIDEO]: "動画制作",
   [WorkType.LIVE]: "ライブ配信",

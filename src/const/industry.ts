@@ -12,7 +12,7 @@ export const industryValues = [
   Industry.OTHER,
 ] as const;
 
-const industryLabels = {
+export const industryLabels = {
   [Industry.RETAIL]: "小売業",
   [Industry.MANUFACTURING]: "製造業",
   [Industry.SERVICE]: "サービス業",

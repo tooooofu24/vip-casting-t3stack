@@ -13,7 +13,7 @@ export const regionValues = [
   Region.ONLINE,
 ] as const;
 
-const regionLabels = {
+export const regionLabels = {
   [Region.ALL]: "全国",
   [Region.KANTO]: "関東地方",
   [Region.KANSAI]: "関西地方",

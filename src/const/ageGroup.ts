@@ -9,7 +9,7 @@ export const ageGroupValues = [
   AgeGroup.OVER_40S,
 ] as const;
 
-const ageGroupLabels = {
+export const ageGroupLabels = {
   [AgeGroup.TEENS]: "10代",
   [AgeGroup.EARLY_20S]: "20代前半",
   [AgeGroup.LATE_20S]: "20代後半",
