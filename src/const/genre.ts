@@ -11,7 +11,7 @@ export const genreValues = [
   Genre.ENTERTAINMENT,
 ] as const;
 
-const genreLabels = {
+export const genreLabels = {
   [Genre.BEAUTY]: "ビューティー",
   [Genre.FASHION]: "ファッション",
   [Genre.FOOD]: "フード",

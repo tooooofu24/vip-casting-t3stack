@@ -50,7 +50,7 @@ export const prefectureValues = [
   Prefecture.OKINAWA,
 ] as const;
 
-const prefectureLabels = {
+export const prefectureLabels = {
   [Prefecture.HOKKAIDO]: "北海道",
   [Prefecture.AOMORI]: "青森県",
   [Prefecture.IWATE]: "岩手県",
