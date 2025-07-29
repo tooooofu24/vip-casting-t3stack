@@ -28,10 +28,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <Text fontSize="lg" fontWeight="bold">
               VIPキャスティング 管理画面
             </Text>
-
-            <HStack gap={4}>
-              <Text>管理者</Text>
-            </HStack>
           </HStack>
         </Card.Body>
       </Card.Root>
