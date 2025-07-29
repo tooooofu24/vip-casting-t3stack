@@ -1,5 +1,7 @@
 "use client";
 
+import { genreLabels } from "@/const/genre";
+import { prefectureLabels } from "@/const/prefecture";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
 import {
@@ -8,8 +10,10 @@ import {
   Button,
   Center,
   Heading,
+  HStack,
   Spinner,
   Table,
+  Tag,
   VStack,
 } from "@chakra-ui/react";
 
@@ -88,11 +92,11 @@ export default function AdminDashboard() {
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader>会社名</Table.ColumnHeader>
-                <Table.ColumnHeader>作成日</Table.ColumnHeader>
-                <Table.ColumnHeader>承認状態</Table.ColumnHeader>
+                <Table.ColumnHeader>担当者</Table.ColumnHeader>
+                <Table.ColumnHeader>メール</Table.ColumnHeader>
                 <Table.ColumnHeader>所在地</Table.ColumnHeader>
-                <Table.ColumnHeader>ビジネス情報</Table.ColumnHeader>
-                <Table.ColumnHeader>支払い情報</Table.ColumnHeader>
+                <Table.ColumnHeader>ジャンル</Table.ColumnHeader>
+                <Table.ColumnHeader>申込日</Table.ColumnHeader>
                 <Table.ColumnHeader>操作</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
@@ -103,25 +107,32 @@ export default function AdminDashboard() {
                     {company.information?.companyName ?? "-"}
                   </Table.Cell>
                   <Table.Cell>
-                    {company.createdAt.toLocaleDateString()}
+                    {company.business ? company.business.contactName : "-"}
                   </Table.Cell>
                   <Table.Cell>
-                    {company.isApproved ? "承認済" : "未承認"}
+                    {company.business ? company.business.email : "-"}
                   </Table.Cell>
                   <Table.Cell>
                     {company.address
-                      ? `${company.address.prefecture} ${company.address.city} ${company.address.town}`
+                      ? `${prefectureLabels[company.address.prefecture]} ${company.address.city} ${company.address.town}`
                       : "-"}
                   </Table.Cell>
                   <Table.Cell>
-                    {company.business
-                      ? `${company.business.contactName} (${company.business.department})`
-                      : "-"}
+                    {company.business?.genres &&
+                    company.business.genres.length > 0 ? (
+                      <HStack wrap="wrap">
+                        {company.business.genres.map((g) => (
+                          <Tag.Root key={g.genre} size="sm" colorPalette="gray">
+                            <Tag.Label>{genreLabels[g.genre]}</Tag.Label>
+                          </Tag.Root>
+                        ))}
+                      </HStack>
+                    ) : (
+                      "-"
+                    )}
                   </Table.Cell>
                   <Table.Cell>
-                    {company.payment
-                      ? `${company.payment.bankName}（${company.payment.accountHolder}）`
-                      : "-"}
+                    {company.createdAt.toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
                     <Button
@@ -190,7 +201,7 @@ export default function AdminDashboard() {
                   </Table.Cell>
                   <Table.Cell>
                     {influencer.address
-                      ? `${influencer.address.prefecture} ${influencer.address.city} ${influencer.address.town}`
+                      ? `${prefectureLabels[influencer.address.prefecture]} ${influencer.address.city} ${influencer.address.town}`
                       : "-"}
                   </Table.Cell>
                   <Table.Cell>

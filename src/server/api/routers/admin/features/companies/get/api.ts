@@ -12,7 +12,15 @@ export const get = adminProcedure
       include: {
         information: true,
         address: true,
-        business: true,
+        business: {
+          include: {
+            genres: {
+              select: {
+                genre: true,
+              },
+            },
+          },
+        },
         payment: true,
       },
       orderBy: { createdAt: "desc" },
