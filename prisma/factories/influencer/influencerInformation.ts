@@ -10,7 +10,7 @@ export function influencerInformationFactory(): Prisma.InfluencerInformationCrea
   const lastName = faker.person.lastName();
   const firstNameKana = faker.person.firstName();
   const lastNameKana = faker.person.lastName();
-  const displayName = `${firstName} (${faker.helpers.arrayElement(["@", ""])})${faker.internet.username()}`;
+  const displayName = `${lastName} ${firstName}`;
 
   return {
     displayName,
