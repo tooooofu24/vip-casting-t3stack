@@ -1,9 +1,13 @@
 "use client";
 
+import { genderLabels } from "@/const/gender";
 import { genreLabels } from "@/const/genre";
+import { platformIcons } from "@/const/platform";
 import { prefectureLabels } from "@/const/prefecture";
 import { toaster } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
+import { differenceInYears } from "date-fns";
+import { Platform } from "@/lib/prisma/generated";
 import {
   Alert,
   Box,
@@ -61,6 +65,64 @@ export default function AdminDashboard() {
         });
       },
     });
+
+  const getMainSns = (
+    sns: {
+      instagramName?: string | null;
+      instagramFollowers?: number | null;
+      youtubeName?: string | null;
+      youtubeFollowers?: number | null;
+      tiktokName?: string | null;
+      tiktokFollowers?: number | null;
+      xName?: string | null;
+      xFollowers?: number | null;
+    } | null,
+  ) => {
+    if (!sns) return "-";
+
+    const snsData: { platform: Platform; name: string; followers: number }[] =
+      [];
+    if (sns.instagramName && sns.instagramFollowers) {
+      snsData.push({
+        platform: Platform.INSTAGRAM,
+        name: sns.instagramName,
+        followers: sns.instagramFollowers,
+      });
+    }
+    if (sns.youtubeName && sns.youtubeFollowers) {
+      snsData.push({
+        platform: Platform.YOUTUBE,
+        name: sns.youtubeName,
+        followers: sns.youtubeFollowers,
+      });
+    }
+    if (sns.tiktokName && sns.tiktokFollowers) {
+      snsData.push({
+        platform: Platform.TIKTOK,
+        name: sns.tiktokName,
+        followers: sns.tiktokFollowers,
+      });
+    }
+    if (sns.xName && sns.xFollowers) {
+      snsData.push({
+        platform: Platform.X,
+        name: sns.xName,
+        followers: sns.xFollowers,
+      });
+    }
+
+    // フォロワー数でソートして最も多いものを返す
+    const mainSns = snsData.sort((a, b) => b.followers - a.followers)[0];
+    if (!mainSns) return "-";
+
+    const IconComponent = platformIcons[mainSns.platform];
+    return (
+      <HStack>
+        <IconComponent size={16} />
+        <Text fontSize="sm">{mainSns.followers.toLocaleString()}</Text>
+      </HStack>
+    );
+  };
 
   return (
     <VStack align="stretch" gap={4} py={8} px={{ base: 2, md: 8 }}>
@@ -186,10 +248,11 @@ export default function AdminDashboard() {
             <Table.Header>
               <Table.Row>
                 <Table.ColumnHeader>公開名</Table.ColumnHeader>
-                <Table.ColumnHeader>作成日</Table.ColumnHeader>
-                <Table.ColumnHeader>承認状態</Table.ColumnHeader>
+                <Table.ColumnHeader>メール</Table.ColumnHeader>
+                <Table.ColumnHeader>性別・年齢</Table.ColumnHeader>
                 <Table.ColumnHeader>住所</Table.ColumnHeader>
-                <Table.ColumnHeader>SNS</Table.ColumnHeader>
+                <Table.ColumnHeader>主要SNS</Table.ColumnHeader>
+                <Table.ColumnHeader>申込日</Table.ColumnHeader>
                 <Table.ColumnHeader>操作</Table.ColumnHeader>
               </Table.Row>
             </Table.Header>
@@ -200,30 +263,21 @@ export default function AdminDashboard() {
                     {influencer.information?.displayName ?? "-"}
                   </Table.Cell>
                   <Table.Cell>
-                    {new Date(influencer.createdAt).toLocaleDateString()}
+                    {influencer.information?.email ?? "-"}
                   </Table.Cell>
                   <Table.Cell>
-                    {influencer.isApproved ? "承認済" : "未承認"}
+                    {influencer.information
+                      ? `${genderLabels[influencer.information.gender]} ${differenceInYears(new Date(), new Date(influencer.information.birthday))}歳`
+                      : "-"}
                   </Table.Cell>
                   <Table.Cell>
                     {influencer.address
-                      ? `${prefectureLabels[influencer.address.prefecture]} ${influencer.address.city} ${influencer.address.town}`
+                      ? `${prefectureLabels[influencer.address.prefecture]} ${influencer.address.city}`
                       : "-"}
                   </Table.Cell>
+                  <Table.Cell>{getMainSns(influencer.sns)}</Table.Cell>
                   <Table.Cell>
-                    {influencer.sns
-                      ? [
-                          influencer.sns.instagramName &&
-                            `Instagram: @${influencer.sns.instagramName}`,
-                          influencer.sns.youtubeName &&
-                            `YouTube: ${influencer.sns.youtubeName}`,
-                          influencer.sns.tiktokName &&
-                            `TikTok: @${influencer.sns.tiktokName}`,
-                          influencer.sns.xName && `X: @${influencer.sns.xName}`,
-                        ]
-                          .filter(Boolean)
-                          .join(" / ") || "-"
-                      : "-"}
+                    {new Date(influencer.createdAt).toLocaleDateString()}
                   </Table.Cell>
                   <Table.Cell>
                     <Button
