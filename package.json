@@ -19,7 +19,7 @@
     "chakra-ui-gen": "chakra eject --outdir src/lib/chakra-ui/theme/original && npm run format && npm run check"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.23.0",
+    "@chakra-ui/react": "^3.24.0",
     "@emotion/react": "^11.14.0",
     "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.13.0",
@@ -43,7 +43,7 @@
     "zod": "^4.0.13"
   },
   "devDependencies": {
-    "@chakra-ui/cli": "^3.23.0",
+    "@chakra-ui/cli": "^3.24.0",
     "@eslint/eslintrc": "^3.3.1",
     "@faker-js/faker": "^9.9.0",
     "@types/node": "^22.17.0",
