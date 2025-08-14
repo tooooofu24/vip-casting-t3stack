@@ -19,28 +19,55 @@ export default function AvatarPage() {
     api.influencer.avatar.get.useQuery();
 
   // アップロード用URL生成
-  const createUploadUrlMutation =
-    api.influencer.avatar.createUploadSignedUrl.useMutation();
+  const { mutateAsync: createUploadUrlMutation } =
+    api.influencer.avatar.createUploadSignedUrl.useMutation({
+      onError: (error) => {
+        showErrorToast(
+          `アップロードURLの取得に失敗しました: ${
+            error instanceof Error
+              ? error.message
+              : "不明なエラーが発生しました"
+          }`,
+        );
+        setIsLoading(false);
+      },
+    });
 
   // アップロード完了通知
-  const uploadCompleteMutation =
-    api.influencer.avatar.uploadComplete.useMutation();
+  const { mutateAsync: uploadCompleteMutation } =
+    api.influencer.avatar.uploadComplete.useMutation({
+      onError: (error) => {
+        showErrorToast(
+          `保存に失敗しました: ${
+            error instanceof Error
+              ? error.message
+              : "不明なエラーが発生しました"
+          }`,
+        );
+        setIsLoading(false);
+      },
+      onSuccess: () => {
+        void refetchAvatar();
+        setUploadData(null);
+        showSuccessToast("アバター画像を更新しました");
+        setIsLoading(false);
+      },
+    });
 
   const handleFileUpload = async (files: File[]) => {
     const file = files[0];
     if (!file) return;
 
-    try {
-      setIsLoading(true);
+    setIsLoading(true);
 
+    try {
       // 1. アップロード用署名付きURL取得
       const uploadRequest: CreateUploadSignedUrlRequest = {
         fileName: file.name,
         fileSize: file.size,
         mimeType: file.type,
       };
-      const uploadUrlResult =
-        await createUploadUrlMutation.mutateAsync(uploadRequest);
+      const uploadUrlResult = await createUploadUrlMutation(uploadRequest);
 
       // 2. Supabaseストレージに直接アップロード
       const uploadResponse = await fetch(uploadUrlResult.signedUrl, {
@@ -66,13 +93,13 @@ export default function AvatarPage() {
       showSuccessToast(
         "アップロード完了。保存ボタンを押して確定してください。",
       );
+      setIsLoading(false);
     } catch (error) {
       showErrorToast(
         `アップロードに失敗しました: ${
           error instanceof Error ? error.message : "不明なエラーが発生しました"
         }`,
       );
-    } finally {
       setIsLoading(false);
     }
   };
@@ -80,28 +107,8 @@ export default function AvatarPage() {
   const handleSubmit = async () => {
     if (!uploadData) return;
 
-    try {
-      setIsLoading(true);
-
-      // DB保存通知
-      await uploadCompleteMutation.mutateAsync(uploadData);
-
-      // アバター情報を再取得してUIを更新
-      await refetchAvatar();
-
-      // アップロードデータをクリア
-      setUploadData(null);
-
-      showSuccessToast("アバター画像を更新しました");
-    } catch (error) {
-      showErrorToast(
-        `保存に失敗しました: ${
-          error instanceof Error ? error.message : "不明なエラーが発生しました"
-        }`,
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(true);
+    await uploadCompleteMutation(uploadData);
   };
 
   return (
