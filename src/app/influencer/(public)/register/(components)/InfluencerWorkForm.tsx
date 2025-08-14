@@ -26,9 +26,9 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type React from "react";
 import { Controller, useForm, type DefaultValues } from "react-hook-form";
 import { LuSend } from "react-icons/lu";
-import type React from "react";
 
 export type InfluencerWorkFormProps = {
   defaultValues?: DefaultValues<InfluencerWorkRequest>;
@@ -145,6 +145,7 @@ export function InfluencerWorkForm({
                         }
                       }}
                       {...field}
+                      flex={0}
                     >
                       <CheckboxCard.HiddenInput />
                       <CheckboxCard.Control>
@@ -190,6 +191,7 @@ export function InfluencerWorkForm({
                         }
                       }}
                       {...field}
+                      flex={0}
                     >
                       <CheckboxCard.HiddenInput />
                       <CheckboxCard.Control>
