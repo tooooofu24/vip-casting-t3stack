@@ -214,11 +214,24 @@ CREATE TABLE "public"."InfluencerInformation" (
     "birthday" TIMESTAMP(3) NOT NULL,
     "gender" "public"."Gender" NOT NULL,
     "phone" VARCHAR(20) NOT NULL,
-    "avatarUrl" VARCHAR(500),
     "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ(6) NOT NULL,
 
     CONSTRAINT "InfluencerInformation_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."InfluencerAvatar" (
+    "id" UUID NOT NULL,
+    "influencerId" UUID NOT NULL,
+    "fileName" VARCHAR(255) NOT NULL,
+    "filePath" VARCHAR(500) NOT NULL,
+    "mimeType" VARCHAR(100) NOT NULL,
+    "fileSize" INTEGER NOT NULL,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(6) NOT NULL,
+
+    CONSTRAINT "InfluencerAvatar_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -375,6 +388,9 @@ CREATE UNIQUE INDEX "Influencer_supabaseId_key" ON "public"."Influencer"("supaba
 CREATE UNIQUE INDEX "InfluencerInformation_influencerId_key" ON "public"."InfluencerInformation"("influencerId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "InfluencerAvatar_influencerId_key" ON "public"."InfluencerAvatar"("influencerId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "InfluencerAddress_influencerId_key" ON "public"."InfluencerAddress"("influencerId");
 
 -- CreateIndex
@@ -427,6 +443,9 @@ ALTER TABLE "public"."CompanyPayment" ADD CONSTRAINT "CompanyPayment_companyId_f
 
 -- AddForeignKey
 ALTER TABLE "public"."InfluencerInformation" ADD CONSTRAINT "InfluencerInformation_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "public"."Influencer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."InfluencerAvatar" ADD CONSTRAINT "InfluencerAvatar_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "public"."Influencer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "public"."InfluencerAddress" ADD CONSTRAINT "InfluencerAddress_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "public"."Influencer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
