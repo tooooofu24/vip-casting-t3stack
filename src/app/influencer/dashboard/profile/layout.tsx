@@ -6,7 +6,7 @@ import type { Route } from "next";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaInstagram } from "react-icons/fa6";
-import { LuBriefcase, LuMapPin, LuUser } from "react-icons/lu";
+import { LuBriefcase, LuMapPin, LuUser, LuImage } from "react-icons/lu";
 
 const TAB_CONFIG: {
   path: Route;
@@ -19,6 +19,12 @@ const TAB_CONFIG: {
     label: "基本情報",
     icon: LuUser,
     value: "information",
+  },
+  {
+    path: "/influencer/dashboard/profile/avatar",
+    label: "アバター画像",
+    icon: LuImage,
+    value: "avatar",
   },
   {
     path: "/influencer/dashboard/profile/address",

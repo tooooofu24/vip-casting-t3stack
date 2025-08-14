@@ -13,3 +13,7 @@ export const createUploadSignedUrlSchema = z.object({
       "画像ファイルのみアップロード可能です",
     ),
 });
+
+export type CreateUploadSignedUrlRequest = z.infer<
+  typeof createUploadSignedUrlSchema
+>;

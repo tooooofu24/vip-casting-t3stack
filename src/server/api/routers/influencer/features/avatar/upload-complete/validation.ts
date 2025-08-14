@@ -6,3 +6,5 @@ export const uploadCompleteSchema = z.object({
   fileSize: z.number().min(1, "ファイルサイズは必須です"),
   mimeType: z.string().min(1, "MIMEタイプは必須です"),
 });
+
+export type UploadCompleteRequest = z.infer<typeof uploadCompleteSchema>;
