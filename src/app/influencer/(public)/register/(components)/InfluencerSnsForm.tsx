@@ -5,6 +5,7 @@ import {
   influencerSnsSchema,
   type InfluencerSnsRequest,
 } from "@/server/api/routers/influencer/features/auth/register/validations/sns";
+import { setValueAsNumber } from "@/lib/react-hook-form/setValueAsNumber";
 import {
   Alert,
   Box,
@@ -88,10 +89,11 @@ export function InfluencerSnsForm({
                   <Field.Label>フォロワー数</Field.Label>
                   <InputGroup endElement="人">
                     <Input
-                      type="number"
                       placeholder="10000"
                       required={false}
-                      {...register("instagramFollowers")}
+                      {...register("instagramFollowers", {
+                        setValueAs: setValueAsNumber,
+                      })}
                     />
                   </InputGroup>
                   <Field.ErrorText>
@@ -138,10 +140,11 @@ export function InfluencerSnsForm({
                   <Field.Label>登録者数</Field.Label>
                   <InputGroup endElement="人">
                     <Input
-                      type="number"
                       placeholder="10000"
                       required={false}
-                      {...register("youtubeFollowers")}
+                      {...register("youtubeFollowers", {
+                        setValueAs: setValueAsNumber,
+                      })}
                     />
                   </InputGroup>
                   <Field.ErrorText>
@@ -186,10 +189,11 @@ export function InfluencerSnsForm({
                   <Field.Label>フォロワー数</Field.Label>
                   <InputGroup endElement="人">
                     <Input
-                      type="number"
                       placeholder="10000"
                       required={false}
-                      {...register("tiktokFollowers")}
+                      {...register("tiktokFollowers", {
+                        setValueAs: setValueAsNumber,
+                      })}
                     />
                   </InputGroup>
                   <Field.ErrorText>
@@ -232,10 +236,11 @@ export function InfluencerSnsForm({
                   <Field.Label>フォロワー数</Field.Label>
                   <InputGroup endElement="人">
                     <Input
-                      type="number"
                       placeholder="10000"
                       required={false}
-                      {...register("xFollowers")}
+                      {...register("xFollowers", {
+                        setValueAs: setValueAsNumber,
+                      })}
                     />
                   </InputGroup>
                   <Field.ErrorText>
