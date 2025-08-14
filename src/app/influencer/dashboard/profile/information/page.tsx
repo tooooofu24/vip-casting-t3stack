@@ -3,10 +3,7 @@
 import { InfluencerInformationForm } from "@/app/influencer/(public)/register/(components)/InfluencerInformationForm";
 import { showErrorToast, showSuccessToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
-import {
-  influencerInformationDefaultValues,
-  type InfluencerInformationRequest,
-} from "@/server/api/routers/influencer/features/auth/register/validations/information";
+import { type UpdateInformationRequest } from "@/server/api/routers/influencer/features/profile/information/update/validation";
 import { Spinner, Tabs, VStack } from "@chakra-ui/react";
 
 export default function InformationPage() {
@@ -33,9 +30,7 @@ export default function InformationPage() {
       },
     });
 
-  const handleInformationUpdate = async (
-    data: InfluencerInformationRequest,
-  ) => {
+  const handleInformationUpdate = async (data: UpdateInformationRequest) => {
     await updateInformationMutation(data);
   };
 
@@ -53,9 +48,7 @@ export default function InformationPage() {
         onSubmit={handleInformationUpdate}
         submitButtonText="保存"
         showBackButton={false}
-        defaultValues={
-          profile?.information ?? influencerInformationDefaultValues
-        }
+        defaultValues={profile?.information ?? undefined}
       />
     </Tabs.Content>
   );
