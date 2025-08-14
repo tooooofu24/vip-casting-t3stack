@@ -42,7 +42,7 @@ export function InfluencerInformationForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<InfluencerInformationRequest>({
     resolver: zodResolver(influencerInformationSchema),
     defaultValues,
@@ -195,13 +195,20 @@ export function InfluencerInformationForm({
           <Box pt={4}>
             {showBackButton && onBack ? (
               <ButtonGroup w="full" justifyContent="space-between">
-                <Button variant="outline" onClick={onBack} type="button">
+                <Button
+                  variant="outline"
+                  onClick={onBack}
+                  type="button"
+                  disabled={isSubmitting}
+                >
                   戻る
                 </Button>
-                <Button type="submit">{submitButtonText}</Button>
+                <Button type="submit" loading={isSubmitting}>
+                  {submitButtonText}
+                </Button>
               </ButtonGroup>
             ) : (
-              <Button w="full" type="submit">
+              <Button w="full" type="submit" loading={isSubmitting}>
                 {submitButtonText}
               </Button>
             )}
