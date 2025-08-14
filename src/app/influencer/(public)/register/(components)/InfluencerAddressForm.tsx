@@ -4,7 +4,7 @@ import { prefectures } from "@/const/prefecture";
 import {
   influencerAddressSchema,
   type InfluencerAddressRequest,
-} from "@/server/api/routers/influencer/features/auth/register/validations/address";
+} from "@/server/api/routers/influencer/features/profile/address/update/validation";
 import {
   Box,
   Button,
@@ -40,7 +40,7 @@ export function InfluencerAddressForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<InfluencerAddressRequest>({
     resolver: zodResolver(influencerAddressSchema),
     defaultValues,
@@ -140,13 +140,20 @@ export function InfluencerAddressForm({
         <Box mt={8}>
           {showBackButton && onBack ? (
             <ButtonGroup w="full" justifyContent="space-between">
-              <Button variant="outline" onClick={onBack} type="button">
+              <Button
+                variant="outline"
+                onClick={onBack}
+                type="button"
+                disabled={isSubmitting}
+              >
                 戻る
               </Button>
-              <Button type="submit">{submitButtonText}</Button>
+              <Button type="submit" loading={isSubmitting}>
+                {submitButtonText}
+              </Button>
             </ButtonGroup>
           ) : (
-            <Button w="full" type="submit">
+            <Button w="full" type="submit" loading={isSubmitting}>
               {submitButtonText}
             </Button>
           )}

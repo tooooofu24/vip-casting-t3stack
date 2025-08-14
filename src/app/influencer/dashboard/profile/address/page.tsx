@@ -1,21 +1,37 @@
 "use client";
 
 import { InfluencerAddressForm } from "@/app/influencer/(public)/register/(components)/InfluencerAddressForm";
-import { showSuccessToast } from "@/lib/chakra-ui/toaster";
+import { showErrorToast, showSuccessToast } from "@/lib/chakra-ui/toaster";
 import { api } from "@/lib/trpc/react";
-import {
-  influencerAddressDefaultValues,
-  type InfluencerAddressRequest,
-} from "@/server/api/routers/influencer/features/auth/register/validations/address";
+import { type InfluencerAddressRequest } from "@/server/api/routers/influencer/features/profile/address/update/validation";
 import { Spinner, Tabs, VStack } from "@chakra-ui/react";
 
 export default function AddressPage() {
-  const { data: profile, isLoading } = api.influencer.profile.get.useQuery();
+  const {
+    data: profile,
+    isLoading,
+    refetch,
+  } = api.influencer.profile.get.useQuery();
 
-  const handleAddressUpdate = (data: InfluencerAddressRequest) => {
-    // TODO: API実装時に更新ロジックを追加
-    void data;
-    showSuccessToast("住所情報を更新しました");
+  const { mutateAsync: updateAddressMutation } =
+    api.influencer.profile.updateAddress.useMutation({
+      onError: (error) => {
+        showErrorToast(
+          `住所情報の更新に失敗しました: ${
+            error instanceof Error
+              ? error.message
+              : "不明なエラーが発生しました"
+          }`,
+        );
+      },
+      onSuccess: () => {
+        void refetch();
+        showSuccessToast("住所情報を更新しました");
+      },
+    });
+
+  const handleAddressUpdate = async (data: InfluencerAddressRequest) => {
+    await updateAddressMutation(data);
   };
 
   if (isLoading) {
@@ -32,7 +48,7 @@ export default function AddressPage() {
         onSubmit={handleAddressUpdate}
         submitButtonText="保存"
         showBackButton={false}
-        defaultValues={profile?.address ?? influencerAddressDefaultValues}
+        defaultValues={profile?.address ?? undefined}
       />
     </Tabs.Content>
   );
