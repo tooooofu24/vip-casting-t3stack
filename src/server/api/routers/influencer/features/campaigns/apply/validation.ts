@@ -1,7 +1,7 @@
 import { z } from "@/lib/zod";
 
 export const applyCampaignSchema = z.object({
-  campaignId: z.string().min(1).uuid(),
+  campaignId: z.uuid(),
   message: z.string().optional(),
 });
 
