@@ -37,6 +37,9 @@ CREATE TYPE "public"."AccountType" AS ENUM ('NORMAL', 'CURRENT');
 -- CreateEnum
 CREATE TYPE "public"."ApplicationStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED', 'COMPLETED', 'CANCELLED');
 
+-- CreateEnum
+CREATE TYPE "public"."MessageSenderType" AS ENUM ('COMPANY', 'INFLUENCER');
+
 -- CreateTable
 CREATE TABLE "public"."Admin" (
     "id" UUID NOT NULL,
@@ -339,6 +342,31 @@ CREATE TABLE "public"."Application" (
     CONSTRAINT "Application_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "public"."Conversation" (
+    "id" UUID NOT NULL,
+    "companyId" UUID NOT NULL,
+    "influencerId" UUID NOT NULL,
+    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(6) NOT NULL,
+
+    CONSTRAINT "Conversation_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."Message" (
+    "id" UUID NOT NULL,
+    "conversationId" UUID NOT NULL,
+    "senderId" UUID NOT NULL,
+    "senderType" "public"."MessageSenderType" NOT NULL,
+    "content" TEXT NOT NULL,
+    "readAt" TIMESTAMPTZ(6),
+    "createdAt" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMPTZ(6) NOT NULL,
+
+    CONSTRAINT "Message_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Admin_supabaseId_key" ON "public"."Admin"("supabaseId");
 
@@ -414,6 +442,24 @@ CREATE INDEX "Application_influencerId_idx" ON "public"."Application"("influence
 -- CreateIndex
 CREATE UNIQUE INDEX "Application_campaignId_influencerId_key" ON "public"."Application"("campaignId", "influencerId");
 
+-- CreateIndex
+CREATE INDEX "Conversation_companyId_idx" ON "public"."Conversation"("companyId");
+
+-- CreateIndex
+CREATE INDEX "Conversation_influencerId_idx" ON "public"."Conversation"("influencerId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Conversation_companyId_influencerId_key" ON "public"."Conversation"("companyId", "influencerId");
+
+-- CreateIndex
+CREATE INDEX "Message_conversationId_idx" ON "public"."Message"("conversationId");
+
+-- CreateIndex
+CREATE INDEX "Message_senderId_idx" ON "public"."Message"("senderId");
+
+-- CreateIndex
+CREATE INDEX "Message_createdAt_idx" ON "public"."Message"("createdAt");
+
 -- AddForeignKey
 ALTER TABLE "public"."User" ADD CONSTRAINT "User_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "public"."Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -467,3 +513,12 @@ ALTER TABLE "public"."Application" ADD CONSTRAINT "Application_campaignId_fkey" 
 
 -- AddForeignKey
 ALTER TABLE "public"."Application" ADD CONSTRAINT "Application_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "public"."Influencer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Conversation" ADD CONSTRAINT "Conversation_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "public"."Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Conversation" ADD CONSTRAINT "Conversation_influencerId_fkey" FOREIGN KEY ("influencerId") REFERENCES "public"."Influencer"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "public"."Message" ADD CONSTRAINT "Message_conversationId_fkey" FOREIGN KEY ("conversationId") REFERENCES "public"."Conversation"("id") ON DELETE CASCADE ON UPDATE CASCADE;

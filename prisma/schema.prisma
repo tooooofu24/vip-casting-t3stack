@@ -164,6 +164,11 @@ enum ApplicationStatus {
     CANCELLED
 }
 
+enum MessageSenderType {
+    COMPANY
+    INFLUENCER
+}
+
 model Admin {
     id         String   @id @default(uuid()) @db.Uuid
     supabaseId String   @unique @db.Uuid
@@ -187,12 +192,13 @@ model Company {
     updatedAt  DateTime @updatedAt @db.Timestamptz(6)
     isApproved Boolean  @default(false)
 
-    information CompanyInformation?
-    address     CompanyAddress?
-    business    CompanyBusiness?
-    payment     CompanyPayment?
-    Campaign    Campaign[]
-    User        User[]
+    information   CompanyInformation?
+    address       CompanyAddress?
+    business      CompanyBusiness?
+    payment       CompanyPayment?
+    Campaign      Campaign[]
+    User          User[]
+    conversations Conversation[]
 }
 
 model CompanyInformation {
@@ -333,12 +339,13 @@ model Influencer {
     updatedAt  DateTime @updatedAt @db.Timestamptz(6)
     isApproved Boolean  @default(false)
 
-    information  InfluencerInformation?
-    address      InfluencerAddress?
-    sns          InfluencerSns?
-    work         InfluencerWork?
-    avatar       InfluencerAvatar?
-    applications Application[]
+    information   InfluencerInformation?
+    address       InfluencerAddress?
+    sns           InfluencerSns?
+    work          InfluencerWork?
+    avatar        InfluencerAvatar?
+    applications  Application[]
+    conversations Conversation[]
 }
 
 model InfluencerInformation {
@@ -482,4 +489,39 @@ model Application {
     @@unique([campaignId, influencerId])
     @@index([campaignId])
     @@index([influencerId])
+}
+
+model Conversation {
+    id           String   @id @default(uuid()) @db.Uuid
+    companyId    String   @db.Uuid
+    influencerId String   @db.Uuid
+    createdAt    DateTime @default(now()) @db.Timestamptz(6)
+    updatedAt    DateTime @updatedAt @db.Timestamptz(6)
+
+    // --- リレーション ---
+    company    Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    influencer Influencer @relation(fields: [influencerId], references: [id], onDelete: Cascade)
+    messages   Message[]
+
+    @@unique([companyId, influencerId])
+    @@index([companyId])
+    @@index([influencerId])
+}
+
+model Message {
+    id             String            @id @default(uuid()) @db.Uuid
+    conversationId String            @db.Uuid
+    senderId       String            @db.Uuid
+    senderType     MessageSenderType
+    content        String            @db.Text
+    readAt         DateTime?         @db.Timestamptz(6)
+    createdAt      DateTime          @default(now()) @db.Timestamptz(6)
+    updatedAt      DateTime          @updatedAt @db.Timestamptz(6)
+
+    // --- リレーション ---
+    conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+    @@index([conversationId])
+    @@index([senderId])
+    @@index([createdAt])
 }
