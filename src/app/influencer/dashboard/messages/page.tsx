@@ -1,34 +1,48 @@
 "use client";
 
+import { BreadcrumbSection } from "@/app/(components)/BreadcrumbSection";
 import ChatList from "@/app/influencer/dashboard/messages/(components)/ChatList";
-import { Box, Card, Container, Grid, Stack, Text } from "@chakra-ui/react";
+import ChatRoom from "@/app/influencer/dashboard/messages/(components)/ChatRoom";
+import { Card, Grid, Stack, Text, VStack } from "@chakra-ui/react";
+import { useSearchParams } from "next/navigation";
 
 export default function MessagesPage() {
-  return (
-    <Box py={8}>
-      <Container maxW="container.xl" px={4}>
-        <Card.Root overflow="hidden">
-          <Grid
-            templateColumns={{ base: "1fr", md: "1fr 2fr" }}
-            h="calc(100vh - 12rem)"
-          >
-            {/* ChatListコンポーネントの場所 */}
-            <Box borderRight="1px" borderColor="gray.100">
-              <ChatList />
-            </Box>
+  const searchParams = useSearchParams();
+  const selectedConversationId = searchParams.get("id");
 
-            <Stack
-              display={{ base: "none", md: "flex" }}
-              align="center"
-              justify="center"
-              bg="gray.50"
-              h="full"
-            >
-              <Text color="gray.500">チャットを選択してください</Text>
-            </Stack>
-          </Grid>
-        </Card.Root>
-      </Container>
-    </Box>
+  return (
+    <VStack gap={6} align="stretch">
+      {/* Breadcrumb Section */}
+      <BreadcrumbSection items={[{ label: "メッセージ" }]} />
+
+      <Card.Root overflow="hidden">
+        <Grid
+          templateColumns={{ base: "1fr", md: "1fr 2fr" }}
+          h="calc(100vh - 12rem)"
+        >
+          {/* ChatListコンポーネントの場所 */}
+          <Card.Body borderRight="sm" borderColor="border" p={0}>
+            <ChatList />
+          </Card.Body>
+
+          {/* チャットルームまたは空の状態 */}
+          <Card.Body p={0}>
+            {selectedConversationId ? (
+              <ChatRoom conversationId={selectedConversationId} />
+            ) : (
+              <Stack
+                display={{ base: "none", md: "flex" }}
+                align="center"
+                justify="center"
+                bg="bg.muted"
+                h="full"
+              >
+                <Text color="fg.muted">チャットを選択してください</Text>
+              </Stack>
+            )}
+          </Card.Body>
+        </Grid>
+      </Card.Root>
+    </VStack>
   );
 }

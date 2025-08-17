@@ -45,7 +45,13 @@ const mockMessages: Message[] = [
   },
 ];
 
-export default function ChatRoom() {
+interface ChatRoomProps {
+  conversationId: string;
+}
+
+export default function ChatRoom({
+  conversationId: _conversationId,
+}: ChatRoomProps) {
   return (
     <Grid templateRows="auto 1fr auto" h="full">
       {/* Chat Header */}

@@ -44,7 +44,7 @@ export default function ChatList() {
           <Link
             key={chat.id}
             as={NextLink}
-            href={`/messages/${chat.id}`}
+            href={`/influencer/dashboard/messages?id=${chat.id}`}
             _hover={{ textDecoration: "none" }}
             px={4}
             py={6}
