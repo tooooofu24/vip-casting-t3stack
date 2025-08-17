@@ -4,7 +4,9 @@ import { ApplyButton } from "@/app/influencer/dashboard/campaigns/[id]/(componen
 import { genres } from "@/const/genre";
 import { regions } from "@/const/region";
 import { rewardTypeLabels } from "@/const/rewardType";
+import { showErrorToast, showSuccessToast } from "@/lib/chakra-ui/toaster";
 import type { RouterOutputs } from "@/lib/trpc/react";
+import { api } from "@/lib/trpc/react";
 import {
   Badge,
   Button,
@@ -17,6 +19,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import {
   LuBuilding2,
   LuExternalLink,
@@ -34,6 +37,20 @@ type CompanyInfoCardProps = {
 
 export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
   const { company } = campaign;
+  const router = useRouter();
+
+  // 会話作成
+  const { mutate, isPending } = api.influencer.messages.create.useMutation({
+    onSuccess: (data) => {
+      // 作成した会話のページに遷移
+      router.push(`/influencer/dashboard/messages?id=${data.conversationId}`);
+      showSuccessToast("会話を開始しました");
+    },
+    onError: (error) => {
+      showErrorToast(error.message);
+    },
+  });
+
   return (
     <VStack align="stretch" gap={6}>
       {/* 企業基本情報 */}
@@ -174,16 +191,18 @@ export function CompanyInfoCard({ campaign }: CompanyInfoCardProps) {
                 size="lg"
                 variant="outline"
                 width="100%"
-                onClick={() => {
-                  // TODO: チャット機能の実装
-                  alert("チャット機能は準備中です");
-                }}
+                onClick={() =>
+                  mutate({
+                    companyId: company.id,
+                  })
+                }
+                loading={isPending}
               >
                 <Icon as={LuMessageSquare} />
                 チャットを開始
               </Button>
               <Text fontSize="xs" color="fg.muted" textAlign="center">
-                ※ 応募後にチャット機能が利用可能になります
+                企業との相談や質問ができます
               </Text>
             </VStack>
           </VStack>
