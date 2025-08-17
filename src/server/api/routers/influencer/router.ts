@@ -3,6 +3,7 @@ import { campaignRouter } from "@/server/api/routers/influencer/features/campaig
 import { passwordRouter } from "@/server/api/routers/influencer/features/password/router";
 import { profileRouter } from "@/server/api/routers/influencer/features/profile/router";
 import { avatarRouter } from "@/server/api/routers/influencer/features/avatar/router";
+import { messagesRouter } from "@/server/api/routers/influencer/features/messages/router";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 export const influencerRouter = createTRPCRouter({
@@ -11,4 +12,5 @@ export const influencerRouter = createTRPCRouter({
   campaigns: campaignRouter,
   profile: profileRouter,
   avatar: avatarRouter,
+  messages: messagesRouter,
 });
