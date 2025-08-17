@@ -6,6 +6,7 @@ import {
   LuDollarSign,
   LuLayoutDashboard,
   LuMessageSquare,
+  LuSearch,
   LuSettings,
   LuStar,
   LuUser,
@@ -22,8 +23,8 @@ export const InfluencerSidebar = () => {
     },
     {
       path: "/influencer/dashboard/campaigns",
-      label: "案件一覧",
-      icon: LuStar,
+      label: "案件検索",
+      icon: LuSearch,
       active: pathname.startsWith("/influencer/dashboard/campaigns"),
     },
     {

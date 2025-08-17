@@ -71,36 +71,35 @@
 | I-07 | 認証・登録 | パスワードリセット | ✅ | ✅ | **完了** | - | [/influencer/reset-password](http://localhost:3000/influencer/reset-password) |
 | I-08 | 認証・登録 | パスワード忘れ | ✅ | ✅ | **完了** | - | [/influencer/forget-password](http://localhost:3000/influencer/forget-password) |
 | I-09 | 認証・登録 | アバター画像アップロード | ✅ | ✅ | **完了** | Supabase統合完了 | [/influencer/dashboard/profile/avatar](http://localhost:3000/influencer/dashboard/profile/avatar) |
-| I-10 | 認証・登録 | 身分証アップロード | ❌ | ❌ | **未実装** | ファイルアップロード必要 | - |
-| I-11 | 認証・登録 | 運営承認待ち状態管理 | ⚠️ | ❌ | **部分実装** | DBフラグのみ | - |
-| I-12 | プロフィール | プロフィール表示 | ✅ | ✅ | **完了** | 全データ統合済み | [/influencer/dashboard/profile](http://localhost:3000/influencer/dashboard/profile) |
-| I-13 | プロフィール | プロフィール編集（情報） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/information](http://localhost:3000/influencer/dashboard/profile/information) |
-| I-14 | プロフィール | プロフィール編集（SNS） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/sns](http://localhost:3000/influencer/dashboard/profile/sns) |
-| I-15 | プロフィール | プロフィール編集（案件情報） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/work](http://localhost:3000/influencer/dashboard/profile/work) |
-| I-16 | プロフィール | プロフィール編集（住所） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/address](http://localhost:3000/influencer/dashboard/profile/address) |
-| I-17 | ダッシュボード | ダッシュボード表示 | ❌ | ⚠️ | **UI のみ** | モックデータ | [/influencer/dashboard](http://localhost:3000/influencer/dashboard) |
-| I-18 | ダッシュボード | スケジュール管理 | ❌ | ⚠️ | **UI のみ** | 追加・編集機能なし | [/influencer/dashboard](http://localhost:3000/influencer/dashboard) |
-| I-19 | ダッシュボード | レビュー機能 | ❌ | ❌ | **未実装** | - | - |
-| I-20 | 案件探し | 案件一覧表示 | ✅ | ✅ | **完了** | - | [/influencer/dashboard/campaigns](http://localhost:3000/influencer/dashboard/campaigns) |
-| I-21 | 案件探し | 案件詳細表示 | ✅ | ✅ | **完了** | - | [/influencer/dashboard/campaigns/[id]](http://localhost:3000/influencer/dashboard/campaigns/1) |
-| I-22 | 案件探し | 案件検索・フィルタ | ⚠️ | ⚠️ | **部分実装** | 基本的な絞り込みのみ | [/influencer/dashboard/campaigns](http://localhost:3000/influencer/dashboard/campaigns) |
-| I-23 | 案件探し | 案件応募 | ✅ | ✅ | **完了** | - | [/influencer/dashboard/campaigns/[id]](http://localhost:3000/influencer/dashboard/campaigns/1) |
-| I-24 | 案件管理 | 応募状況一覧 | ❌ | ⚠️ | **UI のみ** | 実データ取得なし | [/influencer/dashboard/campaign-management](http://localhost:3000/influencer/dashboard/campaign-management) |
-| I-25 | 案件管理 | 進行中案件管理 | ❌ | ⚠️ | **UI のみ** | ステータス更新なし | [/influencer/dashboard/campaign-management](http://localhost:3000/influencer/dashboard/campaign-management) |
-| I-26 | 案件管理 | 完了案件表示 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/campaign-management](http://localhost:3000/influencer/dashboard/campaign-management) |
-| I-27 | PRリスト | PRリスト一覧 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/pr-listing](http://localhost:3000/influencer/dashboard/pr-listing) |
-| I-28 | PRリスト | PRリスト作成 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/pr-listing/create](http://localhost:3000/influencer/dashboard/pr-listing/create) |
-| I-29 | PRリスト | PRリスト詳細 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/pr-listing/[id]](http://localhost:3000/influencer/dashboard/pr-listing/1) |
-| I-30 | PRリスト | PRリスト編集 | ❌ | ❌ | **未実装** | - | - |
-| I-31 | メッセージ | メッセージ一覧 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/messages](http://localhost:3000/influencer/dashboard/messages) |
-| I-32 | メッセージ | メッセージ送受信 | ❌ | ⚠️ | **UI のみ** | リアルタイム機能なし | [/influencer/dashboard/messages/[id]](http://localhost:3000/influencer/dashboard/messages/1) |
-| I-33 | 収益 | 収益一覧表示 | ❌ | ⚠️ | **UI のみ** | モックデータ | [/influencer/dashboard/earnings](http://localhost:3000/influencer/dashboard/earnings) |
-| I-34 | 収益 | 収益詳細・履歴 | ❌ | ❌ | **未実装** | - | - |
-| I-35 | 収益 | 振込申請 | ❌ | ❌ | **未実装** | - | - |
-| I-36 | 設定 | アカウント設定 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/settings](http://localhost:3000/influencer/dashboard/settings) |
-| I-37 | 設定 | 通知設定 | ❌ | ❌ | **未実装** | - | - |
+| I-10 | 認証・登録 | 運営承認待ち状態管理 | ⚠️ | ❌ | **部分実装** | DBフラグのみ | - |
+| I-11 | プロフィール | プロフィール表示 | ✅ | ✅ | **完了** | 全データ統合済み | [/influencer/dashboard/profile](http://localhost:3000/influencer/dashboard/profile) |
+| I-12 | プロフィール | プロフィール編集（情報） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/information](http://localhost:3000/influencer/dashboard/profile/information) |
+| I-13 | プロフィール | プロフィール編集（SNS） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/sns](http://localhost:3000/influencer/dashboard/profile/sns) |
+| I-14 | プロフィール | プロフィール編集（案件情報） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/work](http://localhost:3000/influencer/dashboard/profile/work) |
+| I-15 | プロフィール | プロフィール編集（住所） | ✅ | ✅ | **完了** | 完全なCRUD実装 | [/influencer/dashboard/profile/address](http://localhost:3000/influencer/dashboard/profile/address) |
+| I-16 | ダッシュボード | ダッシュボード表示 | ❌ | ⚠️ | **UI のみ** | モックデータ | [/influencer/dashboard](http://localhost:3000/influencer/dashboard) |
+| I-17 | ダッシュボード | スケジュール管理 | ❌ | ⚠️ | **UI のみ** | 追加・編集機能なし | [/influencer/dashboard](http://localhost:3000/influencer/dashboard) |
+| I-18 | ダッシュボード | レビュー機能 | ❌ | ❌ | **未実装** | - | - |
+| I-19 | 案件探し | 案件一覧表示 | ✅ | ✅ | **完了** | - | [/influencer/dashboard/campaigns](http://localhost:3000/influencer/dashboard/campaigns) |
+| I-20 | 案件探し | 案件詳細表示 | ✅ | ✅ | **完了** | - | [/influencer/dashboard/campaigns/[id]](http://localhost:3000/influencer/dashboard/campaigns/1) |
+| I-21 | 案件探し | 案件検索・フィルタ | ⚠️ | ⚠️ | **部分実装** | 基本的な絞り込みのみ | [/influencer/dashboard/campaigns](http://localhost:3000/influencer/dashboard/campaigns) |
+| I-22 | 案件探し | 案件応募 | ✅ | ✅ | **完了** | - | [/influencer/dashboard/campaigns/[id]](http://localhost:3000/influencer/dashboard/campaigns/1) |
+| I-23 | 案件管理 | 応募状況一覧 | ❌ | ⚠️ | **UI のみ** | 実データ取得なし | [/influencer/dashboard/campaign-management](http://localhost:3000/influencer/dashboard/campaign-management) |
+| I-24 | 案件管理 | 進行中案件管理 | ❌ | ⚠️ | **UI のみ** | ステータス更新なし | [/influencer/dashboard/campaign-management](http://localhost:3000/influencer/dashboard/campaign-management) |
+| I-25 | 案件管理 | 完了案件表示 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/campaign-management](http://localhost:3000/influencer/dashboard/campaign-management) |
+| I-26 | PRリスト | PRリスト一覧 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/pr-listing](http://localhost:3000/influencer/dashboard/pr-listing) |
+| I-27 | PRリスト | PRリスト作成 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/pr-listing/create](http://localhost:3000/influencer/dashboard/pr-listing/create) |
+| I-28 | PRリスト | PRリスト詳細 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/pr-listing/[id]](http://localhost:3000/influencer/dashboard/pr-listing/1) |
+| I-29 | PRリスト | PRリスト編集 | ❌ | ❌ | **未実装** | - | - |
+| I-30 | メッセージ | メッセージ一覧 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/messages](http://localhost:3000/influencer/dashboard/messages) |
+| I-31 | メッセージ | メッセージ送受信 | ❌ | ⚠️ | **UI のみ** | リアルタイム機能なし | [/influencer/dashboard/messages/[id]](http://localhost:3000/influencer/dashboard/messages/1) |
+| I-32 | 収益 | 収益一覧表示 | ❌ | ⚠️ | **UI のみ** | モックデータ | [/influencer/dashboard/earnings](http://localhost:3000/influencer/dashboard/earnings) |
+| I-33 | 収益 | 収益詳細・履歴 | ❌ | ❌ | **未実装** | - | - |
+| I-34 | 収益 | 振込申請 | ❌ | ❌ | **未実装** | - | - |
+| I-35 | 設定 | アカウント設定 | ❌ | ⚠️ | **UI のみ** | - | [/influencer/dashboard/settings](http://localhost:3000/influencer/dashboard/settings) |
+| I-36 | 設定 | 通知設定 | ❌ | ❌ | **未実装** | - | - |
 
-### インフルエンサー機能完了度: **40%** (15/37タスク完了)
+### インフルエンサー機能完了度: **42%** (15/36タスク完了)
 
 ---
 
@@ -110,8 +109,8 @@
 |-------------|-----------|-----------|--------|------|----------|
 | **管理者** | 5 | 13 | **38%** | 基本機能のみ実装 | [/admin/dashboard](http://localhost:3000/admin/dashboard) |
 | **企業** | 10 | 28 | **36%** | 登録・基本案件管理完了 | [/company/dashboard](http://localhost:3000/company/dashboard) |
-| **インフルエンサー** | 15 | 37 | **40%** | **プロフィール管理完全実装** | [/influencer/dashboard](http://localhost:3000/influencer/dashboard) |
-| **全体** | **30** | **78** | **38%** | インフルエンサー機能大幅改善 | [/](http://localhost:3000/) |
+| **インフルエンサー** | 15 | 36 | **42%** | **プロフィール管理完全実装** | [/influencer/dashboard](http://localhost:3000/influencer/dashboard) |
+| **全体** | **30** | **77** | **39%** | インフルエンサー機能大幅改善 | [/](http://localhost:3000/) |
 
 ---
 
@@ -129,10 +128,8 @@
 4. **メッセージング機能** (C-24, C-25)
 
 ### インフルエンサー (高優先度)
-1. **プロフィール完成度チェック機能** (新規実装) 🆕
-2. **身分証アップロード機能** (I-10)
-3. **メッセージング機能** (I-31, I-32)
-4. **スケジュール管理機能** (I-18)
+1. **メッセージング機能** (I-31, I-32)
+2. **スケジュール管理機能** (I-18)
 
 ---
 
@@ -145,17 +142,17 @@
    - ✅ Production-ready品質
 
 2. **次の優先実装項目**
-   - **プロフィール完成度チェック機能** (最優先)
    - ファイルアップロード機能拡張
    - メッセージング機能
+   - 企業プロフィール編集API
 
 3. **各ユーザー種別の核となる機能**
    - 管理者: 審査・承認機能
    - 企業: インフルエンサー検索・応募者管理
-   - インフルエンサー: プロフィール完成度・スケジュール管理
+   - インフルエンサー: スケジュール管理・メッセージング
 
 4. **段階的な機能拡張**
    - ✅ インフルエンサー基盤機能完了
-   - → プロフィール完成度システム
+   - → ファイルアップロード機能統一
    - → 企業機能拡充
    - → 高度な機能の順で実装

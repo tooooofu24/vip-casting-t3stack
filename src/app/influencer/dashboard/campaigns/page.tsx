@@ -30,7 +30,7 @@ export default function CampaignsPage() {
     <VStack gap={6} align="stretch">
       {/* Breadcrumb Section */}
       <BreadcrumbSection
-        items={[{ label: "案件一覧" }]}
+        items={[{ label: "案件検索" }]}
         title="限定案件を探す"
         description="VIPキャスティングだけの、厳選された高単価案件をご紹介します。"
       />
