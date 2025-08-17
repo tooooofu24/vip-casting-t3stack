@@ -11,7 +11,7 @@ export type BreadcrumbItem = {
 
 export type BreadcrumbSectionProps = {
   items: BreadcrumbItem[];
-  title: string;
+  title?: string;
   description?: string;
 };
 
@@ -48,16 +48,20 @@ export function BreadcrumbSection({
           ))}
         </Breadcrumb.List>
       </Breadcrumb.Root>
-      <VStack gap={1} align="stretch">
-        <Heading as="h1" size="xl" fontWeight="bold">
-          {title}
-        </Heading>
-        {description && (
-          <Text fontSize="sm" color="fg.muted">
-            {description}
-          </Text>
-        )}
-      </VStack>
+      {!!title && !!description && (
+        <VStack gap={1} align="stretch">
+          {title && (
+            <Heading as="h1" size="xl" fontWeight="bold">
+              {title}
+            </Heading>
+          )}
+          {description && (
+            <Text fontSize="sm" color="fg.muted">
+              {description}
+            </Text>
+          )}
+        </VStack>
+      )}
     </VStack>
   );
 }
