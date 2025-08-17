@@ -5,8 +5,21 @@ import { Pagination } from "@/app/(components)/Pagination";
 import { CampaignCard } from "@/app/influencer/dashboard/campaigns/(components)/CampaignCard";
 import type { RouterOutputs } from "@/lib/trpc/react";
 import { api } from "@/lib/trpc/react";
-import { Box, SimpleGrid, Spinner, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
+  InputGroup,
+  SimpleGrid,
+  Spinner,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useState } from "react";
+import { LuSearch, LuSlidersHorizontal } from "react-icons/lu";
 
 // Type for campaign data from the API
 type CampaignData =
@@ -34,6 +47,31 @@ export default function CampaignsPage() {
         title="限定案件を探す"
         description="VIPキャスティングだけの、厳選された高単価案件をご紹介します。"
       />
+
+      <HStack gap={2}>
+        <InputGroup
+          startElement={
+            <Icon>
+              <LuSearch />
+            </Icon>
+          }
+        >
+          <Input bg="white" placeholder="キーワードで検索" />
+        </InputGroup>
+        <IconButton
+          aria-label="Search database"
+          variant="outline"
+          type="button"
+        >
+          <LuSlidersHorizontal />
+        </IconButton>
+        <Button>
+          <Icon>
+            <LuSearch />
+          </Icon>
+          検索
+        </Button>
+      </HStack>
 
       {/* Loading State */}
       {isLoading && (
