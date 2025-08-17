@@ -1,5 +1,5 @@
-import { influencerProcedure } from "@/server/api/trpc";
 import { createConversationSchema } from "@/server/api/routers/influencer/features/messages/create/validation";
+import { influencerProcedure } from "@/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 
 export const createConversation = influencerProcedure
@@ -33,64 +33,21 @@ export const createConversation = influencerProcedure
     });
 
     if (existingConversation) {
-      throw new TRPCError({
-        code: "CONFLICT",
-        message: "この企業との会話は既に存在します",
-      });
+      return {
+        conversationId: existingConversation.id,
+      };
     }
 
-    // 3. トランザクションで会話作成 + 初回メッセージ送信
-    const result = await ctx.db.$transaction(async (tx) => {
-      // 会話作成
-      const conversation = await tx.conversation.create({
-        data: {
-          companyId: input.companyId,
-          influencerId: ctx.influencerId,
-        },
-      });
-
-      // 初回メッセージ作成
-      const message = await tx.message.create({
-        data: {
-          conversationId: conversation.id,
-          senderId: ctx.influencerId,
-          senderType: "INFLUENCER",
-          content: input.content,
-        },
-        include: {
-          conversation: {
-            include: {
-              influencer: {
-                include: {
-                  information: {
-                    select: {
-                      displayName: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      });
-
-      return { conversation, message };
+    // 3. 会話作成
+    const conversation = await ctx.db.conversation.create({
+      data: {
+        companyId: input.companyId,
+        influencerId: ctx.influencerId,
+      },
     });
 
     // 4. レスポンス形式を整理
     return {
-      conversationId: result.conversation.id,
-      companyId: input.companyId,
-      companyName: company.information?.displayName ?? "企業名不明",
-      message: {
-        id: result.message.id,
-        content: result.message.content,
-        senderType: result.message.senderType,
-        senderName:
-          result.message.conversation.influencer.information?.displayName ??
-          "インフルエンサー名不明",
-        readAt: result.message.readAt,
-        createdAt: result.message.createdAt,
-      },
+      conversationId: conversation.id,
     };
   });
