@@ -9,6 +9,7 @@ import {
   influencerWorkSchema,
   type InfluencerWorkRequest,
 } from "@/server/api/routers/influencer/features/auth/register/validations/work";
+import { setValueAsNumber } from "@/lib/react-hook-form/setValueAsNumber";
 import {
   Box,
   Button,
@@ -73,7 +74,7 @@ export function InfluencerWorkForm({
                   <Input
                     placeholder="30000"
                     {...register("postFee", {
-                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                      setValueAs: setValueAsNumber,
                     })}
                   />
                 </InputGroup>
@@ -85,7 +86,7 @@ export function InfluencerWorkForm({
                   <Input
                     placeholder="50000"
                     {...register("videoFee", {
-                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                      setValueAs: setValueAsNumber,
                     })}
                   />
                 </InputGroup>
@@ -97,7 +98,7 @@ export function InfluencerWorkForm({
                   <Input
                     placeholder="100000"
                     {...register("liveFee", {
-                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                      setValueAs: setValueAsNumber,
                     })}
                   />
                 </InputGroup>
@@ -109,7 +110,7 @@ export function InfluencerWorkForm({
                   <Input
                     placeholder="150000"
                     {...register("eventFee", {
-                      setValueAs: (v) => (v === "" ? undefined : Number(v)),
+                      setValueAs: setValueAsNumber,
                     })}
                   />
                 </InputGroup>
