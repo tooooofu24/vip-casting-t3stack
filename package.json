@@ -19,20 +19,20 @@
     "chakra-ui-gen": "chakra eject --outdir src/lib/chakra-ui/theme/original && npm run format && npm run check"
   },
   "dependencies": {
-    "@chakra-ui/react": "^3.25.0",
+    "@chakra-ui/react": "^3.26.0",
     "@emotion/react": "^11.14.0",
     "@hookform/resolvers": "^5.2.1",
-    "@prisma/client": "^6.14.0",
+    "@prisma/client": "^6.16.1",
     "@supabase/ssr": "^0.7.0",
-    "@supabase/supabase-js": "^2.56.0",
+    "@supabase/supabase-js": "^2.57.4",
     "@t3-oss/env-nextjs": "^0.13.8",
-    "@tanstack/react-query": "^5.85.5",
-    "@trpc/client": "^11.5.0",
-    "@trpc/react-query": "^11.5.0",
-    "@trpc/server": "^11.5.0",
+    "@tanstack/react-query": "^5.87.4",
+    "@trpc/client": "^11.5.1",
+    "@trpc/react-query": "^11.5.1",
+    "@trpc/server": "^11.5.1",
     "date-fns": "^4.1.0",
-    "i18next": "^25.4.1",
-    "next": "^15.5.0",
+    "i18next": "^25.5.2",
+    "next": "^15.5.3",
     "next-themes": "^0.4.6",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -40,29 +40,29 @@
     "react-icons": "^5.5.0",
     "server-only": "^0.0.1",
     "superjson": "^2.2.2",
-    "uuid": "^11.1.0",
-    "zod": "^4.1.1"
+    "uuid": "^13.0.0",
+    "zod": "^4.1.8"
   },
   "devDependencies": {
-    "@chakra-ui/cli": "^3.25.0",
+    "@chakra-ui/cli": "^3.26.0",
     "@eslint/eslintrc": "^3.3.1",
-    "@faker-js/faker": "^9.9.0",
-    "@types/node": "^22.17.2",
-    "@types/react": "^19.1.11",
-    "@types/react-dom": "^19.1.7",
+    "@faker-js/faker": "^10.0.0",
+    "@types/node": "^24.3.3",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
     "@types/uuid": "^10.0.0",
-    "cspell": "^9.2.0",
-    "eslint": "^9.34.0",
-    "eslint-config-next": "^15.5.0",
-    "knip": "^5.63.0",
+    "cspell": "^9.2.1",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^15.5.3",
+    "knip": "^5.63.1",
     "prettier": "^3.6.2",
-    "prisma": "^6.14.0",
+    "prisma": "^6.16.1",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.40.0"
+    "typescript-eslint": "^8.43.0"
   },
   "ct3aMetadata": {
     "initVersion": "7.39.3"
   },
-  "packageManager": "npm@11.5.2"
+  "packageManager": "npm@11.6.0"
 }
