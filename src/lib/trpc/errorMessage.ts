@@ -47,6 +47,8 @@ export function getErrorMessageFromTrpcCode(
       return "クライアントがリクエストを中断しました。";
     case "PAYMENT_REQUIRED":
       return "支払いが必要です。";
+    case "PRECONDITION_REQUIRED":
+      return "前提条件が満たされていません。";
     default:
       // case漏れがあれば、ここで型エラーになる
       const _: never = code;
